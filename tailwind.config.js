@@ -26,6 +26,9 @@ module.exports = {
         surfaceDark: '#201a19',
         onSurfaceDark: '#ede0de',
       },
+      fontSize: {
+        heading: '6.25rem',
+      },
     },
   },
   plugins: [],
