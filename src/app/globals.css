@@ -1,3 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+body{
+    background-image: url('/assets/Images/back.svg');
+    background-repeat: no-repeat;
+}
