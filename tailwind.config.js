@@ -26,6 +26,7 @@ module.exports = {
         onBackgroundDark: '#ede0de',
         surfaceDark: '#201a19',
         onSurfaceDark: '#ede0de',
+        pinkSecondary:'#fdf1ef',
       },
       fontSize: {
         heading: '6.25rem',

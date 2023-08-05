@@ -25,11 +25,11 @@ const icons = [
 function Navbar({}: Props) {
   return (
     <>
-      <nav className="bg-surface dark:bg-surfaceDark h-screen  px-3 fixed flex flex-col items-center justify-center">
+      <nav className="bg-pinkSecondary dark:bg-surfaceDark h-screen  px-4 fixed flex flex-col items-center justify-center">
         <div className="flex flex-col items-center space-y-4">
           <div className="absolute top-2 mx-2">
             <Link href="/">
-              <Image src={logo} alt="logo" width={51} height={51} />
+              <Image src={logo} alt="logo" width={45} height={45} />
             </Link>
           </div>
           {icons.map((icon) => {
