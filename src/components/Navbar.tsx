@@ -1,28 +1,47 @@
-import Link from "next/link"
-import Image from "next/image"
+import Link from "next/link";
+import Image from "next/image";
+import {
+  add_square_light,
+  calendar,
+  edit_light,
+  group,
+  mortarboard_light,
+  video_light,
+  logo,
+  notebook,
+} from "../../public";
 
-type Props = {}
-const icons = [{path: "/video", icon: "/icons/Video_light.svg"}, {path: "/calendar", icon: "/icons/Calendar.svg"}, {path: "/edit", icon: "/icons/Edit_light.svg"}, {path: "/group", icon: "/icons/Group.svg"},{path:"/notebook",icon:"icons/notebook.svg"},{path: "/motoboard_light", icon: "/icons/Mortarboard_light.svg"}, {path: "/edit", icon: "/icons/Add_square_light.svg"}]
+type Props = {};
+const icons = [
+  { path: "/video", icon: video_light },
+  { path: "/calendar", icon: calendar },
+  { path: "/edit", icon: edit_light },
+  { path: "/group", icon: group },
+  { path: "/notebook", icon: notebook },
+  { path: "/motoboard_light", icon: mortarboard_light },
+  { path: "/edit", icon: add_square_light },
+];
 function Navbar({}: Props) {
   return (
     <>
-    <nav className="bg-background h-screen  pl-2 fixed flex flex-col items-center justify-center">
+      <nav className="bg-background h-screen  px-3 fixed flex flex-col items-center justify-center">
         <div className="flex flex-col items-center space-y-4">
-        <div className="absolute top-2">
-        <Link href="/">
-            <Image src="/icons/Logo.svg" alt="logo" width={51} height={51}/>
-        </Link>
+          <div className="absolute top-2 mx-2">
+            <Link href="/">
+              <Image src={logo} alt="logo" width={51} height={51} />
+            </Link>
+          </div>
+          {icons.map((icon) => {
+            return (
+              <Link href={icon.path} className=" py-2">
+                <Image src={icon.icon} alt="video" width={35} height={35} />
+              </Link>
+            );
+          })}
         </div>
-        {icons.map((icon) => {
-            return ( <Link href={icon.path}>
-            <Image src={icon.icon} alt="video" width={45} height={45}/>
-        </Link>)
-})}
-        
-        </div>
-    </nav>
+      </nav>
     </>
-  )
+  );
 }
 
-export default Navbar
+export default Navbar;
