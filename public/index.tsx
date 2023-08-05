@@ -11,6 +11,7 @@ import video_light from './assets/navbar_icons/Video_light.svg'
 import logo from './assets/navbar_icons/logo.svg'
 import notebook from './assets/navbar_icons/notebook.svg'
 import homepage_penguin from './assets/Images/homepage_penguin.png'
+import homepage_penguin_dark from './assets/Images/homepage_penguin_dark.png'
 
 export {
     add_square_light,
@@ -25,5 +26,6 @@ export {
     video_light,
     logo,
     notebook,
-    homepage_penguin
+    homepage_penguin,
+    homepage_penguin_dark
 }

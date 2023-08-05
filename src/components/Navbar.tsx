@@ -25,7 +25,7 @@ const icons = [
 function Navbar({}: Props) {
   return (
     <>
-      <nav className="bg-background h-screen  px-3 fixed flex flex-col items-center justify-center">
+      <nav className="bg-surface dark:bg-surfaceDark h-screen  px-3 fixed flex flex-col items-center justify-center">
         <div className="flex flex-col items-center space-y-4">
           <div className="absolute top-2 mx-2">
             <Link href="/">
@@ -35,7 +35,7 @@ function Navbar({}: Props) {
           {icons.map((icon) => {
             return (
               <Link href={icon.path} className=" py-2">
-                <Image src={icon.icon} alt="video" width={35} height={35} />
+                <Image src={icon.icon} alt="video" className="dark:invert" width={35} height={35} />
               </Link>
             );
           })}
