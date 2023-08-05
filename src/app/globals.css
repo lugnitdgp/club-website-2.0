@@ -7,3 +7,7 @@ body{
     background-image: url('/assets/Images/back.svg');
     background-repeat: no-repeat;
 }
+
+[data-theme="dark"]{
+    background-color: aqua;
+}

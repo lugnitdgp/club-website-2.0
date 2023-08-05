@@ -7,10 +7,10 @@ type Props = {
   children: ReactNode;
 };
 
-export default function Providers({ children }: Props) {
+export default function CustomThemeProvider({ children }: Props) {
   return (
     <>
-      <ThemeProvider attribute="class" defaultTheme="system">
+      <ThemeProvider attribute="class" >
         {children}
       </ThemeProvider>
     </>

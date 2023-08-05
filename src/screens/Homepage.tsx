@@ -10,7 +10,7 @@ function Homepage() {
       <div className=" flex flex-row  justify-between align-middle h-screen ">
         <div className="home-onboard-text flex  w-3/6 flex-col justify-evenly px-7 mx-auto ">
           <div>
-          <div className="font-bold text-heading leading-10">Explore</div>
+          <div className="font-bold text-heading leading-10 dark:text-primary">Explore</div>
           <div className="font-Monsterrat_Alternates font-bold text-heading text-primary ">
             Create
           </div>

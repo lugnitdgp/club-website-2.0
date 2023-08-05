@@ -10,6 +10,7 @@ import {
   logo,
   notebook,
 } from "../../public";
+import ThemeSwitcher from "./ThemeSwitcher";
 
 type Props = {};
 const icons = [
@@ -39,6 +40,7 @@ function Navbar({}: Props) {
             );
           })}
         </div>
+        <ThemeSwitcher />
       </nav>
     </>
   );
