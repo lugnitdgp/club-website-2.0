@@ -1,6 +1,5 @@
-import ToogleTheme from "@/components/ToogleTheme";
-import Navbar from "@/components/Navbar";
-import Homepage from "@/components/Homepage";
+
+import Homepage from "@/screens/Homepage";
 export default function Home() {
   return (
     <>

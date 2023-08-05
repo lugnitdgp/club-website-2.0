@@ -3,7 +3,6 @@ import type { Metadata } from 'next';
 import { Inter,Montserrat,Montserrat_Alternates } from 'next/font/google';
 import Providers from '@/components/Providers';
 import Navbar from '@/components/Navbar';
-import Homepage from '@/components/Homepage';
 
 const montserrat = Montserrat({ subsets: ['latin'] });
 
