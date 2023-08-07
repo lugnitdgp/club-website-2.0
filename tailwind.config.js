@@ -4,6 +4,7 @@ module.exports = {
   content: [
     './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
     './src/components/**/*.{js,ts,jsx,tsx,mdx}',
+    './src/screens/**/*.{js,ts,jsx,tsx,mdx}',
     './src/app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
@@ -17,7 +18,7 @@ module.exports = {
         onBackground: '#201a19',
         surface: '#fffbff',
         onSurface: '#201a19',
-        primaryDark: '#ffb4a9',
+        primaryDark: '#ef614d',
         onPrimaryDark: '#690002',
         primaryContainerDark: '#930004',
         onPrimaryContainerDark: '#ffdad5',
@@ -25,6 +26,10 @@ module.exports = {
         onBackgroundDark: '#ede0de',
         surfaceDark: '#201a19',
         onSurfaceDark: '#ede0de',
+        pinkSecondary:'#fdf1ef',
+      },
+      fontSize: {
+        heading: '6.25rem',
       },
     },
   },
