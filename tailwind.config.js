@@ -18,7 +18,7 @@ module.exports = {
         onBackground: '#201a19',
         surface: '#fffbff',
         onSurface: '#201a19',
-        primaryDark: '#ffb4a9',
+        primaryDark: '#ef614d',
         onPrimaryDark: '#690002',
         primaryContainerDark: '#930004',
         onPrimaryContainerDark: '#ffdad5',

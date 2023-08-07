@@ -27,7 +27,7 @@ function Navbar({}: Props) {
     <>
       <nav className="bg-pinkSecondary dark:bg-surfaceDark h-screen  px-4 fixed flex flex-col items-center justify-center">
         <div className="flex flex-col items-center space-y-4">
-          <div className="absolute top-2 mx-2">
+          <div className="absolute top-5 mx-auto">
             <Link href="/">
               <Image src={logo} alt="logo" width={45} height={45} />
             </Link>
