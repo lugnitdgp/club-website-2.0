@@ -7,7 +7,7 @@ function Homepage() {
   return (
     <>
       <div className=" flex flex-row  justify-between align-middle h-screen ">
-        <div className="home-onboard-text flex  w-3/6 flex-col justify-evenly px-7 mx-auto ">
+        <div className="home-onboard-text flex  w-3/6 flex-col justify-evenly px-7 mx-auto">
           <div>
             <div className="font-bold text-heading leading-10 text-onBackground dark:text-onBackgroundDark">
               Explore
@@ -20,7 +20,7 @@ function Homepage() {
             </div>
           </div>
           <div>
-            <div className="font-bold text-6xl mt-10 pb-1 text-onBackground dark:text-onBackgroundDark">
+            <div className="font-bold xl:whitespace-nowrap text-6xl mt-10 pb-1 text-onBackground dark:text-onBackgroundDark">
               GNU/Linux Users' Group
             </div>
             <div className="font-normal text-xl  mt-5 text-onBackground dark:text-onBackgroundDark ">
@@ -35,12 +35,12 @@ function Homepage() {
           <Image
             src={homepage_penguin}
             alt={""}
-            className=" h-screen dark:hidden"
+            className="-z-1 h-screen dark:hidden"
           />
           <Image
             src={homepage_penguin_dark}
             alt={""}
-            className=" h-screen hidden dark:block"
+            className="-z-1 h-screen hidden dark:block"
           />
         </div>
       </div>
