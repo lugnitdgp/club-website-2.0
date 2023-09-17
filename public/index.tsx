@@ -12,6 +12,10 @@ import logo from './assets/navbar_icons/logo.svg'
 import notebook from './assets/navbar_icons/notebook.svg'
 import homepage_penguin from './assets/Images/homepage_penguin.png'
 import homepage_penguin_dark from './assets/Images/homepage_penguin_dark.png'
+import groups_icon from './assets/homepage_icons/groups.svg'
+import events_icon from './assets/homepage_icons/events.svg'
+import computer_icon from './assets/homepage_icons/computer.svg'
+import group_photo from './assets/Images/group_photo.png'
 
 export {
     add_square_light,
@@ -27,5 +31,9 @@ export {
     logo,
     notebook,
     homepage_penguin,
-    homepage_penguin_dark
+    homepage_penguin_dark,
+    groups_icon,
+    events_icon,
+    computer_icon,
+    group_photo
 }
