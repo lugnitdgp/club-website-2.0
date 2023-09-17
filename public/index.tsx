@@ -16,7 +16,7 @@ import groups_icon from './assets/homepage_icons/groups.svg'
 import events_icon from './assets/homepage_icons/events.svg'
 import computer_icon from './assets/homepage_icons/computer.svg'
 import group_photo from './assets/Images/group_photo.png'
-
+import mindersnatch from './assets/homepage_icons/mindersnatch.png'
 export {
     add_square_light,
     calendar,
@@ -35,5 +35,6 @@ export {
     groups_icon,
     events_icon,
     computer_icon,
-    group_photo
+    group_photo,
+    mindersnatch
 }
