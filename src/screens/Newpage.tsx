@@ -1,5 +1,6 @@
 "use-client";
 
+import Link from "next/link";
 import React from "react";
 import Image from "next/image";
 import {
@@ -7,7 +8,7 @@ import {
   computer_icon,
   events_icon,
   group_photo,
-  mindersnatch
+  mindersnatch,
 } from "../../public";
 function Newpage() {
   return (
@@ -155,16 +156,28 @@ function Newpage() {
             className="rounded-sm h-full w-full"
           ></Image>
         </div>
-        <div className="font-onboard-text font-semibold text-6xl my-4">
+        <div className="font-onboard-text font-semibold text-5xl my-4">
           <span className="text-onBackground dark:text-onBackgroundDark">
             Minder Snatch
           </span>
         </div>
-        <div className="font-Monsterrat font-light text-2xl text-onBackground dark:text-onBackgroundDark">
+        <div className="font-Monsterrat font-light text-2xl text-onBackground dark:text-onBackgroundDark mb-4">
           Remaining essentially unchanged. It was popularised in the 1960s with
           the release of Letraset sheets containing Lorem Ipsum passages, and
           more recently with desktop publishing software like Aldus PageMaker
           including versions of Lorem Ipsu
+        </div>
+        <div className="flex flex-row items-center justify-normal my-4 gap-x-8">
+          <div className="flex items-center justify-center rounded-lg bg-primary h-14 w-80">
+            <Link href="/register" className="text-onPrimary font-Monsterrat font-bold text-2xl">
+              Register Now
+            </Link>
+          </div>
+          <div className="flex items-center justify-center rounded-lg bg-onPrimaryContainerDark h-14 w-80">
+            <Link href="/events" className="text-[#2C1512] font-Monsterrat font-bold text-2xl">
+              See All Events
+            </Link>
+          </div>
         </div>
       </div>
     </>
