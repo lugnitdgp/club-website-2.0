@@ -13,13 +13,13 @@ useEffect(()=>{
   return (
     <>
       {active? 
-        <div className="w-full cursor-pointer text-primary p-2 border-b-2 border-primary " onClick={()=>{
+        <div className="w-full cursor-pointer text-center text-primary p-2 border-b-2 border-primary " onClick={()=>{
             setactiveTab(displayText)
         }}>
           <p>{displayText}</p>
         </div>
        : 
-        <div className="w-full cursor-pointer text-primary p-2  "  onClick={()=>{
+        <div className="w-full cursor-pointer text-center text-primary p-2  "  onClick={()=>{
             setactiveTab(displayText)
         }}>
           <p>{displayText}</p>

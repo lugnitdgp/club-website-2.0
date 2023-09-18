@@ -12,6 +12,8 @@ import logo from './assets/navbar_icons/logo.svg'
 import notebook from './assets/navbar_icons/notebook.svg'
 import homepage_penguin from './assets/Images/homepage_penguin.png'
 import homepage_penguin_dark from './assets/Images/homepage_penguin_dark.png'
+import alarm from './assets/Images/alarm.svg'
+import location_on from './assets/Images/location_on.svg'
 
 export {
     add_square_light,
@@ -27,5 +29,7 @@ export {
     logo,
     notebook,
     homepage_penguin,
-    homepage_penguin_dark
+    homepage_penguin_dark,
+    alarm,
+    location_on
 }
