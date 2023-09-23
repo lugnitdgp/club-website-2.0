@@ -2,10 +2,23 @@
 import React, { useEffect, useState } from "react";
 import EventPageTab from "@/components/EventPageTab";
 import EventCard from "@/components/EventCard";
-import { Events } from "../api/Events";
+import { Events } from "../api/sampledata";
+import EventModal from "@/components/EventModal";
 
 const Eventpage = () => {
   const [activeTab, setactiveTab] = useState("UPCOMING");
+  const [selectedEvent, setSelectedEvent] = useState(null);
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const openModal = (eventObj: any) => {
+    setSelectedEvent(eventObj);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
 
   return (
     <>
@@ -16,7 +29,10 @@ const Eventpage = () => {
               <span className=" text-onBackground dark:text-onBackgroundDark">
                 Featured
               </span>
-              <span className="text-primary dark:text-primaryDark"> Events</span>
+              <span className="text-primary dark:text-primaryDark">
+                {" "}
+                Events
+              </span>
             </div>
 
             <div className="font-normal text-xl mt-8 text-onBackground dark:text-onBackgroundDark ">
@@ -30,38 +46,52 @@ const Eventpage = () => {
           </div>
         </div>
 
-        <div className="mt-8 flex flex-row justify-around m-8 bg-yellowPrimary ">
-          <EventPageTab
-            activeTab={activeTab}
-            displayText={"UPCOMING"}
-            setactiveTab={setactiveTab}
-          />
-          <EventPageTab
-            activeTab={activeTab}
-            displayText={"CURRENT"}
-            setactiveTab={setactiveTab}
-          />
-          <EventPageTab
-            activeTab={activeTab}
-            displayText={"PAST"}
-            setactiveTab={setactiveTab}
-          />
+        <div className="flex justify-center">
+          <div className="flex flex-row justify-around mt-16 w-full md:w-1/2 bg-yellowPrimary ">
+            <EventPageTab
+              activeTab={activeTab}
+              displayText={"UPCOMING"}
+              setactiveTab={setactiveTab}
+            />
+
+            <EventPageTab
+              activeTab={activeTab}
+              displayText={"PAST"}
+              setactiveTab={setactiveTab}
+            />
+          </div>
         </div>
-        <div className="flex flex-row justify-around ">
+        <div className="flex flex-row  justify-evenly mt-16 flex-wrap">
           {Events.map((eventObj, index) => (
-            (index%3==1)?(
-
-            <div key={index} className="rounded-lg bg-yellowPrimary w-1/4 m-8">
-              <EventCard eventObj={eventObj} />
-            </div>
-
-            ):(
-
-            <div key={index} className="rounded-lg bg-primaryContainer w-1/4 m-8">
-              <EventCard eventObj={eventObj} />
-            </div>
-            )
+            <>
+              {eventObj.id % 3 === 2 ? (
+                <div
+                  key={eventObj.id}
+                  className="rounded-lg bg-yellowPrimary w-full md:w-96 my-8"
+                  onClick={() => {
+                    openModal(eventObj);
+                  }}
+                >
+                  <EventCard eventObj={eventObj} />
+                </div>
+              ) : (
+                <div
+                  key={index}
+                  className="rounded-lg bg-primaryContainer w-full md:w-96 my-8"
+                  onClick={() => {
+                    openModal(eventObj);
+                  }}
+                >
+                  <EventCard eventObj={eventObj} />
+                </div>
+              )}
+            </>
           ))}
+          <EventModal
+            eventObj={selectedEvent}
+            isOpen={isModalOpen}
+            onClose={closeModal}
+          />
         </div>
       </div>
     </>
