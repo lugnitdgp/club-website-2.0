@@ -24,7 +24,7 @@ const EventCard = ({ eventObj }:any) => {
         </div>
       </div>
       <div className=" mt-1 mb-4 w-5/6 self-center dark:text-black">
-        <p>{eventObj.description}</p>
+        <p>{String(eventObj.description).slice(0,146)}  <b>......</b></p>
       </div>
     </div>
   );
