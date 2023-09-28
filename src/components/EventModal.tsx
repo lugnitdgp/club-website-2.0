@@ -25,15 +25,15 @@ const EventModal = ({ eventObj, isOpen, onClose }: any) => {
         onClick={onClose}
       ></div>
       {eventObj.id % 3 === 2 ? (
-        <div className="modal-container  bg-yellowPrimary w-11/12 md:max-w-md mx-auto rounded shadow-lg z-50 overflow-y-auto p-2">
-          <div className="flex flex-col rounded-3xl cursor-pointer">
+        <div className="modal-container  bg-yellowPrimary  md:max-w-md mx-auto rounded-xl shadow-lg z-50  py-4 px-2">
+          <div className="flex flex-col rounded-3xl cursor-pointer  overflow-y-scroll">
             <div className="text-center  font-medium text-3xl m-4">
-              <p className="dark:text-black">{eventObj.title}</p>
+              <p className="uppercase dark:text-black ">{eventObj.title}</p>
             </div>
-            <div className="flex  justify-center mb-3  h-52">
+            <div className="flex  justify-center mb-3  h-96">
               <img src={eventObj.image} alt="" className="object-contain" />
             </div>
-            <div className="flex w-full justify-center m-2">
+            <div className="flex  justify-center m-2">
               <div className="flex   ">
                 <Image src={alarm} alt={""} className="m-2" />
 
@@ -48,21 +48,21 @@ const EventModal = ({ eventObj, isOpen, onClose }: any) => {
                 </p>
               </div>
             </div>
-            <div className=" h-48 overflow-y-scroll px-4  mb-4  w-5/6 self-center dark:text-black">
+            <div className=" h-44 w-5/6 self-center dark:text-black">
               <p>{eventObj.description}</p>
             </div>
           </div>
         </div>
       ) : (
-        <div className="modal-container bg-primaryContainer w-11/12 md:max-w-md mx-auto rounded shadow-lg z-50 overflow-y-auto p-2">
-          <div className="flex flex-col rounded-3xl cursor-pointer">
+        <div className="modal-container  bg-primaryContainer  md:max-w-md mx-auto rounded-xl shadow-lg z-50  py-4 px-2">
+          <div className="flex flex-col rounded-3xl cursor-pointer  overflow-y-scroll">
             <div className="text-center  font-medium text-3xl m-4">
-              <p className="dark:text-black">{eventObj.title}</p>
+              <p className="uppercase dark:text-black ">{eventObj.title}</p>
             </div>
-            <div className="flex  justify-center mb-3  h-52">
+            <div className="flex  justify-center mb-3  h-96">
               <img src={eventObj.image} alt="" className="object-contain" />
             </div>
-            <div className="flex w-full justify-center m-2">
+            <div className="flex  justify-center m-2">
               <div className="flex   ">
                 <Image src={alarm} alt={""} className="m-2" />
 
@@ -77,7 +77,7 @@ const EventModal = ({ eventObj, isOpen, onClose }: any) => {
                 </p>
               </div>
             </div>
-            <div className=" h-48 overflow-y-scroll px-4  mb-4  w-5/6 self-center dark:text-black">
+            <div className=" h-44 w-5/6 self-center dark:text-black">
               <p>{eventObj.description}</p>
             </div>
           </div>

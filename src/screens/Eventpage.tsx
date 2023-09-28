@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import EventPageTab from "@/components/EventPageTab";
 import EventCard from "@/components/EventCard";
-import { Events } from "../api/sampledata";
+import { Events } from "../lib/sampledata";
 import EventModal from "@/components/EventModal";
 
 const Eventpage = () => {
@@ -24,7 +24,7 @@ const Eventpage = () => {
     <>
       <div className="align-middle h-screen ">
         <div className="flex flex-row  justify-center">
-          <div className="text-center mt-10 w-4/6">
+          <div className="text-center mt-10 w-4/6 ">
             <div className="font-bold  text-7xl">
               <span className=" text-onBackground dark:text-onBackgroundDark">
                 Featured
@@ -67,7 +67,7 @@ const Eventpage = () => {
               {eventObj.id % 3 === 2 ? (
                 <div
                   key={eventObj.id}
-                  className="rounded-lg bg-yellowPrimary w-full md:w-96 my-8"
+                  className="rounded-xl bg-yellowPrimary w-full md:w-96 my-8"
                   onClick={() => {
                     openModal(eventObj);
                   }}
@@ -77,7 +77,7 @@ const Eventpage = () => {
               ) : (
                 <div
                   key={index}
-                  className="rounded-lg bg-primaryContainer w-full md:w-96 my-8"
+                  className="rounded-xl bg-primaryContainer w-full md:w-96 my-8"
                   onClick={() => {
                     openModal(eventObj);
                   }}

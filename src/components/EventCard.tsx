@@ -7,7 +7,7 @@ const EventCard = ({ eventObj }:any) => {
   return (
     <div className="flex flex-col rounded-3xl cursor-pointer" >
       <div className="text-center font-medium text-3xl m-4">
-        <p className="dark:text-black">{eventObj.title}</p>
+        <p className="uppercase dark:text-black">{eventObj.title}</p>
       </div>
       <div className="flex justify-center mb-3  h-52">
         <img src={eventObj.image} alt="" className="object-contain" />
