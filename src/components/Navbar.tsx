@@ -32,9 +32,9 @@ function Navbar({}: Props) {
               <Image src={logo} alt="logo" width={45} height={45} />
             </Link>
           </div>
-          {icons.map((icon) => {
+          {icons.map((icon, index) => {
             return (
-              <Link href={icon.path} className=" py-2">
+              <Link href={icon.path} key={index} className=" py-2">
                 <Image src={icon.icon} alt="video" className="dark:invert" width={35} height={35} />
               </Link>
             );
