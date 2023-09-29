@@ -2,7 +2,7 @@
 
 import React from "react";
 import Image from "next/image";
-import { homepage_penguin,homepage_penguin_dark } from "../../public";
+import { homepage_penguin,homepage_penguin_dark } from "../../public/assets";
 function LandingComponent() {
   return (
     <>

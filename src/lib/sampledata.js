@@ -1,3 +1,5 @@
+import { TDOC } from "../../public/assets";
+
 export const Events = [
   {
     id:1,
@@ -29,7 +31,7 @@ export const Events = [
       
       May the source be with you 🐧
       `,
-    image: "TDOC.JPG",
+    image: './assets/Images/TDOC.jpg',
     time: "6:00pm",
     location: "NAB 211",
   },
@@ -63,7 +65,7 @@ export const Events = [
     
     May the source be with you 🐧
     `,
-    image: "TDOC.JPG",
+    image: './assets/Images/TDOC.jpg',
     time: "6:00pm",
     location: "NAB 211",
   },
@@ -97,8 +99,30 @@ export const Events = [
     
     May the source be with you 🐧
     `,
-    image: "TDOC.JPG",
+    image: './assets/Images/TDOC.jpg',
     time: "6:00pm",
     location: "NAB 211",
+  },
+];
+export const Members = [
+  {
+    name: "Dhruba Sinha",
+    image: "./assets/Images/Dhruba.png",
+    description: "coding supremacy",
+  },
+  {
+    name: "Dhruba Sinha",
+    image: "./assets/Images/Dhruba.png",
+    description: "coding supremacy",
+  },
+  {
+    name: "Dhruba Sinha",
+    image: "./assets/Images/Dhruba.png",
+    description: "coding supremacy",
+  },
+  {
+    name: "Dhruba Sinha",
+    image: "./assets/Images/Dhruba.png",
+    description: "coding supremacy",
   },
 ];

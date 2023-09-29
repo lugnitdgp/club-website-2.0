@@ -9,7 +9,7 @@ import {
   events_icon,
   group_photo,
   mindersnatch,
-} from "../../public";
+} from "../../public/assets";
 import LandingComponent from "../components/LandingComponent";
 function HomePage() {
   return (

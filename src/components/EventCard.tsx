@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import Image from "next/image";
-import { alarm, location_on } from "../../public";
+import { alarm, location_on } from "../../public/assets";
 
 const EventCard = ({ eventObj }:any) => {
   return (
