@@ -16,7 +16,10 @@ const Eventpage = () => {
               <span className=" text-onBackground dark:text-onBackgroundDark">
                 Featured
               </span>
-              <span className="text-primary dark:text-primaryDark"> Events</span>
+              <span className="text-primary dark:text-primaryDark">
+                {" "}
+                Events
+              </span>
             </div>
 
             <div className="font-normal text-xl mt-8 text-onBackground dark:text-onBackgroundDark ">
@@ -48,20 +51,23 @@ const Eventpage = () => {
           />
         </div>
         <div className="flex flex-row justify-around ">
-          {Events.map((eventObj, index) => (
-            (index%3==1)?(
-
-            <div key={index} className="rounded-lg bg-yellowPrimary w-1/4 m-8">
-              <EventCard eventObj={eventObj} />
-            </div>
-
-            ):(
-
-            <div key={index} className="rounded-lg bg-primaryContainer w-1/4 m-8">
-              <EventCard eventObj={eventObj} />
-            </div>
+          {Events.map((eventObj, index) =>
+            index % 3 == 1 ? (
+              <div
+                key={index}
+                className="rounded-lg bg-yellowPrimary w-1/4 m-8"
+              >
+                <EventCard eventObj={eventObj} />
+              </div>
+            ) : (
+              <div
+                key={index}
+                className="rounded-lg bg-primaryContainer w-1/4 m-8"
+              >
+                <EventCard eventObj={eventObj} />
+              </div>
             )
-          ))}
+          )}
         </div>
       </div>
     </>
