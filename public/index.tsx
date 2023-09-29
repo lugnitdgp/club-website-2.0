@@ -17,6 +17,9 @@ import events_icon from './assets/homepage_icons/events.svg'
 import computer_icon from './assets/homepage_icons/computer.svg'
 import group_photo from './assets/Images/group_photo.png'
 import mindersnatch from './assets/homepage_icons/mindersnatch.png'
+import alarm from './assets/Images/alarm.svg'
+import location_on from './assets/Images/location_on.svg'
+
 export {
     add_square_light,
     calendar,
@@ -36,5 +39,7 @@ export {
     events_icon,
     computer_icon,
     group_photo,
-    mindersnatch
+    mindersnatch,
+    alarm,
+    location_on
 }

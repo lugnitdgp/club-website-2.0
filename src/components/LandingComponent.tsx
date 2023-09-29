@@ -3,7 +3,7 @@
 import React from "react";
 import Image from "next/image";
 import { homepage_penguin,homepage_penguin_dark } from "../../public";
-function Homepage() {
+function LandingComponent() {
   return (
     <>
       <div className=" flex flex-row  justify-between align-middle h-screen ">
@@ -48,4 +48,4 @@ function Homepage() {
   );
 }
 
-export default Homepage;
+export default LandingComponent;

@@ -10,9 +10,11 @@ import {
   group_photo,
   mindersnatch,
 } from "../../public";
-function Newpage() {
+import LandingComponent from "../components/LandingComponent";
+function HomePage() {
   return (
     <>
+    <LandingComponent /> 
       <div className=" flex flex-row  justify-around align-middle h-5/6 w-full py-10">
         <div className="bg-tertiary dark:bg-tertiaryDark h-full w-2/6 rounded-lg flex flex-col justify-center items-center px-4 py-2">
           <Image
@@ -184,4 +186,4 @@ function Newpage() {
   );
 }
 
-export default Newpage;
+export default HomePage;
