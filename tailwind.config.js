@@ -4,7 +4,7 @@ module.exports = {
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/screens/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/Screens/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
@@ -30,6 +30,7 @@ module.exports = {
         tertiary: "#FCDFA6",
         onTertiary: "#251A00",
         tertiaryDark: "#292322",
+        yellowPrimary:"#fcdfa6"
       },
       fontSize: {
         heading: "6.25rem",
