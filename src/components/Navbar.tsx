@@ -9,7 +9,7 @@ import {
   video_light,
   logo,
   notebook,
-} from "../../public";
+} from "../../public/assets";
 import ThemeSwitcher from "./ThemeSwitcher";
 
 type Props = {};
