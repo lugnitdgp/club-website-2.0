@@ -3,9 +3,14 @@ import React, { useEffect, useState } from "react";
 import EventPageTab from "@/components/EventPageTab";
 import EventCard from "@/components/EventCard";
 import { Events } from "../lib/sampledata";
+import { fetchEvent } from "@/lib/api/index";
 import EventModal from "@/components/EventModal";
 
 const Eventpage = () => {
+  const [eventsArray,setEventsArr]=useState<any[]>([])
+  const [pastArray,setPastArr]=useState<any[]>([])
+  const [upcomingArray,setupcomingArr]=useState<any[]>([])
+
   const [activeTab, setactiveTab] = useState("UPCOMING");
   const [selectedEvent, setSelectedEvent] = useState(null);
 
@@ -19,10 +24,22 @@ const Eventpage = () => {
   const closeModal = () => {
     setIsModalOpen(false);
   };
+  
+  useEffect(()=>{
+    fetchEvent().then((events)=>{
+      events.forEach((event:any) => {
+        event.upcoming?upcomingArray.push(event):pastArray.push(event)
+      });
+    }
+    );
+    activeTab==="UPCOMING"? setEventsArr(upcomingArray) : setEventsArr(pastArray)
+  },[activeTab])
+
+
 
   return (
     <>
-      <div className="align-middle h-screen ">
+      <div className="align-middle h-screen  ">
         <div className="flex  justify-center">
           <div className="text-center mt-10 w-4/6 ">
             <div className="font-bold  text-7xl">
@@ -61,10 +78,16 @@ const Eventpage = () => {
             />
           </div>
         </div>
-        <div className="flex flex-row  justify-evenly mt-16 flex-wrap">
-          {Events.map((eventObj, index) => (
+        <div className="flex justify-center">
+
+        <div className="flex flex-row w-10/12 justify-evenly mt-16 flex-wrap">
+          { 
+          eventsArray.map((eventObj:any, index) => (
+
             <>
-              {eventObj.id % 3 === 2 ? (
+              {!eventObj.show_bool ?null:
+                
+                index% 3 === 1 ? (
                 <div
                   key={eventObj.id}
                   className="rounded-xl bg-yellowPrimary w-full md:w-96 my-8"
@@ -92,6 +115,7 @@ const Eventpage = () => {
             isOpen={isModalOpen}
             onClose={closeModal}
           />
+        </div>
         </div>
       </div>
     </>

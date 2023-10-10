@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { alarm, location_on } from "../../public/assets";
+import dayjs from "dayjs";
 
 const EventModal = ({ eventObj, isOpen, onClose }: any) => {
   useEffect(() => {
@@ -31,25 +32,35 @@ const EventModal = ({ eventObj, isOpen, onClose }: any) => {
               <p className="uppercase dark:text-black ">{eventObj.title}</p>
             </div>
             <div className="flex  justify-center mb-3  h-96">
-              <img src={eventObj.image} alt="" className="object-contain" />
+              <img
+                src={eventObj.event_image}
+                alt=""
+                className="object-contain"
+              />
             </div>
             <div className="flex  justify-center m-2">
               <div className="flex   ">
                 <Image src={alarm} alt={""} className="m-2" />
 
                 <p className=" self-center font-semibold dark:text-black">
-                  {eventObj.time}
+                  {dayjs(eventObj.event_timing).format("DD MMM h:mm A")}
                 </p>
               </div>
               <div className="flex h-10 mx-2 ">
-                <Image src={location_on} alt={""} className="m-2" />
-                <p className="self-center font-semibold dark:text-black">
-                  {eventObj.location}
-                </p>
+                <>
+                  {!eventObj.venue ? null : (
+                    <>
+                      <Image src={location_on} alt={""} className="m-2" />
+                      <p className="self-center font-semibold dark:text-black">
+                        {eventObj.venue}
+                      </p>
+                    </>
+                  )}
+                </>
               </div>
             </div>
             <div className=" h-44 w-5/6 self-center dark:text-black">
-              <p>{eventObj.description}</p>
+              <div dangerouslySetInnerHTML={{ __html: eventObj.description }} />
             </div>
           </div>
         </div>
@@ -60,25 +71,35 @@ const EventModal = ({ eventObj, isOpen, onClose }: any) => {
               <p className="uppercase dark:text-black ">{eventObj.title}</p>
             </div>
             <div className="flex  justify-center mb-3  h-96">
-              <img src={eventObj.image} alt="" className="object-contain" />
+              <img
+                src={eventObj.event_image}
+                alt=""
+                className="object-contain"
+              />
             </div>
             <div className="flex  justify-center m-2">
               <div className="flex   ">
                 <Image src={alarm} alt={""} className="m-2" />
 
                 <p className=" self-center font-semibold dark:text-black">
-                  {eventObj.time}
+                  {dayjs(eventObj.event_timing).format("DD MMM h:mm A")}
                 </p>
               </div>
               <div className="flex h-10 mx-2 ">
-                <Image src={location_on} alt={""} className="m-2" />
-                <p className="self-center font-semibold dark:text-black">
-                  {eventObj.location}
-                </p>
+                <>
+                  {!eventObj.venue ? null : (
+                    <>
+                      <Image src={location_on} alt={""} className="m-2" />
+                      <p className="self-center font-semibold dark:text-black">
+                        {eventObj.venue}
+                      </p>
+                    </>
+                  )}
+                </>
               </div>
             </div>
             <div className=" h-44 w-5/6 self-center dark:text-black">
-              <p>{eventObj.description}</p>
+              <div dangerouslySetInnerHTML={{ __html: eventObj.description }} />
             </div>
           </div>
         </div>
