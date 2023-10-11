@@ -29,8 +29,11 @@ const Eventpage = () => {
         event.upcoming?upcomingArray.push(event):pastArray.push(event)
       });
     }
-    );
-    activeTab==="UPCOMING"? setEventsArr(upcomingArray) : setEventsArr(pastArray)
+    ).then(()=>
+
+      activeTab==="UPCOMING"? setEventsArr(upcomingArray) : setEventsArr(pastArray)
+    )
+
   },[activeTab])
 
 
