@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from "react";
 import EventPageTab from "@/components/EventPageTab";
 import EventCard from "@/components/EventCard";
-import { Events } from "../lib/sampledata";
 import { fetchEvent } from "@/lib/api/index";
 import EventModal from "@/components/EventModal";
 
@@ -24,7 +23,6 @@ const Eventpage = () => {
   const closeModal = () => {
     setIsModalOpen(false);
   };
-  
   useEffect(()=>{
     fetchEvent().then((events)=>{
       events.forEach((event:any) => {
