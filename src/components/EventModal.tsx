@@ -25,7 +25,7 @@ const EventModal = ({ eventObj, isOpen, onClose }: any) => {
         className="modal-overlay absolute inset-0 bg-[#201A19] opacity-[0.45]"
         onClick={onClose}
       ></div>
-      {eventObj.id % 3 === 2 ? (
+      {eventObj.index % 3 === 1 ? (
         <div className="modal-container  bg-yellowPrimary  md:max-w-md mx-auto rounded-xl shadow-lg z-50  py-4 px-2">
           <div className="flex flex-col rounded-3xl cursor-pointer  overflow-y-scroll">
             <div className="text-center  font-medium text-3xl m-4">

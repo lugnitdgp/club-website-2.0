@@ -6,37 +6,36 @@ import { fetchEvent } from "@/lib/api/index";
 import EventModal from "@/components/EventModal";
 
 const Eventpage = () => {
-  const [eventsArray,setEventsArr]=useState<any[]>([])
-  const [pastArray,setPastArr]=useState<any[]>([])
-  const [upcomingArray,setupcomingArr]=useState<any[]>([])
+  const [eventsArray, setEventsArr] = useState<any[]>([]);
+  const [pastArray, setPastArr] = useState<any[]>([]);
+  const [upcomingArray, setupcomingArr] = useState<any[]>([]);
 
   const [activeTab, setactiveTab] = useState("UPCOMING");
   const [selectedEvent, setSelectedEvent] = useState(null);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const openModal = (eventObj: any) => {
-    setSelectedEvent(eventObj);
+  const openModal = (eventObj: any, index: number) => {
+    setSelectedEvent({ ...eventObj, index: index });
     setIsModalOpen(true);
   };
 
   const closeModal = () => {
     setIsModalOpen(false);
   };
-  useEffect(()=>{
-    fetchEvent().then((events)=>{
-      events.forEach((event:any) => {
-        event.upcoming?upcomingArray.push(event):pastArray.push(event)
-      });
-    }
-    ).then(()=>
-
-      activeTab==="UPCOMING"? setEventsArr(upcomingArray) : setEventsArr(pastArray)
-    )
-
-  },[activeTab])
-
-
+  useEffect(() => {
+    fetchEvent()
+      .then((events) => {
+        events.forEach((event: any) => {
+          event.upcoming ? upcomingArray.push(event) : pastArray.push(event);
+        });
+      })
+      .then(() =>
+        activeTab === "UPCOMING"
+          ? setEventsArr(upcomingArray)
+          : setEventsArr(pastArray)
+      );
+  }, [activeTab]);
 
   return (
     <>
@@ -80,43 +79,42 @@ const Eventpage = () => {
           </div>
         </div>
         <div className="flex justify-center">
-
-        <div className="flex flex-row w-10/12 justify-evenly mt-16 flex-wrap">
-          { 
-          eventsArray.map((eventObj:any, index) => (
-
-            <>
-              {!eventObj.show_bool ?null:
-                
-                index% 3 === 1 ? (
-                <div
-                  key={eventObj.id}
-                  className="rounded-xl bg-yellowPrimary w-full md:w-96 my-8"
-                  onClick={() => {
-                    openModal(eventObj);
-                  }}
-                >
-                  <EventCard eventObj={eventObj} />
-                </div>
-              ) : (
-                <div
-                  key={index}
-                  className="rounded-xl bg-primaryContainer w-full md:w-96 my-8"
-                  onClick={() => {
-                    openModal(eventObj);
-                  }}
-                >
-                  <EventCard eventObj={eventObj} />
-                </div>
-              )}
-            </>
-          ))}
-          <EventModal
-            eventObj={selectedEvent}
-            isOpen={isModalOpen}
-            onClose={closeModal}
-          />
-        </div>
+          <div className="flex flex-row w-10/12 justify-evenly mt-16 flex-wrap">
+            {eventsArray.map((eventObj: any, index) => (
+              <>
+                {!eventObj.show_bool ? null : index % 3 === 1 ? (
+                  <div
+                    key={eventObj.id}
+                    className="rounded-xl bg-yellowPrimary w-full md:w-96 my-8"
+                  >
+                    <EventCard
+                      eventObj={eventObj}
+                      onClick={() => {
+                        openModal(eventObj, index);
+                      }}
+                    />
+                  </div>
+                ) : (
+                  <div
+                    key={index}
+                    className="rounded-xl bg-primaryContainer w-full md:w-96 my-8"
+                  >
+                    <EventCard
+                      eventObj={eventObj}
+                      onClick={() => {
+                        openModal(eventObj, index);
+                      }}
+                    />
+                  </div>
+                )}
+              </>
+            ))}
+            <EventModal
+              eventObj={selectedEvent}
+              isOpen={isModalOpen}
+              onClose={closeModal}
+            />
+          </div>
         </div>
       </div>
     </>

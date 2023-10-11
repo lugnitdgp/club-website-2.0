@@ -4,16 +4,16 @@ import Image from "next/image";
 import { alarm, location_on } from "../../public/assets";
 import dayjs from "dayjs";
 
-const EventCard = ({ eventObj }: any) => {
+const EventCard = ({ eventObj, onClick }: any) => {
   return (
-    <div className="flex flex-col rounded-3xl cursor-pointer">
-      <div className="text-center font-medium text-3xl m-4">
-        <p className="uppercase dark:text-black">
+    <div className="flex flex-col rounded-3xl relative">
+      <div className="flex justify-center items-center text-center h-16  font-medium text-3xl m-3 ">
+        <p className=" uppercase dark:text-black">
           {eventObj.title.slice(0, 23)}
         </p>
       </div>
-      <div className="flex justify-center mb-3  h-52">
-        <img src={eventObj.event_image} alt="" className="object-contain" />
+      <div className="flex justify-center mb-2  ">
+        <img src={eventObj.event_image} alt="" className=" max-h-52 px-4" />
       </div>
       <div className="flex w-full justify-center m-2">
         <div className="flex h-10 mz-2  ">
@@ -36,16 +36,25 @@ const EventCard = ({ eventObj }: any) => {
           </>
         </div>
       </div>
-      <div className=" mt-1 mb-4 w-5/6 self-center dark:text-black">
+      <div className=" mt-1 mb-4  w-5/6 self-center dark:text-black">
         <div>
-          <div
+          <div className="h-36  text-start"
             dangerouslySetInnerHTML={{
               __html: eventObj.description.slice(0, 146),
             }}
-          />{" "}
-          <b>......</b>
+          />
         </div>
       </div>
+        <div className=" absolute bottom-4 right-4 cursor-pointer ">
+
+        <p 
+          onClick={() => {
+            onClick();
+          }}
+        >
+          <u>Read More</u>
+        </p>
+        </div>
     </div>
   );
 };
