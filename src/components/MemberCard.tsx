@@ -18,22 +18,28 @@ const MemberCard = ({ memberObj, index }: any) => {
           }
         >
           <p className="text-center font-medium text-3xl mt-20">
-            {memberObj.name}
+            {memberObj.first_name + " " + memberObj.last_name}
           </p>
           <div>
             <p className="text-center font-normal text-xl m-2">
-              {memberObj.description}
+              {memberObj.bio}
             </p>
           </div>
           <div className="flex flex-row justify-center ">
             <div id="image" className="rounded-20xl m-6">
-              <Image src={facebook} alt="" className="object-contain" />
+              <a href={memberObj.facebook_link}>
+                <Image src={facebook} alt="" className="object-contain" />
+              </a>
             </div>
             <div id="image" className="rounded-20xl m-6">
-              <Image src={email} alt="" className="object-contain" />
+              <a href={memberObj.reddit_link}>
+                <Image src={email} alt="" className="object-contain" />
+              </a>
             </div>
             <div id="image" className="rounded-20xl m-6 my-">
-              <Image src={github} alt="" className="object-contain" />
+              <a href={memberObj.linkedin_link}>
+                <Image src={github} alt="" className="object-contain" />
+              </a>
             </div>
           </div>
         </div>

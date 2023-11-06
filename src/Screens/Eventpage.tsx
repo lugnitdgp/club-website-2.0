@@ -24,6 +24,8 @@ const Eventpage = () => {
     setIsModalOpen(false);
   };
   useEffect(() => {
+    setPastArr([]);
+    setupcomingArr([]);
     fetchEvent()
       .then((events) => {
         events.forEach((event: any) => {
