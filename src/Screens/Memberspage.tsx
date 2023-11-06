@@ -69,11 +69,11 @@ const MembersPage = () => {
             setactiveTab={setactiveTab}
           />
         </div>
-        <div className=" justify-around w-full">
+        <div className="flex flex-wrap justify-around w-full">
           {!membersArray
             ? null
             : membersArray.map((memberObj, index) => (
-                <div key={index} className="w-[295px] h-[253px]">
+                <div key={index} className="w-[295px] h-[253px] m-12">
                   <MemberCard index={index} memberObj={memberObj} />
                 </div>
               ))}
