@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
+
 import {
   add_square_light,
   calendar,
@@ -11,6 +12,7 @@ import {
   notebook,
 } from '../../public/assets';
 import ThemeSwitcher from './ThemeSwitcher';
+import MobileNav from './MobileNav';
 
 type Props = {};
 const icons = [
@@ -22,7 +24,8 @@ const icons = [
 function Navbar({}: Props) {
   return (
     <>
-      <nav className="fixed flex flex-col items-center justify-center h-screen px-4 bg-pinkSecondary dark:bg-surfaceDark">
+      <MobileNav icons={icons} />
+      <nav className="fixed flex flex-col items-center justify-center hidden h-screen px-4 md:flex bg-pinkSecondary dark:bg-surfaceDark">
         <div className="flex flex-col items-center space-y-4">
           <div className="absolute mx-auto top-5">
             <Link href="/">

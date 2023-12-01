@@ -26,14 +26,14 @@ const ThemeSwitcher = () => {
     <>
       <button
         onClick={handleChange}
-        className="absolute text-black transition-all duration-100 rounded-lg dark:text-gray-800 md:text-2xl bottom-4 dark:hidden"
+        className="text-2xl text-black transition-all duration-100 rounded-lg md:absolute dark:text-gray-800 bottom-4 dark:hidden"
         data-hide-on-theme="light"
       >
         <MdOutlineDarkMode />
       </button>
       <button
         onClick={handleChange}
-        className="absolute hidden text-white transition-all duration-100 rounded-lg md:text-2xl bottom-4 dark:block"
+        className="hidden text-2xl text-white transition-all duration-100 rounded-lg md:absolute bottom-4 dark:block"
       >
         <MdOutlineLightMode />
       </button>
