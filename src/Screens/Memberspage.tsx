@@ -61,7 +61,7 @@ const MembersPage = ({
             setactiveTab={setactiveTab}
           />
         </div>
-        <div className="flex flex-wrap w-full pb-12 pl-12">
+        <div className="flex flex-wrap w-full pb-12">
           {!membersArray
             ? null
             : membersArray.map((memberObj, index) => (

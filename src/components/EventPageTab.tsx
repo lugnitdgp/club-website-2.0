@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 
 const EventPageTab = ({ displayText, activeTab, setactiveTab }: any) => {
   const [active, setActive] = useState(() =>
@@ -14,7 +14,7 @@ const EventPageTab = ({ displayText, activeTab, setactiveTab }: any) => {
     <>
       {active ? (
         <div
-          className="w-full cursor-pointer text-2xl text-center text-primary font-semibold p-4 border-b-2 border-primary "
+          className="w-full p-4 text-sm font-semibold text-center border-b-2 cursor-pointer md:text-2xl text-primary border-primary "
           onClick={() => {
             setactiveTab(displayText);
           }}
@@ -23,7 +23,7 @@ const EventPageTab = ({ displayText, activeTab, setactiveTab }: any) => {
         </div>
       ) : (
         <div
-          className="w-full cursor-pointer text-2xl text-center text-primary p-4 font-semibold  "
+          className="w-full p-4 text-sm font-semibold text-center cursor-pointer md:text-2xl text-primary "
           onClick={() => {
             setactiveTab(displayText);
           }}

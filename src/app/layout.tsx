@@ -15,7 +15,7 @@ export default function RootLayout({
       <body className={montserrat.className} id="page-wrap">
         <CustomThemeProvider>
           <Navbar />
-          <div className="ml-20">{children}</div>
+          <div className="md:ml-20">{children}</div>
         </CustomThemeProvider>
       </body>
     </html>
