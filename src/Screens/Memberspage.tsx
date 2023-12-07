@@ -1,75 +1,67 @@
-"use client";
-import React, { useEffect, useState } from "react";
-import EventPageTab from "@/components/EventPageTab";
-import MemberCard from "@/components/MemberCard";
-import { fetchMembers } from "@/lib/api";
+'use client';
+import React, { useEffect, useState } from 'react';
+import EventPageTab from '@/components/EventPageTab';
+import MemberCard from '@/components/MemberCard';
+import { fetchMembers } from '@/lib/api';
 // import { Members } from "@/lib/sampledata";
 
-const MembersPage = () => {
-  const [activeTab, setactiveTab] = useState("FINAL YEAR");
-  const [membersArray, setMembersArray] = useState<any[]>([]);
-  const [finalYearArray, setfinalYearArray] = useState<any[]>([]);
-  const [thirdYearArray, setthirdYearArray] = useState<any[]>([]);
-  const [secondYearArray, setsecondYearArray] = useState<any[]>([]);
+const MembersPage = ({
+  secondYearsArray,
+  thirdYearsArray,
+  finalYearsArray,
+}: {
+  secondYearsArray: any[];
+  thirdYearsArray: any[];
+  finalYearsArray: any[];
+}) => {
+  const [activeTab, setactiveTab] = useState('FINAL YEAR');
+  const [membersArray, setMembersArray] = useState<any[]>(finalYearsArray);
+  // const [finalYearArray, setfinalYearArray] = useState<any[]>([]);
+  // const [thirdYearArray, setthirdYearArray] = useState<any[]>([]);
+  // const [secondYearArray, setsecondYearArray] = useState<any[]>([]);
   useEffect(() => {
-    setfinalYearArray([]);
-    setthirdYearArray([]);
-    setsecondYearArray([]);
-    fetchMembers()
-      .then((members) => {
-        members.forEach((member: any) => {
-          if (member.year_name === 4) {
-            finalYearArray.push(member);
-          } else if (member.year_name === 3) {
-            thirdYearArray.push(member);
-          } else if (member.year_name === 2) {
-            secondYearArray.push(member);
-          }
-        });
-      })
-      .then(() => {
-        if (activeTab === "FINAL YEAR") {
-          setMembersArray(finalYearArray);
-        } else if (activeTab === "THIRD YEAR") {
-          setMembersArray(thirdYearArray);
-        } else if (activeTab === "SECOND YEAR") {
-          setMembersArray(secondYearArray);
-        }
-      });
+    console.log(finalYearsArray);
+    if (activeTab === 'FINAL YEAR') {
+      setMembersArray(finalYearsArray);
+    } else if (activeTab === 'THIRD YEAR') {
+      setMembersArray(thirdYearsArray);
+    } else {
+      setMembersArray(secondYearsArray);
+    }
   }, [activeTab]);
 
   return (
     <>
-      <div className="align-middle h-screen ">
-        <div className="flex flex-col  justify-center items-center">
-          <div className="font-bold  text-7xl text-center mt-10 w-4/6">
+      <div className="h-screen align-middle ">
+        <div className="flex flex-col items-center justify-center">
+          <div className="w-4/6 mt-10 font-bold text-center text-7xl">
             <span className=" text-onBackground dark:text-onBackgroundDark">
               Meet The
             </span>
             <span className="text-primary dark:text-primaryDark "> Team</span>
-            <div className="font-normal text-xl mt-8 text-onBackground dark:text-onBackgroundDark">
+            <div className="mt-8 text-xl font-normal text-onBackground dark:text-onBackgroundDark">
               <p className="">"None of us is as smart is as all of us"</p>
             </div>
           </div>
         </div>
-        <div className="flex flex-row mx-5 my-12 justify-around  bg-yellowPrimary">
+        <div className="flex flex-row justify-around mx-5 my-12 bg-yellowPrimary">
           <EventPageTab
             activeTab={activeTab}
-            displayText={"FINAL YEAR"}
+            displayText={'FINAL YEAR'}
             setactiveTab={setactiveTab}
           />
           <EventPageTab
             activeTab={activeTab}
-            displayText={"THIRD YEAR"}
+            displayText={'THIRD YEAR'}
             setactiveTab={setactiveTab}
           />
           <EventPageTab
             activeTab={activeTab}
-            displayText={"SECOND YEAR"}
+            displayText={'SECOND YEAR'}
             setactiveTab={setactiveTab}
           />
         </div>
-        <div className="flex flex-wrap justify-around w-full">
+        <div className="flex flex-wrap w-full pb-12 pl-12">
           {!membersArray
             ? null
             : membersArray.map((memberObj, index) => (
