@@ -1,33 +1,40 @@
-"use client";
-import React from "react";
-import Image from "next/image";
-import { alarm, location_on } from "../../public/assets";
-import dayjs from "dayjs";
+'use client';
+import React from 'react';
+import Image from 'next/image';
+import { alarm, location_on } from '../../public/assets';
+import dayjs from 'dayjs';
 
 const EventCard = ({ eventObj, onClick }: any) => {
   return (
-    <div className="flex flex-col rounded-3xl relative">
-      <div className="flex justify-center items-center text-center h-16  font-medium text-3xl m-3 ">
-        <p className=" uppercase dark:text-black">
+    <div className="relative flex flex-col h-full pt-4 pb-8 rounded-3xl">
+      <div className="flex items-center justify-center h-10 px-2 m-3 text-xl font-medium text-center md:h-16 md:text-3xl ">
+        <p className="uppercase truncate dark:text-black">
           {eventObj.title.slice(0, 23)}
         </p>
       </div>
-      <div className="flex justify-center mb-2  ">
-        <img src={eventObj.event_image} alt="" className=" max-h-52 px-4" />
+      <div className="flex justify-center mb-2 ">
+        <Image
+          src={eventObj.event_image}
+          alt="Event Image"
+          height={1080}
+          width={1920}
+          // quality={100}
+          className="w-auto px-4 max-h-64 "
+        />
       </div>
-      <div className="flex w-full justify-center m-2">
-        <div className="flex h-10 mz-2  ">
-          <Image src={alarm} alt={""} className="m-2" />
+      <div className="flex flex-col justify-center w-full m-2 md:flex-row">
+        <div className="flex mx-2 md:h-10 ">
+          <Image src={alarm} alt={''} className="m-2" />
 
-          <p className=" self-center font-semibold dark:text-black">
-            {dayjs(eventObj.event_timing).format("DD MMM h:mm A")}
+          <p className="self-center font-semibold dark:text-black">
+            {dayjs(eventObj.event_timing).format('DD MMM h:mm A')}
           </p>
         </div>
-        <div className="flex h-10 mx-2 ">
+        <div className="flex mx-2 md:h-10 ">
           <>
             {!eventObj.venue ? null : (
               <>
-                <Image src={location_on} alt={""} className="m-2" />
+                <Image src={location_on} alt={''} className="m-2" />
                 <p className="self-center font-semibold dark:text-black">
                   {eventObj.venue}
                 </p>
@@ -36,25 +43,23 @@ const EventCard = ({ eventObj, onClick }: any) => {
           </>
         </div>
       </div>
-      <div className=" mt-1 mb-4  w-5/6 self-center dark:text-black">
-        <div>
-          <div className="h-36  text-start"
-            dangerouslySetInnerHTML={{
-              __html: eventObj.description.slice(0, 146),
-            }}
-          />
-        </div>
+      <div className="self-center w-5/6 mt-1 mb-4 dark:text-black">
+        <div
+          className="[&>*]:truncate h-24 text-start flex flex-col [&>*]:grow w-full"
+          dangerouslySetInnerHTML={{
+            __html: eventObj.description.slice(0, 146),
+          }}
+        />
       </div>
-        <div className=" absolute bottom-4 right-4 cursor-pointer ">
-
-        <p 
+      <div className="absolute cursor-pointer bottom-4 right-4">
+        <p
           onClick={() => {
             onClick();
           }}
         >
           <u>Read More</u>
         </p>
-        </div>
+      </div>
     </div>
   );
 };

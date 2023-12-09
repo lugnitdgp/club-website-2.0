@@ -10,8 +10,8 @@ const MemberCard = ({ memberObj, index }: any) => {
         <div
           className={
             index % 2 === 0
-              ? 'text-center relative bg-yellowPrimary dark:bg-[#5d3f3b] dark:text-[#ffdad5] font-medium text-3xl w-[295px] h-[253px] rounded-md px-2'
-              : 'text-center relative bg-primaryContainer dark:bg-[#574419] dark:text-[#fcdfa6] font-medium text-3xl w-[295px] h-[253px] rounded-md px-2'
+              ? 'text-center relative bg-yellowPrimary dark:bg-secondaryDark dark:text-onSecondaryDark font-medium text-3xl w-[295px] h-[253px] rounded-md px-2'
+              : 'text-center relative bg-primaryContainer dark:bg-tertiaryDark dark:text-onTertiaryDark font-medium text-3xl w-[295px] h-[253px] rounded-md px-2'
           }
         >
           <div className="absolute left-0 right-0 flex justify-center -top-16 ">
@@ -34,29 +34,17 @@ const MemberCard = ({ memberObj, index }: any) => {
           <div className="flex flex-row justify-center h-8 ">
             <div id="image" className="justify-center m-6 rounded-20xl ">
               <a href={memberObj.facebook_link}>
-                <Image
-                  src={facebook}
-                  alt=""
-                  className="object-contain dark:invert"
-                />
+                <Image src={facebook} alt="" className="object-contain " />
               </a>
             </div>
             <div id="image" className="m-6 rounded-20xl">
               <a href={memberObj.reddit_link}>
-                <Image
-                  src={email}
-                  alt=""
-                  className="object-contain dark:invert"
-                />
+                <Image src={email} alt="" className="object-contain " />
               </a>
             </div>
             <div id="image" className="m-6 rounded-20xl my-">
               <a href={memberObj.linkedin_link}>
-                <Image
-                  src={github}
-                  alt=""
-                  className="object-contain dark:invert"
-                />
+                <Image src={github} alt="" className="object-contain " />
               </a>
             </div>
           </div>

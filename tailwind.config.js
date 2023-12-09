@@ -29,9 +29,12 @@ module.exports = {
         pinkSecondary: '#fdf1ef',
         tertiary: '#FCDFA6',
         onTertiary: '#251A00',
-        tertiaryDark: '#292322',
         yellowPrimary: '#fcdfa6',
         yellowPrimaryContainerDark: '#5c4200',
+        secondaryDark: '#e7bdb7',
+        onSecondaryDark: '#442926',
+        tertiaryDark: '#dfc38c',
+        onTertiaryDark: '#3e2e04',
       },
       fontSize: {
         heading: '6.25rem',

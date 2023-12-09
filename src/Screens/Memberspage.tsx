@@ -31,7 +31,7 @@ const MembersPage = ({
     <>
       <div className="h-screen align-middle ">
         <div className="flex flex-col items-center justify-center">
-          <div className="w-4/6 mt-10 font-bold text-center text-7xl">
+          <div className="w-4/6 mt-10 text-4xl font-bold text-center md:text-7xl">
             <span className=" text-onBackground dark:text-onBackgroundDark">
               Meet The
             </span>
@@ -41,7 +41,7 @@ const MembersPage = ({
             </div>
           </div>
         </div>
-        <div className="flex flex-row justify-around mx-5 my-12 ">
+        <div className="flex flex-row justify-around mx-5 my-8 md:my-12 ">
           <EventPageTab
             activeTab={activeTab}
             displayText={'FINAL YEAR'}
