@@ -16,11 +16,8 @@ const MembersPage = ({
 }) => {
   const [activeTab, setactiveTab] = useState('FINAL YEAR');
   const [membersArray, setMembersArray] = useState<any[]>(finalYearsArray);
-  // const [finalYearArray, setfinalYearArray] = useState<any[]>([]);
-  // const [thirdYearArray, setthirdYearArray] = useState<any[]>([]);
-  // const [secondYearArray, setsecondYearArray] = useState<any[]>([]);
+
   useEffect(() => {
-    console.log(finalYearsArray);
     if (activeTab === 'FINAL YEAR') {
       setMembersArray(finalYearsArray);
     } else if (activeTab === 'THIRD YEAR') {
@@ -44,7 +41,7 @@ const MembersPage = ({
             </div>
           </div>
         </div>
-        <div className="flex flex-row justify-around mx-5 my-12 bg-yellowPrimary">
+        <div className="flex flex-row justify-around mx-5 my-12 ">
           <EventPageTab
             activeTab={activeTab}
             displayText={'FINAL YEAR'}

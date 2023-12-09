@@ -11,6 +11,9 @@ html[class='light'] {
   background-image: url('/assets/Images/lightbg.svg');
   background-repeat: no-repeat;
 }
+html[class='dark'] {
+  background-color: #201a19;
+}
 * {
   transition: all 300ms;
 }

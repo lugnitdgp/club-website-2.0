@@ -12,10 +12,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={montserrat.className} id="page-wrap">
+      <body className={montserrat.className} id="page-wrap ">
         <CustomThemeProvider>
           <Navbar />
-          <div className="md:ml-20">{children}</div>
+          <div className="md:ml-20 ">{children}</div>
         </CustomThemeProvider>
       </body>
     </html>

@@ -14,7 +14,7 @@ const EventPageTab = ({ displayText, activeTab, setactiveTab }: any) => {
     <>
       {active ? (
         <div
-          className="w-full p-4 text-sm font-semibold text-center border-b-2 cursor-pointer md:text-2xl text-primary border-primary "
+          className="w-full p-4 text-sm font-semibold text-center border-b-2 cursor-pointer round-2 md:text-2xl text-primary border-primary dark:bg-primaryContainer dark:text-onPrimaryContainer"
           onClick={() => {
             setactiveTab(displayText);
           }}
@@ -23,7 +23,7 @@ const EventPageTab = ({ displayText, activeTab, setactiveTab }: any) => {
         </div>
       ) : (
         <div
-          className="w-full p-4 text-sm font-semibold text-center cursor-pointer md:text-2xl text-primary "
+          className="w-full p-4 text-sm font-semibold text-center cursor-pointer dark:text-primaryDark md:text-2xl text-primary "
           onClick={() => {
             setactiveTab(displayText);
           }}

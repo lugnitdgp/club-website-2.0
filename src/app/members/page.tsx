@@ -8,7 +8,6 @@ const members = async () => {
   const thirdYearsArray = data.filter((member: any) => member.year_name === 3);
   const finalYearsArray = data.filter((member: any) => member.year_name === 4);
 
-  console.log('finalYearsArray', finalYearsArray?.length);
   return (
     <MembersPage
       secondYearsArray={secondYearsArray}
