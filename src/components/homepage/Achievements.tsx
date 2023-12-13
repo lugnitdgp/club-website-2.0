@@ -60,7 +60,7 @@ const Achievement = ({ icon, icon_dark, num, text, isPrimary }: any) => {
 
 export const Achievements = () => {
   return (
-    <div className="snap-start grid grid-cols-1 md:grid-cols-2 pt-16 px-4 px-24 gap-4">
+    <div className="snap-start grid grid-cols-1 md:grid-cols-2 pt-16 px-4 md:px-24 gap-4">
       <Achievement
         icon={groups_icon}
         icon_dark={grops_icon_dark}
