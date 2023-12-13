@@ -1,7 +1,7 @@
-'use client';
-import React from 'react';
-import Image from 'next/image';
-import { email, facebook, github } from '../../public/assets';
+"use client";
+import React from "react";
+import Image from "next/image";
+import { email, facebook, github } from "../../public/assets";
 
 const MemberCard = ({ memberObj, index }: any) => {
   return (
@@ -10,8 +10,8 @@ const MemberCard = ({ memberObj, index }: any) => {
         <div
           className={
             index % 2 === 0
-              ? 'text-center relative bg-yellowPrimary dark:bg-secondaryDark dark:text-onSecondaryDark font-medium text-3xl w-[295px] h-[253px] rounded-md px-2'
-              : 'text-center relative bg-primaryContainer dark:bg-tertiaryDark dark:text-onTertiaryDark font-medium text-3xl w-[295px] h-[253px] rounded-md px-2'
+              ? "text-center relative bg-yellowPrimary dark:bg-secondaryDark dark:text-onSecondaryDark font-medium text-3xl w-[295px] h-[253px] rounded-md px-2"
+              : "text-center relative bg-primaryContainer dark:bg-tertiaryDark dark:text-onTertiaryDark font-medium text-3xl w-[295px] h-[253px] rounded-md px-2"
           }
         >
           <div className="absolute left-0 right-0 flex justify-center -top-16 ">
@@ -20,15 +20,17 @@ const MemberCard = ({ memberObj, index }: any) => {
               alt="member Image"
               width={100}
               height={100}
+              blurDataURL="iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8Xw8AAoMBgDTD2qgAAAAASUVORK5CYII="
+              placeholder="blur"
               className="object-contain rounded-full w-[153px] h-[153px]"
             />
           </div>
           <p className="mt-16 text-lg text-center truncate ">
-            {memberObj.first_name + ' ' + memberObj.last_name}
+            {memberObj.first_name + " " + memberObj.last_name}
           </p>
           <div>
             <p className="m-2 text-sm font-normal text-center truncate h-9 text-ellipsis">
-              {memberObj?.bio?.length > 0 ? memberObj.bio : 'GLUG Member'}
+              {memberObj?.bio?.length > 0 ? memberObj.bio : "GLUG Member"}
             </p>
           </div>
           <div className="flex flex-row justify-center h-8 ">

@@ -6,7 +6,7 @@ import { homepage_penguin, homepage_penguin_dark } from "../../public/assets";
 function LandingComponent() {
     return (
         <>
-            <div className=" flex flex-row  justify-between align-middle h-screen ">
+            <div className="snap-start relative flex flex-row  justify-between align-middle h-screen ">
                 <div className="home-onboard-text flex w-5/6  md:w-3/6 flex-col mt-20  md:mt-0 md:justify-evenly md:px-7 mx-auto">
                     <div className="hidden md:block">
                         <div className="font-bold text-heading leading-10 text-onBackground dark:text-onBackgroundDark">
