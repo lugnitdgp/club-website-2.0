@@ -1,8 +1,8 @@
-'use client';
-import React, { useEffect, useState } from 'react';
-import EventPageTab from '@/components/EventPageTab';
-import MemberCard from '@/components/MemberCard';
-import { fetchMembers } from '@/lib/api';
+"use client";
+import React, { useEffect, useState } from "react";
+import EventPageTab from "@/components/EventPageTab";
+import MemberCard from "@/components/MemberCard";
+import { fetchMembers } from "@/lib/api";
 // import { Members } from "@/lib/sampledata";
 
 const MembersPage = ({
@@ -14,13 +14,13 @@ const MembersPage = ({
   thirdYearsArray: any[];
   finalYearsArray: any[];
 }) => {
-  const [activeTab, setactiveTab] = useState('FINAL YEAR');
+  const [activeTab, setactiveTab] = useState("FINAL YEAR");
   const [membersArray, setMembersArray] = useState<any[]>(finalYearsArray);
 
   useEffect(() => {
-    if (activeTab === 'FINAL YEAR') {
+    if (activeTab === "FINAL YEAR") {
       setMembersArray(finalYearsArray);
-    } else if (activeTab === 'THIRD YEAR') {
+    } else if (activeTab === "THIRD YEAR") {
       setMembersArray(thirdYearsArray);
     } else {
       setMembersArray(secondYearsArray);
@@ -44,21 +44,21 @@ const MembersPage = ({
         <div className="flex flex-row justify-around mx-5 my-8 md:my-12 ">
           <EventPageTab
             activeTab={activeTab}
-            displayText={'FINAL YEAR'}
+            displayText={"FINAL YEAR"}
             setactiveTab={setactiveTab}
           />
           <EventPageTab
             activeTab={activeTab}
-            displayText={'THIRD YEAR'}
+            displayText={"THIRD YEAR"}
             setactiveTab={setactiveTab}
           />
           <EventPageTab
             activeTab={activeTab}
-            displayText={'SECOND YEAR'}
+            displayText={"SECOND YEAR"}
             setactiveTab={setactiveTab}
           />
         </div>
-        <div className="flex flex-wrap w-full pb-12">
+        <div className="flex flex-wrap justify-center w-full pb-12">
           {!membersArray
             ? null
             : membersArray.map((memberObj, index) => (
