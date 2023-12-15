@@ -3,107 +3,21 @@
 import Link from "next/link";
 import React from "react";
 import Image from "next/image";
-import {
-  groups_icon,
-  computer_icon,
-  events_icon,
-  group_photo,
-  mindersnatch,
-} from "../../public/assets";
-import LandingComponent from "../components/LandingComponent";
+import { group_photo, mindersnatch } from "../../public/assets";
+import LandingComponent from "../components/homepage/LandingComponent";
 import { Achievements } from "@/components/homepage/Achievements";
+import LandingAbout from "@/components/homepage/LandingAbout";
 function HomePage() {
   return (
     <>
       <div className="snap-y  overflow-y-scroll  h-screen no-scrollbar">
         <LandingComponent />
         <Achievements />
-        <div className="flex flex-col h-full mt-4 justify-between">
-          <div className="flex flex-row justify-around align-middle h-full p-2">
-            <div className="flex flex-col justify-top px-7 w-3/6 mx-0">
-              <div className="font-onboard-text font-semibold text-6xl pb-2">
-                <span className="text-primary dark:text-primaryDark">Who </span>
-                <span className="text-onBackground dark:text-onBackgroundDark">
-                  We Are
-                </span>
-              </div>
-              <div className="font-Monsterrat text-lg w-5/6 font-normal leading-9 text-backgroundDark dark:text-onBackgroundDark">
-                The GNU/Linux Users' Group, NIT Durgapur is a community of
-                GNU/Linux Users that promote the use of Free and Open Source
-                Software. The Group was established in 2003 by a bunch of FOSS
-                enthusiasts with the idea of popularising and contributing to
-                Open Source. We are a plethora of designers, contributors and
-                developers that believe in learning and sharing through opening
-                up your mind to Open Source.
-              </div>
-            </div>
-            <div className="w-3/6 h-5/6 p-6">
-              <Image
-                src={group_photo}
-                alt={"error"}
-                className="rounded-lg h-full w-full"
-              ></Image>
-            </div>
-          </div>
-          <div className="flex flex-row justify-around align-middle h-full p-2 mt-2">
-            <div className="w-3/6 h-5/6 p-6">
-              <Image
-                src={group_photo}
-                alt={"error"}
-                className="rounded-lg h-full w-full"
-              ></Image>
-            </div>
-            <div className="flex flex-col justify-top px-7 w-3/6 mx-0">
-              <div className="font-onboard-text font-semibold text-6xl pb-2">
-                <span className="text-primary dark:text-primaryDark">
-                  What{" "}
-                </span>
-                <span className="text-onBackground dark:text-onBackgroundDark">
-                  We Do
-                </span>
-              </div>
-              <div className="font-Monsterrat text-lg w-5/6 font-normal leading-9 text-backgroundDark dark:text-onBackgroundDark">
-                We provide budding enthusiasts like ourselves a forum to
-                contribute and learn about FOSS. Through varied workshops on
-                revolutionary Open Technologies throughout the year, we spread
-                the idea of Open Source to beginners and veterans alike. We
-                bring people together to ideate and contribute to the leading
-                Open technologies. We provide help and resources to everyone who
-                wants to make the web world a better place.
-              </div>
-            </div>
-          </div>
-          <div className="flex flex-row justify-around align-middle h-full p-2 mt-2">
-            <div className="flex flex-col justify-top px-7 w-3/6 mx-0">
-              <div className="font-onboard-text font-semibold text-6xl pb-2">
-                <span className="text-primary dark:text-primaryDark">Our </span>
-                <span className="text-onBackground dark:text-onBackgroundDark">
-                  Vision
-                </span>
-              </div>
-              <div className="font-Monsterrat text-lg w-5/6 font-normal leading-9 text-backgroundDark dark:text-onBackgroundDark">
-                Being a bunch of FOSS enthusiasts, we preach the idea of “free
-                things are the best things” and firmly believe in sharing
-                knowledge. We strive to elevate the tech culture in our college
-                and believe that this can only be done through giving people
-                digital resources and knowledge in all realms from hardware to
-                software and data to design. We promote FOSS through various
-                endeavours because we believe in the freedom of expression for
-                everyone.
-              </div>
-            </div>
-            <div className="w-3/6 h-5/6 p-6">
-              <Image
-                src={group_photo}
-                alt={"error"}
-                className="rounded-lg h-full w-full"
-              ></Image>
-            </div>
-          </div>
-        </div>
-        <div className="flex flex-col px-10 align-middle mt-10">
+        <LandingAbout />
+
+        {/* <div className="flex flex-col px-10 align-middle mt-10">
           <div className="font-onboard-text font-bold text-6xl mb-8">
-            <span className="text-primary dark:text-primaryDark">Latest </span>
+             <span className="text-primary dark:text-primaryDark">Latest </span>
             <span className="text-onBackground dark:text-onBackgroundDark">
               Events
             </span>
@@ -145,7 +59,7 @@ function HomePage() {
               </Link>
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
     </>
   );

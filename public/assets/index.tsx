@@ -27,6 +27,9 @@ import email from "./Images/email.svg";
 import grops_icon_dark from "./Images/groupsDark.svg";
 import computer_dark from "./Images/computerDark.svg";
 import events_dark from "./Images/emoji_eventsDark.svg";
+import landing_image_1 from "./Images/Landing_img_1.jpeg";
+import landing_image_2 from "./Images/Landing_img_2.jpeg";
+import landing_image_3 from "./Images/Landing_img_3.jpeg";
 
 export {
   add_square_light,
@@ -58,4 +61,7 @@ export {
   grops_icon_dark,
   events_dark,
   computer_dark,
+  landing_image_1,
+  landing_image_2,
+  landing_image_3,
 };
