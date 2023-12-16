@@ -31,11 +31,12 @@ const AboutSection = ({ heading, content, image, reverse }: any) => {
 
 const LandingAbout = () => {
   return (
-    <div className="snap-start flex flex-col gap-16 md:gap-24 h-full mt-4 justify-between pt-16 px-12 md:px-24">
+    <div className="snap-start flex flex-col gap-16 md:gap-24 h-full mt-4 justify-between pt-16 px-12 md:px-24 h-max">
       <AboutSection
         heading={
           <>
-            <span className="text-primary">Who</span> We Are
+            <span className="text-primary dark:text-primaryDark">Who</span> We
+            Are
           </>
         }
         content={`The GNU/Linux Users' Group, NIT Durgapur is a community of GNU/Linux
@@ -49,7 +50,8 @@ const LandingAbout = () => {
       <AboutSection
         heading={
           <>
-            <span className="text-primary">What</span> We Do
+            <span className="text-primary dark:text-primaryDark">What</span> We
+            Do
           </>
         }
         content={`We provide budding enthusiasts like ourselves a forum to contribute
@@ -65,7 +67,8 @@ const LandingAbout = () => {
       <AboutSection
         heading={
           <>
-            Our <span className="text-primary">Vision</span>
+            Our{" "}
+            <span className="text-primary dark:text-primaryDark">Vision</span>
           </>
         }
         content={`Being a bunch of FOSS enthusiasts, we preach the idea of “free
