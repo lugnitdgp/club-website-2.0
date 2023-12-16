@@ -2,6 +2,7 @@ import "./globals.css";
 import { Inter, Montserrat, Montserrat_Alternates } from "next/font/google";
 import Navbar from "@/components/Navbar";
 import CustomThemeProvider from "@/providers/Providers";
+import Footer from "@/components/Footer";
 
 const montserrat = Montserrat({ subsets: ["latin"], display: "swap" });
 
@@ -16,6 +17,7 @@ export default function RootLayout({
         <CustomThemeProvider>
           <Navbar />
           <div className="md:ml-20 ">{children}</div>
+          <Footer />
         </CustomThemeProvider>
       </body>
     </html>
