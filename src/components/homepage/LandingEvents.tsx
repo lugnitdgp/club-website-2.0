@@ -32,7 +32,7 @@ const LandingEvents = () => {
               Register Now
             </button>
             <button className="bg-primaryContainer text-onPrimaryContainer dark:primaryContainerDark  px-4 py-2 rounded-md">
-              See All Events
+              <Link href={"/events"}>See All Events</Link>
             </button>
           </div>
         </div>

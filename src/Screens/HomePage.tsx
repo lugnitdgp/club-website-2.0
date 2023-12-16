@@ -8,6 +8,7 @@ import LandingComponent from "../components/homepage/LandingComponent";
 import { Achievements } from "@/components/homepage/Achievements";
 import LandingAbout from "@/components/homepage/LandingAbout";
 import LandingEvents from "@/components/homepage/LandingEvents";
+import ContactUs from "@/components/homepage/ContactUs";
 function HomePage() {
   return (
     <>
@@ -16,6 +17,7 @@ function HomePage() {
         <Achievements />
         <LandingAbout />
         <LandingEvents />
+        <ContactUs />
       </div>
     </>
   );
