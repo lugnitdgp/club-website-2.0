@@ -5,7 +5,7 @@ import { blog_img } from "../../public/assets";
 const BlogCard = () => {
     return (
       <>
-        <div className="relative flex flex-col items-start justify-start h-full pt-4 pb-8 gap-y-8 text-onBackground dark:bg-onBackgroundDark">
+        <div className="relative flex flex-col items-start justify-start h-full py-8 gap-y-8 text-onBackground dark:text-onBackgroundDark">
           <Image
             src={blog_img}
             alt="err"
