@@ -31,7 +31,7 @@ const AboutSection = ({ heading, content, image, reverse }: any) => {
 
 const LandingAbout = () => {
   return (
-    <div className="snap-start flex flex-col gap-16 md:gap-24 h-full mt-4 justify-between pt-16 px-12 md:px-24 h-max">
+    <div className="snap-start flex flex-col gap-16 md:gap-24 h-full mt-4 justify-between pt-16 px-12 md:px-24">
       <AboutSection
         heading={
           <>
