@@ -17,7 +17,6 @@ export default function RootLayout({
         <CustomThemeProvider>
           <Navbar />
           <div className="md:ml-20 ">{children}</div>
-          <Footer />
         </CustomThemeProvider>
       </body>
     </html>

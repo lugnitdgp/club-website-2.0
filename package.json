@@ -17,12 +17,14 @@
     "dayjs": "^1.11.10",
     "eslint": "8.46.0",
     "eslint-config-next": "13.4.12",
+    "konva": "^9.2.3",
     "next": "13.4.12",
     "next-themes": "^0.2.1",
     "react": "18.2.0",
     "react-burger-menu": "^3.0.9",
     "react-dom": "18.2.0",
     "react-icons": "^4.10.1",
+    "react-konva": "^18.2.10",
     "typescript": "5.1.6"
   },
   "devDependencies": {
