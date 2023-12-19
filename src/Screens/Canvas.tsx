@@ -1,6 +1,4 @@
 import { Stage, Layer, Circle, Shape, Text } from "react-konva";
-import Konva from "konva";
-import { useEffect, useState } from "react";
 
 const MonthCircle = ({
   x,
@@ -54,23 +52,41 @@ const Paths = ({
   );
 };
 
+const TextGroup = ({ events, y }: { events: string[]; y: number }) => {
+  const shift = 20,
+    initial = Math.floor(events.length / 2) * shift;
+
+  return events.map((event, index) => {
+    return (
+      <Text
+        text={event}
+        x={400}
+        y={y - initial + index * shift}
+        align="center"
+        width={window.screen.width - 500 - 400}
+        fontSize={shift - 4}
+      />
+    );
+  });
+};
+
 const months = ["JAN", "FEB", "MAR", "APR"];
 
 function Canvas() {
   const monthConfig = months.map((month: string, idx: number) => {
     if (idx % 2 == 0) {
       return {
-        x: 200,
+        x: 400,
         y: 200 + idx * 300,
-        rad: 50,
+        rad: 60,
         text: month,
         fill: "#FCDFA6",
       };
     } else {
       return {
-        x: window.screen.width - 200,
+        x: window.screen.width - 500,
         y: 200 + idx * 300,
-        rad: 50,
+        rad: 60,
         text: month,
         fill: "#FFDAD5",
       };
@@ -85,6 +101,19 @@ function Canvas() {
         rad={month.rad}
         fill={month.fill}
         text={month.text}
+      />
+    );
+  });
+
+  const textGroups = monthConfig.map((month: any) => {
+    return (
+      <TextGroup
+        events={[
+          "Digital Fortress",
+          "Open Source Starter Pack",
+          "Tech Mentorship",
+        ]}
+        y={month.y}
       />
     );
   });
@@ -110,6 +139,7 @@ function Canvas() {
       <Layer>
         {drawPaths}
         {monthCircles}
+        {textGroups}
       </Layer>
     </Stage>
   );

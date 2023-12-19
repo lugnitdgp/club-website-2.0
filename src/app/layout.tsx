@@ -13,7 +13,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en scroll-smooth">
-      <body className={montserrat.className} id="page-wrap ">
+      <body className={montserrat.className} id="page-wrap no-scrollbar">
         <CustomThemeProvider>
           <Navbar />
           <div className="md:ml-20 ">{children}</div>
