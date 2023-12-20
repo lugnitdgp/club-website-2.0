@@ -65,6 +65,7 @@ const TextGroup = ({ events, y }: { events: string[]; y: number }) => {
         align="center"
         width={window.screen.width - 500 - 400}
         fontSize={shift - 4}
+        key={index}
       />
     );
   });
@@ -101,6 +102,7 @@ function Canvas() {
         rad={month.rad}
         fill={month.fill}
         text={month.text}
+        key={month}
       />
     );
   });
@@ -114,6 +116,7 @@ function Canvas() {
           "Tech Mentorship",
         ]}
         y={month.y}
+        key={month}
       />
     );
   });
