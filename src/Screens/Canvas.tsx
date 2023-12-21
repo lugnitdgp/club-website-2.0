@@ -1,4 +1,5 @@
 import useWindowSize from "@/hooks/useWindowSize";
+import { useEffect, useRef, useState } from "react";
 import { Stage, Layer, Circle, Shape, Text } from "react-konva";
 
 const MonthCircle = ({
@@ -78,6 +79,7 @@ const TextGroup = ({
         align="center"
         width={width}
         fontSize={shift - 4}
+        key={index}
       />
     );
   });
@@ -98,19 +100,35 @@ const months = [
   "DEC",
 ];
 
-function Canvas() {
+function Canvas({ timelineData }: { timelineData: any }) {
   const [width, height] = useWindowSize();
+  const [dimensions, setDimensions] = useState({
+    width: 0,
+    height: 0,
+  });
+  const divRef = useRef<any>(null);
 
+  useEffect(() => {
+    console.log(divRef.current?.offsetHeight);
+    if (divRef.current?.offsetHeight && divRef.current?.offsetWidth) {
+      setDimensions({
+        width: divRef.current.offsetWidth,
+        height: divRef.current.offsetHeight,
+      });
+    }
+  }, []);
   // Darw months
-  const monthConfig = months.map((month: string, idx: number) => {
+  const monthConfig = timelineData.map((monthData: any, idx: number) => {
+    const events = monthData.events;
     if (width < 786) {
       const config = {
         x: 100,
         y: 100 + idx * 200,
         rad: 35,
-        text: month,
+        text: monthData.month,
         fill: "#FCDFA6",
         fontSize: 18,
+        events,
       };
       if (idx % 2 != 0) config.fill = "#FFDAD5";
 
@@ -121,21 +139,23 @@ function Canvas() {
         x: 400,
         y: 500 + idx * 300,
         rad: 60,
-        text: month,
+        text: monthData.month,
         fill: "#FCDFA6",
+        events,
       };
     } else {
       return {
         x: width - 500,
         y: 500 + idx * 300,
         rad: 60,
-        text: month,
+        text: monthData.month,
         fill: "#FFDAD5",
+        events,
       };
     }
   });
 
-  const monthCircles = monthConfig.map((month: any) => {
+  const monthCircles = monthConfig.map((month: any, index: number) => {
     return (
       <MonthCircle
         x={month.x}
@@ -144,35 +164,30 @@ function Canvas() {
         fill={month.fill}
         text={month.text}
         fontSize={month.fontSize}
+        key={index}
       />
     );
   });
 
-  const textGroups = monthConfig.map((month: any) => {
+  const textGroups = monthConfig.map((month: any, index: number) => {
     if (width < 768) {
       return (
         <TextGroup
-          events={[
-            "Digital Fortress",
-            "Open Source Starter Pack",
-            "Tech Mentorship",
-          ]}
+          events={month.events}
           x={100}
           y={month.y}
           width={width - 100}
+          key={index}
         />
       );
     }
     return (
       <TextGroup
-        events={[
-          "Digital Fortress",
-          "Open Source Starter Pack",
-          "Tech Mentorship",
-        ]}
+        events={month.events}
         x={400}
         y={month.y}
         width={width - 500 - 400}
+        key={index}
       />
     );
   });
@@ -189,6 +204,7 @@ function Canvas() {
       <Paths
         source={{ x: currx, y: curry }}
         dest={{ x: currdest, y: currdesty }}
+        key={i}
       />
     );
   }
@@ -202,29 +218,31 @@ function Canvas() {
         </h1>
         <p className="mt-2">Through our Lense</p>
       </div>
-      <Stage width={width} height={300 * 14}>
-        <Layer>
-          {width > 768 ? (
-            <Paths
-              source={{ x: width - 500, y: 150 }}
-              dest={{ x: 400, y: 500 }}
-            />
-          ) : null}
-          {width > 768 ? (
-            <MonthCircle
-              x={width - 500}
-              y={150}
-              text="2023"
-              rad={100}
-              fill={"#FFB6B6"}
-              fontSize={40}
-            />
-          ) : null}
-          {drawPaths}
-          {monthCircles}
-          {textGroups}
-        </Layer>
-      </Stage>
+      <div ref={divRef} className="h-full">
+        <Stage width={width} height={500 * 23}>
+          <Layer>
+            {width > 768 ? (
+              <Paths
+                source={{ x: width - 500, y: 150 }}
+                dest={{ x: 400, y: 500 }}
+              />
+            ) : null}
+            {width > 768 ? (
+              <MonthCircle
+                x={width - 500}
+                y={150}
+                text="2023"
+                rad={100}
+                fill={"#FFB6B6"}
+                fontSize={40}
+              />
+            ) : null}
+            {drawPaths}
+            {monthCircles}
+            {textGroups}
+          </Layer>
+        </Stage>
+      </div>
     </>
   );
 }

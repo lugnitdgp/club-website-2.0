@@ -5,10 +5,10 @@ const Canvas = dynamic(() => import("./Canvas"), {
   ssr: false,
 });
 
-export default function Page() {
+export default function Page({ timelineData }: { timelineData: any }) {
   return (
     <div className="overflow-x-hidden">
-      <Canvas />
+      <Canvas timelineData={timelineData} />
     </div>
   );
 }
