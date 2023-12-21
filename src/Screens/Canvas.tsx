@@ -80,7 +80,6 @@ const TextGroup = ({
         width={width}
         fontSize={shift - 4}
         key={index}
-        key={index}
       />
     );
   });
@@ -178,7 +177,6 @@ function Canvas({ timelineData }: { timelineData: any }) {
           x={100}
           y={month.y}
           width={width - 100}
-          key={month}
           key={index}
         />
       );
