@@ -1,84 +1,113 @@
-"use client";
-import React, { useEffect, useState } from "react";
-import Image from "next/image";
-import { alarm, location_on } from "../../public/assets";
+'use client';
+import React, { useEffect, useState } from 'react';
+import Image from 'next/image';
+import { alarm, location_on } from '../../public/assets';
+import { RxCross1 } from 'react-icons/rx';
+import dayjs from 'dayjs';
 
 const EventModal = ({ eventObj, isOpen, onClose }: any) => {
   useEffect(() => {
     if (isOpen) {
-      document.body.style.overflow = "hidden";
+      document.body.style.overflow = 'hidden';
     } else {
-      document.body.style.overflow = "unset";
+      document.body.style.overflow = 'unset';
     }
 
     return () => {
-      document.body.style.overflow = "unset";
+      document.body.style.overflow = 'unset';
     };
   }, [isOpen]);
 
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center overflow-x-hidden overflow-y-auto outline-none focus:outline-none">
-      <div
-        className="modal-overlay absolute inset-0 bg-[#201A19] opacity-[0.45]"
+    <div
+      onClick={onClose}
+      className="fixed z-50 flex items-center justify-center overflow-x-hidden overflow-y-auto outline-none rounded-3xl inset-4 focus:outline-none"
+    >
+      {/* <button
+        className="modal-overlay absolute   z-[100] h-8 w-8 top-2 right-2"
         onClick={onClose}
-      ></div>
-      {eventObj.id % 3 === 2 ? (
-        <div className="modal-container  bg-yellowPrimary  md:max-w-md mx-auto rounded-xl shadow-lg z-50  py-4 px-2">
-          <div className="flex flex-col rounded-3xl cursor-pointer  overflow-y-scroll">
-            <div className="text-center  font-medium text-3xl m-4">
+      >
+        <RxCross1 color="black" />
+      </button> */}
+      {eventObj.index % 3 === 1 ? (
+        <div className="z-50 px-2 py-4 mx-auto shadow-lg modal-container bg-yellowPrimary md:max-w-md rounded-xl">
+          <div className="flex flex-col overflow-y-scroll cursor-pointer rounded-3xl">
+            <div className="mt-8 text-3xl font-medium text-center md:m-4">
               <p className="uppercase dark:text-black ">{eventObj.title}</p>
             </div>
-            <div className="flex  justify-center mb-3  h-96">
-              <img src={eventObj.image} alt="" className="object-contain" />
+            <div className="flex justify-center mb-3 h-96">
+              <Image
+                src={eventObj.event_image}
+                alt=""
+                height={1080}
+                width={1920}
+                className="object-contain w-full h-auto"
+              />
             </div>
-            <div className="flex  justify-center m-2">
-              <div className="flex   ">
-                <Image src={alarm} alt={""} className="m-2" />
+            <div className="flex flex-col justify-center m-2 md:flex-row">
+              <div className="flex ">
+                <Image src={alarm} alt={''} className="m-2" />
 
-                <p className=" self-center font-semibold dark:text-black">
-                  {eventObj.time}
+                <p className="self-center font-semibold dark:text-black">
+                  {dayjs(eventObj.event_timing).format('DD MMM h:mm A')}
                 </p>
               </div>
               <div className="flex h-10 mx-2 ">
-                <Image src={location_on} alt={""} className="m-2" />
-                <p className="self-center font-semibold dark:text-black">
-                  {eventObj.location}
-                </p>
+                <>
+                  {!eventObj.venue ? null : (
+                    <>
+                      <Image src={location_on} alt={''} className="m-2" />
+                      <p className="self-center font-semibold dark:text-black">
+                        {eventObj.venue}
+                      </p>
+                    </>
+                  )}
+                </>
               </div>
             </div>
-            <div className=" h-44 w-5/6 self-center dark:text-black">
-              <p>{eventObj.description}</p>
+            <div className="self-center w-5/6 h-44 dark:text-black">
+              <div dangerouslySetInnerHTML={{ __html: eventObj.description }} />
             </div>
           </div>
         </div>
       ) : (
-        <div className="modal-container  bg-primaryContainer  md:max-w-md mx-auto rounded-xl shadow-lg z-50  py-4 px-2">
-          <div className="flex flex-col rounded-3xl cursor-pointer  overflow-y-scroll">
-            <div className="text-center  font-medium text-3xl m-4">
+        <div className="z-50 px-2 py-4 mx-auto shadow-lg modal-container bg-primaryContainer md:max-w-md rounded-xl">
+          <div className="flex flex-col overflow-y-scroll cursor-pointer rounded-3xl">
+            <div className="mt-8 mb-4 text-3xl font-medium text-center md:m-4">
               <p className="uppercase dark:text-black ">{eventObj.title}</p>
             </div>
-            <div className="flex  justify-center mb-3  h-96">
-              <img src={eventObj.image} alt="" className="object-contain" />
+            <div className="flex flex-col justify-center mb-3 h-96 md:flex-row">
+              <img
+                src={eventObj.event_image}
+                alt=""
+                className="object-contain"
+              />
             </div>
-            <div className="flex  justify-center m-2">
-              <div className="flex   ">
-                <Image src={alarm} alt={""} className="m-2" />
+            <div className="flex justify-center m-2">
+              <div className="flex ">
+                <Image src={alarm} alt={''} className="m-2" />
 
-                <p className=" self-center font-semibold dark:text-black">
-                  {eventObj.time}
+                <p className="self-center font-semibold dark:text-black">
+                  {dayjs(eventObj.event_timing).format('DD MMM h:mm A')}
                 </p>
               </div>
               <div className="flex h-10 mx-2 ">
-                <Image src={location_on} alt={""} className="m-2" />
-                <p className="self-center font-semibold dark:text-black">
-                  {eventObj.location}
-                </p>
+                <>
+                  {!eventObj.venue ? null : (
+                    <>
+                      <Image src={location_on} alt={''} className="m-2" />
+                      <p className="self-center font-semibold dark:text-black">
+                        {eventObj.venue}
+                      </p>
+                    </>
+                  )}
+                </>
               </div>
             </div>
-            <div className=" h-44 w-5/6 self-center dark:text-black">
-              <p>{eventObj.description}</p>
+            <div className="self-center w-5/6 h-44 dark:text-black">
+              <div dangerouslySetInnerHTML={{ __html: eventObj.description }} />
             </div>
           </div>
         </div>

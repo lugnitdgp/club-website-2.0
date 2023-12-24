@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 
-const EventPageTab = ({ displayText, activeTab, setactiveTab }: any) => {
+const BlogPageTab = ({ displayText, activeTab, setactiveTab }: any) => {
   const [active, setActive] = useState(() =>
     activeTab === displayText ? true : false
   );
@@ -14,7 +14,7 @@ const EventPageTab = ({ displayText, activeTab, setactiveTab }: any) => {
     <>
       {active ? (
         <div
-          className="w-full p-4 text-sm font-semibold text-center border-b-2 cursor-pointer round-2 md:text-2xl text-primary border-primary dark:bg-primaryContainer dark:text-onPrimaryContainer"
+          className="w-full p-4 text-sm font-semibold text-center border-b-2 cursor-pointer round-2 md:text-2xl text-primary border-primary bg-yellowPrimary dark:bg-primaryContainer dark:text-onPrimaryContainer"
           onClick={() => {
             setactiveTab(displayText);
           }}
@@ -34,4 +34,4 @@ const EventPageTab = ({ displayText, activeTab, setactiveTab }: any) => {
     </>
   );
 };
-export default EventPageTab;
+export default BlogPageTab;

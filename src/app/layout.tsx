@@ -2,8 +2,9 @@ import "./globals.css";
 import { Inter, Montserrat, Montserrat_Alternates } from "next/font/google";
 import Navbar from "@/components/Navbar";
 import CustomThemeProvider from "@/providers/Providers";
+import Footer from "@/components/Footer";
 
-const montserrat = Montserrat({ subsets: ["latin"] });
+const montserrat = Montserrat({ subsets: ["latin"], display: "swap" });
 
 export default function RootLayout({
   children,
@@ -11,11 +12,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body className={montserrat.className}>
-      <CustomThemeProvider>
+    <html lang="en scroll-smooth">
+      <body className={montserrat.className} id="page-wrap no-scrollbar">
+        <CustomThemeProvider>
           <Navbar />
-          <div className="ml-20">{children}</div>
+          <div className="md:ml-20 ">{children}</div>
         </CustomThemeProvider>
       </body>
     </html>
