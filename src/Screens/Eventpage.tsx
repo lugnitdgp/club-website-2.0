@@ -1,9 +1,9 @@
-'use client';
-import React, { useEffect, useState } from 'react';
-import EventPageTab from '@/components/EventPageTab';
-import EventCard from '@/components/EventCard';
-import { fetchEvent } from '@/lib/api/index';
-import EventModal from '@/components/EventModal';
+"use client";
+import React, { useEffect, useState } from "react";
+import EventPageTab from "@/components/EventPageTab";
+import EventCard from "@/components/EventCard";
+import { fetchEvent } from "@/lib/api/index";
+import EventModal from "@/components/EventModal";
 
 const Eventpage = ({
   pastArray,
@@ -16,7 +16,7 @@ const Eventpage = ({
   // const [pastArray, setPastArr] = useState<any[]>([]);
   // const [upcomingArray, setupcomingArr] = useState<any[]>([]);
 
-  const [activeTab, setactiveTab] = useState('UPCOMING');
+  const [activeTab, setactiveTab] = useState("UPCOMING");
   const [selectedEvent, setSelectedEvent] = useState(null);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -30,7 +30,7 @@ const Eventpage = ({
     setIsModalOpen(false);
   };
   useEffect(() => {
-    if (activeTab == 'UPCOMING') {
+    if (activeTab == "UPCOMING") {
       setEventsArr(upComingArray);
     } else {
       setEventsArr(pastArray);
@@ -39,7 +39,7 @@ const Eventpage = ({
 
   return (
     <>
-      <div className="h-screen align-middle ">
+      <div className=" align-middle ">
         <div className="flex justify-center">
           <div className="w-4/6 mt-10 text-center ">
             <div className="text-4xl font-bold md:text-7xl ">
@@ -47,7 +47,7 @@ const Eventpage = ({
                 Featured
               </span>
               <span className="text-primary dark:text-primaryDark">
-                {' '}
+                {" "}
                 Events
               </span>
             </div>
@@ -62,13 +62,13 @@ const Eventpage = ({
           <div className="flex flex-row justify-around w-full mt-8 md:mt-16 md:w-1/2 ">
             <EventPageTab
               activeTab={activeTab}
-              displayText={'UPCOMING'}
+              displayText={"UPCOMING"}
               setactiveTab={setactiveTab}
             />
 
             <EventPageTab
               activeTab={activeTab}
-              displayText={'PAST'}
+              displayText={"PAST"}
               setactiveTab={setactiveTab}
             />
           </div>

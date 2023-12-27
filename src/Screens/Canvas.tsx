@@ -85,21 +85,6 @@ const TextGroup = ({
   });
 };
 
-const months = [
-  "JAN",
-  "FEB",
-  "MAR",
-  "APR",
-  "MAY",
-  "JUN",
-  "JUL",
-  "AUG",
-  "SEP",
-  "OCT",
-  "NOV",
-  "DEC",
-];
-
 function Canvas({ timelineData }: { timelineData: any }) {
   const [width, height] = useWindowSize();
   const [dimensions, setDimensions] = useState({
@@ -109,7 +94,7 @@ function Canvas({ timelineData }: { timelineData: any }) {
   const divRef = useRef<any>(null);
 
   useEffect(() => {
-    console.log(divRef.current?.offsetHeight);
+    console.log("divref", divRef.current);
     if (divRef.current?.offsetHeight && divRef.current?.offsetWidth) {
       setDimensions({
         width: divRef.current.offsetWidth,
@@ -219,7 +204,7 @@ function Canvas({ timelineData }: { timelineData: any }) {
         <p className="mt-2">Through our Lense</p>
       </div>
       <div ref={divRef} className="h-full">
-        <Stage width={width} height={500 * 23}>
+        <Stage width={width} height={width > 768 ? height * 5 : height * 4}>
           <Layer>
             {width > 768 ? (
               <Paths

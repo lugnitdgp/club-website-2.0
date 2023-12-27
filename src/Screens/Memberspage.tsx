@@ -29,7 +29,7 @@ const MembersPage = ({
 
   return (
     <>
-      <div className="h-screen align-middle ">
+      <div className=" align-middle ">
         <div className="flex flex-col items-center justify-center">
           <div className="w-4/6 mt-10 text-4xl font-bold text-center md:text-7xl">
             <span className=" text-onBackground dark:text-onBackgroundDark">
@@ -58,7 +58,7 @@ const MembersPage = ({
             setactiveTab={setactiveTab}
           />
         </div>
-        <div className="flex flex-wrap justify-center w-full pb-12">
+        <div className="flex flex-wrap justify-center w-full pb-12 mb-12">
           {!membersArray
             ? null
             : membersArray.map((memberObj, index) => (
