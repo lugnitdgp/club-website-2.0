@@ -4,6 +4,8 @@ import EventPageTab from "@/components/EventPageTab";
 import EventCard from "@/components/EventCard";
 import { fetchEvent } from "@/lib/api/index";
 import EventModal from "@/components/EventModal";
+import { LayoutGroup } from "framer-motion";
+import Tabs from "@/components/Tabs";
 
 const Eventpage = ({
   pastArray,
@@ -59,19 +61,11 @@ const Eventpage = ({
         </div>
 
         <div className="flex justify-center">
-          <div className="flex flex-row justify-around w-full mt-8 md:mt-16 md:w-1/2 ">
-            <EventPageTab
-              activeTab={activeTab}
-              displayText={"UPCOMING"}
-              setactiveTab={setactiveTab}
-            />
-
-            <EventPageTab
-              activeTab={activeTab}
-              displayText={"PAST"}
-              setactiveTab={setactiveTab}
-            />
-          </div>
+          <Tabs
+            tabItems={["UPCOMING", "PAST"]}
+            tab={activeTab}
+            setTab={setactiveTab}
+          />
         </div>
         <div className="flex justify-center">
           <div className="flex flex-row flex-wrap w-10/12 mt-8 md:mt-16 justify-evenly">

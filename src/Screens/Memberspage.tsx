@@ -3,6 +3,8 @@ import React, { useEffect, useState } from "react";
 import EventPageTab from "@/components/EventPageTab";
 import MemberCard from "@/components/MemberCard";
 import { fetchMembers } from "@/lib/api";
+import { LayoutGroup } from "framer-motion";
+import Tabs from "@/components/Tabs";
 // import { Members } from "@/lib/sampledata";
 
 const MembersPage = ({
@@ -42,20 +44,10 @@ const MembersPage = ({
           </div>
         </div>
         <div className="flex flex-row justify-around mx-5 my-8 md:my-12 ">
-          <EventPageTab
-            activeTab={activeTab}
-            displayText={"FINAL YEAR"}
-            setactiveTab={setactiveTab}
-          />
-          <EventPageTab
-            activeTab={activeTab}
-            displayText={"THIRD YEAR"}
-            setactiveTab={setactiveTab}
-          />
-          <EventPageTab
-            activeTab={activeTab}
-            displayText={"SECOND YEAR"}
-            setactiveTab={setactiveTab}
+          <Tabs
+            tabItems={["FINAL YEAR", "THIRD YEAR", "SECOND YEAR"]}
+            tab={activeTab}
+            setTab={setactiveTab}
           />
         </div>
         <div className="flex flex-wrap justify-center w-full pb-12 mb-12">
