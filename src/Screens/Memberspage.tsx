@@ -29,17 +29,6 @@ const MembersPage = ({
   return (
     <>
       <div className=" align-middle ">
-        <div className="flex flex-col items-center justify-center">
-          <div className="w-4/6 mt-10 text-4xl font-bold text-center md:text-7xl">
-            <span className=" text-onBackground dark:text-onBackgroundDark">
-              Meet The
-            </span>
-            <span className="text-primary dark:text-primaryDark "> Team</span>
-            <div className="mt-8 text-xl font-normal text-onBackground dark:text-onBackgroundDark">
-              <p className="">"None of us is as smart is as all of us"</p>
-            </div>
-          </div>
-        </div>
         <div className="flex flex-row justify-around mx-5 my-8 md:my-12 ">
           <Tabs
             tabItems={["FINAL YEAR", "THIRD YEAR", "SECOND YEAR"]}

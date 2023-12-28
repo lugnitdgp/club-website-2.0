@@ -43,24 +43,6 @@ const Eventpage = ({
     <>
       <div className=" align-middle ">
         <div className="flex justify-center">
-          <div className="w-4/6 mt-10 text-center ">
-            <div className="text-4xl font-bold md:text-7xl ">
-              <span className=" text-onBackground dark:text-onBackgroundDark">
-                Featured
-              </span>
-              <span className="text-primary dark:text-primaryDark">
-                {" "}
-                Events
-              </span>
-            </div>
-
-            <div className="mt-4 text-xl font-normal md:mt-8 text-onBackground dark:text-onBackgroundDark ">
-              <p className="">Explore our events.</p>
-            </div>
-          </div>
-        </div>
-
-        <div className="flex justify-center">
           <Tabs
             tabItems={["UPCOMING", "PAST"]}
             tab={activeTab}
