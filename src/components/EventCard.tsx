@@ -19,9 +19,9 @@ const EventCard = ({ eventObj, onClick }: any) => {
           height={1080}
           width={1920}
           // quality={100}
-          className="w-auto px-4 max-h-64 "
+          className="w-auto px-4 h-64 "
           placeholder="blur"
-          blurDataURL="iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8Xw8AAoMBgDTD2qgAAAAASUVORK5CYII="
+          blurDataURL={eventObj.blurDataURL || "random"}
         />
       </div>
       <div className="flex flex-col justify-center w-full m-2 md:flex-row">

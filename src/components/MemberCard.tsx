@@ -20,7 +20,7 @@ const MemberCard = ({ memberObj, index }: any) => {
               alt="member Image"
               width={100}
               height={100}
-              blurDataURL="iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8Xw8AAoMBgDTD2qgAAAAASUVORK5CYII="
+              blurDataURL={memberObj.blurDataURL || "random"}
               placeholder="blur"
               className="object-contain rounded-full w-[153px] h-[153px]"
             />

@@ -1,9 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import EventPageTab from "@/components/EventPageTab";
 import MemberCard from "@/components/MemberCard";
-import { fetchMembers } from "@/lib/api";
-import { LayoutGroup } from "framer-motion";
 import Tabs from "@/components/Tabs";
 // import { Members } from "@/lib/sampledata";
 

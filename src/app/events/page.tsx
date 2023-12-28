@@ -1,10 +1,12 @@
-import Eventpage from '@/Screens/Eventpage';
-import { fetchEvent } from '@/lib/api';
-import React from 'react';
+import Eventpage from "@/Screens/Eventpage";
+import { fetchEvent } from "@/lib/api";
+import addBlurDataUrl from "@/utils/getBase64";
+import React from "react";
 
 const event = async () => {
-  const data = await fetchEvent();
+  let data = await fetchEvent();
 
+  data = await addBlurDataUrl(data, "event_image");
   const pastArray = data.filter((item: any) => !item.upcoming);
   const upComingArray = data.filter((item: any) => item.upcoming);
 
