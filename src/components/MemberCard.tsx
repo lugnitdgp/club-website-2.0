@@ -1,9 +1,8 @@
-"use client";
 import React from "react";
 import Image from "next/image";
 import { email, facebook, github } from "../../public/assets";
 
-const MemberCard = ({ memberObj, index }: any) => {
+const MemberCard = async ({ memberObj, index }: any) => {
   return (
     <>
       <div className=" flex w-max mt-[90px]">
@@ -15,15 +14,17 @@ const MemberCard = ({ memberObj, index }: any) => {
           }
         >
           <div className="absolute left-0 right-0 flex justify-center -top-16 ">
-            <Image
-              src={memberObj.image}
-              alt="member Image"
-              width={100}
-              height={100}
-              blurDataURL={memberObj.blurDataURL || "random"}
-              placeholder="blur"
-              className="object-contain rounded-full w-[153px] h-[153px]"
-            />
+            <div className=" w-[153px] h-[153px] relative">
+              <Image
+                src={memberObj.image}
+                alt="member Image"
+                fill
+                objectFit="contain"
+                blurDataURL={memberObj.blurDataURL || "random"}
+                placeholder="blur"
+                className="rounded-full "
+              />
+            </div>
           </div>
           <div className="absolute bottom-4 left-0 right-0">
             <p className="mt-16 text-lg text-center truncate ">

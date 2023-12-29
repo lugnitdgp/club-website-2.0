@@ -1,6 +1,7 @@
 import Eventpage from "@/Screens/Eventpage";
 import EventPageLoading from "@/components/loading/EventPageLoading";
 import { fetchEvent } from "@/lib/api";
+import PenguineLottie from "@/lottie/penguineLottie";
 import addBlurDataUrl from "@/utils/getBase64";
 import React, { Suspense } from "react";
 

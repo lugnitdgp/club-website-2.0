@@ -1,11 +1,12 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import EventPageTab from "@/components/EventPageTab";
 import EventCard from "@/components/EventCard";
 import { fetchEvent } from "@/lib/api/index";
 import EventModal from "@/components/EventModal";
 import { LayoutGroup } from "framer-motion";
 import Tabs from "@/components/Tabs";
+import EventCardLoading from "@/components/loading/EventCardLoading";
 
 const Eventpage = ({
   pastArray,
@@ -58,24 +59,29 @@ const Eventpage = ({
                     key={eventObj.id}
                     className="w-full my-8 rounded-xl bg-yellowPrimary dark:bg-secondaryDark dark:text-onSecondaryDark md:w-96"
                   >
-                    <EventCard
-                      eventObj={eventObj}
-                      onClick={() => {
-                        openModal(eventObj, index);
-                      }}
-                    />
+                    <Suspense fallback={<EventCardLoading />}>
+                      <EventCard
+                        eventObj={eventObj}
+                        onClick={() => {
+                          openModal(eventObj, index);
+                        }}
+                      />
+                    </Suspense>
                   </div>
                 ) : (
                   <div
                     key={index}
                     className="w-full my-8 rounded-xl bg-primaryContainer dark:bg-tertiaryDark dark:text-onTertiaryDark md:w-96"
                   >
-                    <EventCard
-                      eventObj={eventObj}
-                      onClick={() => {
-                        openModal(eventObj, index);
-                      }}
-                    />
+                    <Suspense fallback={<EventCardLoading />}>
+                      {" "}
+                      <EventCard
+                        eventObj={eventObj}
+                        onClick={() => {
+                          openModal(eventObj, index);
+                        }}
+                      />
+                    </Suspense>
                   </div>
                 )}
               </>

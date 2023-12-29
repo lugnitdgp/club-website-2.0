@@ -1,4 +1,5 @@
 import MembersPage from "@/Screens/Memberspage";
+import EventPageLoading from "@/components/loading/EventPageLoading";
 import { fetchMembers } from "@/lib/api";
 import addBlurDataUrl from "@/utils/getBase64";
 import React, { Suspense } from "react";
@@ -32,7 +33,7 @@ const members = () => {
           </div>
         </div>
       </div>
-      <Suspense fallback={<p>Fallback loading...</p>}>
+      <Suspense fallback={<EventPageLoading />}>
         <FetchAndDisplay />
       </Suspense>
     </>

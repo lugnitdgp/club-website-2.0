@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import MemberCard from "@/components/MemberCard";
 import Tabs from "@/components/Tabs";
 // import { Members } from "@/lib/sampledata";
@@ -41,7 +41,10 @@ const MembersPage = ({
             ? null
             : membersArray.map((memberObj, index) => (
                 <div key={index} className="w-[295px] h-[253px] m-12">
-                  <MemberCard index={index} memberObj={memberObj} />
+                  <Suspense fallback={<p>Member loading..</p>}>
+                    {" "}
+                    <MemberCard index={index} memberObj={memberObj} />
+                  </Suspense>
                 </div>
               ))}
         </div>

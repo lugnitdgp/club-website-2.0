@@ -1,4 +1,8 @@
+"use client";
+
+import EventPageLoading from "@/components/loading/EventPageLoading";
+
 export default function Loading() {
   // You can add any UI inside Loading, including a Skeleton.
-  return <div>Loading Please wait</div>;
+  return <EventPageLoading />;
 }

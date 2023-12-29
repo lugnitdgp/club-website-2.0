@@ -1,10 +1,9 @@
-"use client";
-import React from "react";
+import React, { Suspense } from "react";
 import Image from "next/image";
 import { alarm, location_on } from "../../public/assets";
 import dayjs from "dayjs";
 
-const EventCard = ({ eventObj, onClick }: any) => {
+const EventCard = async ({ eventObj, onClick }: any) => {
   return (
     <div className="relative flex flex-col h-full pt-4 pb-8 rounded-3xl">
       <div className="flex items-center justify-center h-10 px-2 m-3 text-xl font-medium text-center md:h-16 md:text-3xl ">
@@ -12,16 +11,12 @@ const EventCard = ({ eventObj, onClick }: any) => {
           {eventObj.title.slice(0, 23)}
         </p>
       </div>
-      <div className="flex justify-center mb-2 ">
+      <div className="flex justify-center mb-2 relative h-64  mx-4">
         <Image
           src={eventObj.event_image}
           alt="Event Image"
-          height={1080}
-          width={1920}
-          // quality={100}
-          className="w-auto px-4 h-64 "
-          placeholder="blur"
-          blurDataURL={eventObj.blurDataURL || "random"}
+          fill
+          objectFit="contain"
         />
       </div>
       <div className="flex flex-col justify-center w-full m-2 md:flex-row">
