@@ -19,10 +19,10 @@ const MemberCard = async ({ memberObj, index }: any) => {
                 src={memberObj.image}
                 alt="member Image"
                 fill
-                objectFit="contain"
+                quality={50}
                 blurDataURL={memberObj.blurDataURL || "random"}
                 placeholder="blur"
-                className="rounded-full "
+                className="object-contain rounded-full "
               />
             </div>
           </div>

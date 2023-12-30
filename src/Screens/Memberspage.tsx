@@ -2,6 +2,7 @@
 import React, { Suspense, useEffect, useState } from "react";
 import MemberCard from "@/components/MemberCard";
 import Tabs from "@/components/Tabs";
+import MemberCardLoading from "@/components/loading/MemberCardLoading";
 // import { Members } from "@/lib/sampledata";
 
 const MembersPage = ({
@@ -37,16 +38,13 @@ const MembersPage = ({
           />
         </div>
         <div className="flex flex-wrap justify-center w-full pb-12 mb-12">
-          {!membersArray
-            ? null
-            : membersArray.map((memberObj, index) => (
-                <div key={index} className="w-[295px] h-[253px] m-12">
-                  <Suspense fallback={<p>Member loading..</p>}>
-                    {" "}
-                    <MemberCard index={index} memberObj={memberObj} />
-                  </Suspense>
-                </div>
-              ))}
+          {membersArray?.map((memberObj, index) => (
+            <div key={index} className="w-[295px] h-[253px] m-12">
+              <Suspense fallback={<MemberCardLoading />}>
+                <MemberCard index={index} memberObj={memberObj} />
+              </Suspense>
+            </div>
+          ))}
         </div>
       </div>
     </>
