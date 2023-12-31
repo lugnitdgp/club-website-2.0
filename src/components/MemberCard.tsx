@@ -1,11 +1,12 @@
 import React from "react";
 import Image from "next/image";
 import { email, facebook, github } from "../../public/assets";
+import { motion } from "framer-motion";
 
-const MemberCard = async ({ memberObj, index }: any) => {
+const MemberCard = ({ memberObj, index }: any) => {
   return (
     <>
-      <div className=" flex w-max mt-[90px]">
+      <div key={memberObj} className=" flex w-max mt-[90px] cursor-pointer">
         <div
           className={
             index % 2 === 0
@@ -14,19 +15,30 @@ const MemberCard = async ({ memberObj, index }: any) => {
           }
         >
           <div className="absolute left-0 right-0 flex justify-center -top-16 ">
-            <div className=" w-[153px] h-[153px] relative">
+            <motion.div
+              className=" w-[153px] h-[153px] relative"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.25, duration: 0.25 }}
+            >
               <Image
                 src={memberObj.image}
                 alt="member Image"
-                fill
-                quality={50}
+                width={153}
+                height={153}
+                loading="lazy"
                 blurDataURL={memberObj.blurDataURL || "random"}
                 placeholder="blur"
-                className="object-contain rounded-full "
+                className="object-contain rounded-full w-[153px] h-[153px]"
               />
-            </div>
+            </motion.div>
           </div>
-          <div className="absolute bottom-4 left-0 right-0">
+          <motion.div
+            className="absolute bottom-4 left-0 right-0"
+            initial={{ y: -40, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ delay: 0.5, duration: 0.25 }}
+          >
             <p className="mt-16 text-lg text-center truncate ">
               {memberObj.first_name + " " + memberObj.last_name}
             </p>
@@ -35,7 +47,12 @@ const MemberCard = async ({ memberObj, index }: any) => {
                 {memberObj?.bio?.length > 0 ? memberObj.bio : "GLUG Member"}
               </p>
             </div>
-            <div className="flex flex-row justify-center h-8 gap-6 items-center  ">
+            <motion.div
+              className="flex flex-row justify-center h-8 gap-6 items-center  "
+              initial={{ y: 40, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.75, duration: 0.25 }}
+            >
               <div id="image" className="justify-center  rounded-20xl ">
                 <a href={memberObj.facebook_link}>
                   <Image src={facebook} alt="" className="object-contain " />
@@ -51,8 +68,8 @@ const MemberCard = async ({ memberObj, index }: any) => {
                   <Image src={github} alt="" className="object-contain " />
                 </a>
               </div>
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
         </div>
       </div>
     </>

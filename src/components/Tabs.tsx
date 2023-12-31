@@ -32,7 +32,7 @@ const Tabs = ({
                 transition={{
                   type: "inertia",
                   layout: {
-                    duration: 0.25,
+                    duration: 0.5,
                     ease: "easeOut",
                   },
                 }}
