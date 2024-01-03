@@ -1,11 +1,9 @@
-"use-client";
-
+"use client";
 import React from "react";
 import Image from "next/image";
-import {
-  homepage_penguin,
-  homepage_penguin_dark,
-} from "../../../public/assets";
+import { homepage_penguin_dark } from "../../../public/assets";
+import { motion } from "framer-motion";
+
 function LandingComponent() {
   return (
     <>
@@ -37,18 +35,18 @@ function LandingComponent() {
             </div>
           </div>
         </div>
-        <div className=" w-2/6  h-screen hidden md:block">
+        <motion.div
+          className=" w-2/6  h-screen hidden md:block"
+          initial={{ x: 1000, rotate: 30 }}
+          animate={{ x: 0, rotate: 0 }}
+          transition={{ duration: 0.7 }}
+        >
           <Image
             src={homepage_penguin_dark}
             alt={""}
-            className="-z-1 h-screen dark:hidden"
+            className="-z-1 h-screen "
           />
-          <Image
-            src={homepage_penguin_dark}
-            alt={""}
-            className="-z-1 h-screen hidden dark:block"
-          />
-        </div>
+        </motion.div>
         <p className="absolute left-8 md:hidden bottom-52 text-xs w-1/3">
           GNU/Linux Users' Group NIT Durgapur a community of GNU/Linux Users
           that promote the use of Free and Open Source Software.

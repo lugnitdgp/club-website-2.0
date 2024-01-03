@@ -9,23 +9,20 @@ import { motion } from "framer-motion";
 
 const TabContent = ({ membersArray }: { membersArray: any[] }) => {
   return (
-    <motion.div
-      className="flex flex-wrap justify-center w-full pb-12 mb-12"
-      layoutId="container"
-    >
+    <div className="flex flex-wrap justify-center w-full pb-12 mb-12">
       {membersArray?.map((memberObj, index) => (
         <motion.div
           key={index}
           className="w-[295px] h-[253px] m-12"
-          initial={{ y: -10, opacity: 0 }}
+          initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
-          exit={{ y: 10, opacity: 0 }}
-          transition={{ duration: 0.25, ease: "easeOut" }}
+          exit={{ y: 20, opacity: 0 }}
+          transition={{ duration: 0.3, ease: "easeIn" }}
         >
           <MemberCard index={index} memberObj={memberObj} />
         </motion.div>
       ))}
-    </motion.div>
+    </div>
   );
 };
 

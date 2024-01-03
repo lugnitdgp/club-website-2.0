@@ -2,10 +2,17 @@ import React, { Suspense } from "react";
 import Image from "next/image";
 import { alarm, location_on } from "../../public/assets";
 import dayjs from "dayjs";
+import { motion } from "framer-motion";
 
-const EventCard = async ({ eventObj, onClick }: any) => {
+const EventCard = ({ eventObj, onClick }: any) => {
   return (
-    <div className="relative flex flex-col h-full pt-4 pb-8 rounded-3xl">
+    <motion.div
+      className="relative flex flex-col h-full pt-4 pb-8 rounded-3xl"
+      initial={{ y: 20, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      exit={{ y: 20, opacity: 0 }}
+      transition={{ duration: 0.3, ease: "easeIn" }}
+    >
       <div className="flex items-center justify-center h-10 px-2 m-3 text-xl font-medium text-center md:h-16 md:text-3xl ">
         <p className="uppercase truncate dark:text-black">
           {eventObj.title.slice(0, 23)}
@@ -57,7 +64,7 @@ const EventCard = async ({ eventObj, onClick }: any) => {
           <u>Read More</u>
         </p>
       </div>
-    </div>
+    </motion.div>
   );
 };
 
