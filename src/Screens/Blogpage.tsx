@@ -7,7 +7,7 @@ const Blogpage = () => {
   const [activeTab, setactiveTab] = useState("BLOGS");
   return (
     <div className="h-screen align-middle">
-      <div className="flex justify-center">
+      <div className="flex justify-center pt-8 md:pt-0">
         <div className="w-full mt-10 text-left px-10">
           <div className="text-4xl font-bold md:text-7xl ">
             <span className=" text-onBackground dark:text-onBackgroundDark">
@@ -21,7 +21,7 @@ const Blogpage = () => {
           </div>
         </div>
       </div>
-      <div className="flex justify-center">
+      <div className="flex justify-center pb-4">
         <div className="flex flex-row justify-around w-full mt-6 md:mt-12 md:w-1/2 ">
           <BlogPageTab
             activeTab={activeTab}
@@ -36,14 +36,17 @@ const Blogpage = () => {
           />
         </div>
       </div>
-      <div className="mt-4">
+
+      <div className="flex flex-col w-full justify-center items-center pt-10">
         <BlogCardMain />
-      </div>
-      <div className="flex flex-wrap w-full justify-evenly pb-10">
-        <BlogCard />
-        <BlogCard />
-        <BlogCard />
-        <BlogCard />
+        <div className="flex flex-wrap w-full justify-evenly py-10">
+          <BlogCard />
+          <BlogCard />
+          <BlogCard />
+          <BlogCard />
+          <BlogCard />
+          <BlogCard />
+        </div>
       </div>
     </div>
   );
