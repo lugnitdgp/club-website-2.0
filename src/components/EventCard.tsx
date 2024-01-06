@@ -23,7 +23,7 @@ const EventCard = ({ eventObj, onClick }: any) => {
           src={eventObj.event_image}
           alt="Event Image"
           fill
-          objectFit="contain"
+          className="object-contain"
         />
       </div>
       <div className="flex flex-col justify-center w-full m-2 md:flex-row">

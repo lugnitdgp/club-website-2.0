@@ -8,6 +8,7 @@ import { AnimatePresence, LayoutGroup } from "framer-motion";
 import Tabs from "@/components/Tabs";
 import EventCardLoading from "@/components/loading/EventCardLoading";
 import { motion } from "framer-motion";
+import Modal from "@/components/Modal"
 
 const TabContent = ({
   eventsArray,
@@ -61,11 +62,9 @@ const TabContent = ({
           )}
         </>
       ))}
-      <EventModal
-        eventObj={selectedEvent}
-        isOpen={isModalOpen}
-        onClose={closeModal}
-      />
+
+      <Modal open={isModalOpen} setOpen={closeModal} eventObj={selectedEvent} />
+
     </div>
   );
 };
@@ -76,9 +75,9 @@ const Eventpage = ({
   pastArray: any[];
   upComingArray: any[];
 }) => {
-  const [eventsArray, setEventsArr] = useState<any[]>([]);
   // const [pastArray, setPastArr] = useState<any[]>([]);
   // const [upcomingArray, setupcomingArr] = useState<any[]>([]);
+  const [open, setOpen] = useState(true);
 
   const [activeTab, setactiveTab] = useState("UPCOMING");
   const [selectedEvent, setSelectedEvent] = useState(null);
@@ -93,13 +92,7 @@ const Eventpage = ({
   const closeModal = () => {
     setIsModalOpen(false);
   };
-  useEffect(() => {
-    if (activeTab == "UPCOMING") {
-      setEventsArr(upComingArray);
-    } else {
-      setEventsArr(pastArray);
-    }
-  }, [activeTab]);
+
 
   return (
     <>
