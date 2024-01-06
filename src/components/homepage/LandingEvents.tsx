@@ -1,10 +1,18 @@
+'use client';
 import Image from "next/image";
 import { mindersnatch } from "../../../public/assets";
 import Link from "next/link";
+import { motion } from "framer-motion"
 
 const LandingEvents = () => {
   return (
-    <div className="snap-y px-12 md:px-24 mt-24 text-onBackround dark:text-onBackroundDark">
+    <motion.div
+
+      initial={{ y: 20, opacity: 0 }}
+      whileInView={{ y: 0, opacity: 1 }}
+      transition={{ duration: .3 }}
+
+      className="snap-y px-12 md:px-24 mt-24 text-onBackround dark:text-onBackroundDark">
       <h2 className="font-bold text-4xl md:text-6xl">
         Latest
         <span className="text-primary dark:text-primaryDark"> Events</span>
@@ -37,7 +45,7 @@ const LandingEvents = () => {
           </div>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 
