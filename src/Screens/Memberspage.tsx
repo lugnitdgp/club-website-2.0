@@ -17,7 +17,7 @@ const TabContent = ({ membersArray }: { membersArray: any[] }) => {
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           exit={{ y: 20, opacity: 0 }}
-          transition={{ duration: 0.3, ease: "easeIn" }}
+          transition={{ duration: 0.200, ease: "easeIn", delay: (index % 3) * 0.1 }}
         >
           <MemberCard index={index} memberObj={memberObj} />
         </motion.div>

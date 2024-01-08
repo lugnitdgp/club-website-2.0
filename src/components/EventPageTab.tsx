@@ -22,9 +22,6 @@ const EventPageTab = ({ displayText, activeTab, setactiveTab }: any) => {
         {active ? (
           <motion.div
             className="absolute h-[2px] left-0 right-0 -bottom-1 bg-primary"
-            transition={{
-              duration: 3,
-            }}
             layoutId="underline"
           />
         ) : null}
