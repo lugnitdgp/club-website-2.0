@@ -3,7 +3,10 @@ const nextConfig = {
   images: {
     remotePatterns: [
       {
-        hostname: 'api.nitdgplug.org',
+        hostname: "res.cloudinary.com",
+      },
+      {
+        hostname: "api.nitdgplug.org",
       },
     ],
   },

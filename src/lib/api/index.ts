@@ -2,6 +2,7 @@ import axios from "axios";
 import dayjs from "dayjs";
 
 export const BACKEND_URL: string = `${process.env.NEXT_PUBLIC_API_URL}`;
+export const DEV_POST_URL: string=`${process.env.NEXT_PUBLIC_DEV_POST_URL}`;
 
 export const fetchEvent = async () => {
   try {
@@ -16,6 +17,19 @@ export const fetchEvent = async () => {
 export const fetchMembers = async () => {
   try {
     let response = await axios.get(`${BACKEND_URL}/profiles`);
+    let data = response.data;
+    console.log(data);
+    return data;
+
+  } catch (error) {
+    console.log(error);
+    return [];
+  }
+};
+
+export const fetchDevPosts = async () => {
+  try {
+    let response = await axios.get(DEV_POST_URL);
     let data = response.data;
     return data;
   } catch (error) {
