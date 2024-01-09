@@ -3,30 +3,41 @@ import React from "react";
 import Image from "next/image";
 import { blog_img2 } from "../../public/assets";
 
-const BlogCardMain = () => {
+const BlogCardMain = ({
+  imgSrc,
+  title,
+  desc,
+  publish_date,
+  blog_url,
+}: {
+  imgSrc: string;
+  title: string;
+  desc: string;
+  publish_date: string;
+  blog_url: string;
+}) => {
   return (
-    <div className="relative flex flex-col md:flex-row items-start justify-start h-full pt-4 pb-8 gap-x-12 px-10">
-        <Image
-          src={blog_img2}
-          alt="err"
-          height={1080}
-          width={1920}
-          className="w-auto max-h-96 rounded-md"
-        ></Image>
-        <div className="font-bold flex flex-col items-start justiy-evenly h-full text-onBackground dark:text-onBackgroundDark">
-          <div className="text-xl">
-            <u>7th Sep 2023</u>
-          </div>
-          <div className="flex flex-col items-start justify-around text-4xl py-8 capitalize">
-            <div>Expressando (Part 1):</div>
-            <div>A real-time sign </div>
-            <div>language detection</div>
-            <div>system</div>
-          </div>
-          <div className="cursor-pointer text-xl">
-            <u>Read more</u>
-          </div>
+    <div className="col-span-2 relative flex flex-col md:flex-row items-center justify-start h-full pt-4 pb-8 gap-x-12 ">
+      <Image
+        src={imgSrc}
+        alt="err"
+        height={1080}
+        width={1920}
+        className="w-1/2 object-contain h-auto rounded-md"
+      />
+      <div className=" flex flex-col items-start justiy-evenly h-full text-onBackground dark:text-onBackgroundDark">
+        <div className="text-xl">
+          <u>{publish_date}</u>
         </div>
+        <h3 className=" text-4xl py-4 font-bold ">
+          {title}
+        </h3>
+
+        <p>{desc}</p>
+        <a href={blog_url} className="cursor-pointer text-sm font-bold mt-4">
+          <u>Read more</u>
+        </a>
+      </div>
     </div>
   );
 };

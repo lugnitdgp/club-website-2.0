@@ -16,7 +16,7 @@ const BlogCard = ({
 }) => {
   return (
     <>
-      <div className="relative flex flex-col items-start justify-start h-full py-8 gap-y-8 text-onBackground dark:text-onBackgroundDark">
+      <div className="relative flex flex-col items-start justify-start h-full py-8 gap-y-4  text-onBackground dark:text-onBackgroundDark">
         <Image
           src={imgSrc}
           alt="err"
@@ -24,19 +24,19 @@ const BlogCard = ({
           width={1920}
           className="w-auto max-h-72 rounded-md"
         ></Image>
-        <div className="flex flex-col items-start justify-center font-bold text-2xl capitalize ">
-          <h3>{title}</h3>
-        </div>
-        <div className="flex flex-col items-start justify-center font-bold text-2xl capitalize ">
-          <h3>{desc}</h3>
-        </div>
-        <div className="flex flex-row w-full justify-between items-center font-medium text-xl">
+        <h3 className="flex flex-col items-start justify-center font-bold text-2xl  ">
+          {title}
+        </h3>
+        <p className="">
+          {desc}
+        </p>
+        <div className="flex flex-row w-full justify-between items-center font-medium text-sm">
           <p>
             <u>{publish_date}</u>
           </p>
-          <div className="cursor-pointer">
-            <a href={blog_url}>Read more</a>
-          </div>
+          <a href={blog_url} className="cursor-pointer font-bold">
+            <u>Read more</u>
+          </a>
         </div>
       </div>
     </>

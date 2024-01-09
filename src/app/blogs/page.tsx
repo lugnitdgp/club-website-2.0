@@ -1,13 +1,22 @@
 import Blogpage from "@/Screens/Blogpage";
-import { fetchDevPosts } from "@/lib/api";
+import { fetchBlogs, fetchDevPosts } from "@/lib/api";
 import React from "react";
+import { Suspense } from "react";
+import EventPageLoading from "@/components/loading/EventPageLoading";
 
-const blogs = async () => {
+const FetchAndDisplay = async () => {
+
   const devArticles = await fetchDevPosts();
+  const blogPosts = await fetchBlogs();
+
+  return <Blogpage devArticles={devArticles} blogPosts={blogPosts} />
+};
+
+const blogs = () => {
   return (
     <>
       <div className="flex justify-center pt-8 md:pt-0">
-        <div className="w-full mt-10 text-left px-10">
+        <div className="w-full mt-10 text-center px-10">
           <div className="text-4xl font-bold md:text-7xl ">
             <span className=" text-onBackground dark:text-onBackgroundDark">
               Our
@@ -20,7 +29,9 @@ const blogs = async () => {
           </div>
         </div>
       </div>
-      <Blogpage devArticles={devArticles} />
+      <Suspense fallback={<EventPageLoading />}>
+        <FetchAndDisplay />
+      </Suspense>
     </>
   );
 };

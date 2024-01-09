@@ -2,7 +2,7 @@ import axios from "axios";
 import dayjs from "dayjs";
 
 export const BACKEND_URL: string = `${process.env.NEXT_PUBLIC_API_URL}`;
-export const DEV_POST_URL: string=`${process.env.NEXT_PUBLIC_DEV_POST_URL}`;
+export const DEV_POST_URL: string = `${process.env.NEXT_PUBLIC_DEV_POST_URL}`;
 
 export const fetchEvent = async () => {
   try {
@@ -37,6 +37,17 @@ export const fetchDevPosts = async () => {
     return [];
   }
 };
+
+export const fetchBlogs = async () => {
+  try {
+    let response = await axios.get(`https://api.nitdgplug.org/blog/posts`);
+    let data = response.data;
+    return data;
+  } catch (error) {
+    console.log(error);
+    return [];
+  }
+}
 
 export const fetchTimeline = async () => {
   try {

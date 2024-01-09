@@ -1,11 +1,11 @@
 "use client";
 import React, { useState } from "react";
-import BlogPageTab from "@/components/BlogPageTab";
 import BlogCardMain from "@/components/BlogCardMain";
 import BlogCard from "@/components/BlogCard";
 import Tabs from "@/components/Tabs";
-const Blogpage = ({ devArticles }: { devArticles: any }) => {
+const Blogpage = ({ devArticles, blogPosts }: { devArticles: any, blogPosts: any }) => {
   const [activeTab, setactiveTab] = useState("DEV");
+  console.log("blogs", blogPosts)
   return (
     <div className="h-screen align-middle">
       <div className="flex justify-center pb-4">
@@ -18,10 +18,16 @@ const Blogpage = ({ devArticles }: { devArticles: any }) => {
         </div>
       </div>
 
-      <div className="flex flex-col w-full justify-center items-center pt-10">
-        <BlogCardMain />
-        <div className="flex flex-wrap w-full justify-evenly py-10">
-          {devArticles?.map((article: any) => (
+      <div className="grid grid-cols-2 w-10/12 m-auto gap-8">
+        {activeTab === "DEV" ? devArticles?.map((article: any, index: number) => (
+          index === 0 ?
+            <BlogCardMain
+              imgSrc={article.cover_image}
+              title={article.title}
+              desc={article.description}
+              publish_date={article.readable_publish_date}
+              blog_url={article.url}
+            /> :
             <BlogCard
               imgSrc={article.cover_image}
               title={article.title}
@@ -29,14 +35,25 @@ const Blogpage = ({ devArticles }: { devArticles: any }) => {
               publish_date={article.readable_publish_date}
               blog_url={article.url}
             />
-          ))}
-          {/* <BlogCard />
-          <BlogCard />
-          <BlogCard />
-          <BlogCard />
-          <BlogCard />
-          <BlogCard /> */}
-        </div>
+        )) : null}
+        {activeTab === "BLOGS" ? blogPosts?.map((article: any, index: number) => (
+          index === 0 ?
+            <BlogCardMain
+              imgSrc={article.thumbnail_image}
+              title={article.title}
+              desc={article.description}
+              publish_date={article.readable_publish_date}
+              blog_url={article.url}
+            /> :
+            <BlogCard
+              imgSrc={article.thumbnail_image}
+              title={article.title}
+              desc={""}
+              publish_date={article.readable_publish_date}
+              blog_url={""}
+            />
+        )) : null}
+
       </div>
     </div>
   );
