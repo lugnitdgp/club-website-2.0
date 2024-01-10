@@ -5,7 +5,6 @@ import BlogCard from "@/components/BlogCard";
 import Tabs from "@/components/Tabs";
 const Blogpage = ({ devArticles, blogPosts }: { devArticles: any, blogPosts: any }) => {
   const [activeTab, setactiveTab] = useState("DEV");
-  console.log("blogs", blogPosts)
   return (
     <div className="h-screen align-middle">
       <div className="flex justify-center pb-4">
@@ -18,7 +17,7 @@ const Blogpage = ({ devArticles, blogPosts }: { devArticles: any, blogPosts: any
         </div>
       </div>
 
-      <div className="grid grid-cols-2 w-10/12 m-auto gap-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 w-10/12 m-auto gap-8">
         {activeTab === "DEV" ? devArticles?.map((article: any, index: number) => (
           index === 0 ?
             <BlogCardMain

@@ -112,7 +112,6 @@ function Canvas({
   const divRef = useRef<any>(null);
 
   useEffect(() => {
-    console.log("divref", divRef.current);
     if (divRef.current?.offsetHeight && divRef.current?.offsetWidth) {
       setDimensions({
         width: divRef.current.offsetWidth,
