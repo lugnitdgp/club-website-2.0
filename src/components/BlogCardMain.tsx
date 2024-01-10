@@ -10,6 +10,7 @@ const BlogCardMain = ({
   publish_date,
   blog_url,
 }: {
+  key: number;
   imgSrc: string;
   title: string;
   desc: string;
@@ -30,9 +31,7 @@ const BlogCardMain = ({
           <div className="text-xl">
             <u>{publish_date}</u>
           </div>
-          <h3 className=" text-4xl py-4 font-bold ">
-            {title}
-          </h3>
+          <h3 className=" text-4xl py-4 font-bold ">{title}</h3>
 
           <p>{desc}</p>
           <a href={blog_url} className="cursor-pointer text-sm font-bold mt-4">
@@ -51,9 +50,7 @@ const BlogCardMain = ({
         <h3 className="flex flex-col items-start justify-center font-bold text-2xl  ">
           {title}
         </h3>
-        <p className="">
-          {desc}
-        </p>
+        <p className="">{desc}</p>
         <div className="flex flex-row w-full justify-between items-center font-medium text-sm">
           <p>
             <u>{publish_date}</u>
