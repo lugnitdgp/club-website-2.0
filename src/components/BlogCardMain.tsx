@@ -9,13 +9,14 @@ const BlogCardMain = ({
   desc,
   publish_date,
   blog_url,
+ 
 }: {
-  key: number;
   imgSrc: string;
   title: string;
   desc: string;
   publish_date: string;
   blog_url: string;
+  
 }) => {
   return (
     <>

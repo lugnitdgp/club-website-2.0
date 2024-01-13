@@ -34,6 +34,8 @@ const Blogpage = ({
                 desc={article.description}
                 publish_date={article.readable_publish_date}
                 blog_url={article.url}
+               
+               
               />
             ) : (
 
@@ -44,6 +46,8 @@ const Blogpage = ({
                 desc={article.description}
                 publish_date={article.readable_publish_date}
                 blog_url={article.url}
+               
+                
               />
             )
           )
@@ -57,7 +61,8 @@ const Blogpage = ({
                 title={article.title}
                 desc={article.description}
                 publish_date={article.readable_publish_date}
-                blog_url={article.url}
+                blog_url={"/blogs/" + article.id}
+                
               />
             ) : (
               <BlogCard
@@ -66,7 +71,9 @@ const Blogpage = ({
                 title={article.title}
                 desc={""}
                 publish_date={article.readable_publish_date}
-                blog_url={""}
+                blog_url={"/blogs/" + article.id}
+              
+            
               />
             )
           )
