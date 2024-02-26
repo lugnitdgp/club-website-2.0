@@ -8,6 +8,9 @@ import {
 } from "../../../public/assets";
 import { motion } from "framer-motion";
 
+const fadeAnimation = {
+}
+
 const AboutSection = ({ heading, content, image, reverse }: any) => {
   let flexProperty;
   if (reverse)
@@ -16,24 +19,35 @@ const AboutSection = ({ heading, content, image, reverse }: any) => {
   else flexProperty = "md:flex gap-4 justify-between items-center ";
   return (
     <div
-
       className={flexProperty}>
       <motion.div
-        initial={{ y: 20, opacity: 0 }}
+        initial={{ y: 40, opacity: 0 }}
         whileInView={{ y: 0, opacity: 1 }}
-        transition={{ duration: .3 }}
+        transition={{ duration: .4, ease: 'easeIn' }}
+        viewport={{ once: true }}
         className="md:w-[40%]">
-        <h2 className="text-4xl font-bold text-onBackground dark:text-onBackgroundDark">
+        <h2
+          data-scroll
+          data-scroll-speed="0.1"
+
+          className="text-4xl font-bold text-onBackground dark:text-onBackgroundDark">
           {heading}
         </h2>
-        <p className="mt-6 leading-6 text-sm mb-12 text-onBackground dark:text-onBackgroundDark">
+        <p
+
+          data-scroll
+          data-scroll-speed="0.1"
+          className="mt-6 leading-6 text-sm mb-12 text-onBackground dark:text-onBackgroundDark">
           {content}
         </p>
       </motion.div>
       <motion.div
-        initial={{ y: 20, opacity: 0 }}
+        initial={{ y: 40, opacity: 0 }}
         whileInView={{ y: 0, opacity: 1 }}
-        transition={{ duration: .3 }}
+        transition={{ duration: .4, ease: 'easeIn' }}
+        viewport={{ once: true }}
+        data-scroll
+        data-scroll-speed="0.2"
         className="relative w-full md:w-[40%] h-max">
         <Image src={image} alt="people" className="w-full h-auto rounded-2" />
       </motion.div>

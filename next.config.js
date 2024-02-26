@@ -8,6 +8,9 @@ const nextConfig = {
       {
         hostname: "api.nitdgplug.org",
       },
+      {
+        hostname: "media.dev.to"
+      }
     ],
   },
 };

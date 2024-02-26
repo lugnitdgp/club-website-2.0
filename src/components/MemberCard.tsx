@@ -59,21 +59,24 @@ const MemberCard = ({ memberObj, index }: any) => {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.3, duration: 0.1, ease: "easeIn" }}
           >
-            <div id="image" className="justify-center  rounded-20xl ">
+
+            {memberObj.facebook_link ? <div id="image" className="justify-center  rounded-20xl ">
               <a href={memberObj.facebook_link}>
+
                 <Image src={facebook} alt="" className="object-contain " />
               </a>
-            </div>
-            <div id="image" className=" rounded-20xl">
-              <a href={memberObj.reddit_link}>
+            </div> : null}
+
+            {memberObj?.email ? <div id="image" className=" rounded-20xl">
+              <a href={`mailto:${memberObj.email}`}>
                 <Image src={email} alt="" className="object-contain " />
               </a>
-            </div>
-            <div id="image" className=" rounded-20xl my-">
-              <a href={memberObj.linkedin_link}>
+            </div> : null}
+            {memberObj.git_link ? <div id="image" className=" rounded-20xl my-">
+              <a href={memberObj.git_link}>
                 <Image src={github} alt="" className="object-contain " />
               </a>
-            </div>
+            </div> : null}
           </motion.div>
         </motion.div>
       </div>

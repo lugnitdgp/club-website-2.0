@@ -51,30 +51,43 @@ export const fetchBlogs = async () => {
 
 export const fetchTimeline = async () => {
   try {
-    const response = await axios.get(`${BACKEND_URL}/timeline`);
-    const monthEventMap: any = {};
-    response.data.forEach((element: any) => {
-      const month = dayjs(element.event_time, "YYYY-MM-DD").format("MMM");
-
-      const year = dayjs(element.event_time, "YYYY-MM-DD").format("YYYY");
-      if (!monthEventMap[year]) {
-        monthEventMap[year] = {};
+    const { data } = await axios.get(`${BACKEND_URL}/timeline_monthly`);
+    const result = Object.keys(data).map(key => {
+      return {
+        month: key.split(" ")[0],
+        year: key.split(" ")[1],
+        events: data[key]
       }
-      const currentMap = monthEventMap[year];
-
-      if (!currentMap[month]) {
-        currentMap[month] = [];
-      }
-      currentMap[month].push(element.event_name);
-    });
-    const result: any = [];
-    Object.keys(monthEventMap).forEach((key: any) => {
-      Object.keys(monthEventMap[key]).forEach((month: any) => {
-        result.push({ month: month, events: monthEventMap[key][month] });
-      });
-    });
-    return result.reverse();
-  } catch (error) {
-    console.error(error);
+    }).filter(event => event.events.length > 0)
+    return result
+  } catch (err) {
+    console.error(err)
   }
+  // try {
+  //   const response = await axios.get(`${BACKEND_URL}/timeline`);
+  //   const monthEventMap: any = {};
+  //   response.data.forEach((element: any) => {
+  //     const month = dayjs(element.event_time, "YYYY-MM-DD").format("MMM");
+  //
+  //     const year = dayjs(element.event_time, "YYYY-MM-DD").format("YYYY");
+  //     if (!monthEventMap[year]) {
+  //       monthEventMap[year] = {};
+  //     }
+  //     const currentMap = monthEventMap[year];
+  //
+  //     if (!currentMap[month]) {
+  //       currentMap[month] = [];
+  //     }
+  //     currentMap[month].push(element.event_name);
+  //   });
+  //   const result: any = [];
+  //   Object.keys(monthEventMap).forEach((key: any) => {
+  //     Object.keys(monthEventMap[key]).forEach((month: any) => {
+  //       result.push({ month: month, events: monthEventMap[key][month] });
+  //     });
+  //   });
+  //   return result.reverse();
+  // } catch (error) {
+  //   console.error(error);
+  // }
 };

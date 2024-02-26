@@ -65,7 +65,7 @@ const TextGroup = ({
   width,
   fill,
 }: {
-  events: string[];
+  events: any[];
   x: number;
   y: number;
   width: number;
@@ -77,7 +77,7 @@ const TextGroup = ({
   return events.map((event, index) => {
     return (
       <Text
-        text={event}
+        text={event.event_name}
         x={x}
         y={y - initial + index * shift}
         align="center"
@@ -224,7 +224,7 @@ function Canvas({
         <p className="mt-2">Through our Lense</p>
       </div>
       <div ref={divRef} className="h-full">
-        <Stage width={width} height={width > 768 ? height * 5 : height * 4}>
+        <Stage width={width} height={width > 768 ? monthConfig.length * 312 : monthConfig.length * 200}>
           <Layer>
             {width > 768 ? (
               <Paths

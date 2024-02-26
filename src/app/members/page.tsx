@@ -3,6 +3,12 @@ import EventPageLoading from "@/components/loading/EventPageLoading";
 import { fetchMembers } from "@/lib/api";
 import addBlurDataUrl from "@/utils/getBase64";
 import React, { Suspense } from "react";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: 'Members'
+
+}
 
 const FetchAndDisplay = async () => {
   let data = await fetchMembers();

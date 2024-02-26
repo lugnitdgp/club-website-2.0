@@ -3,7 +3,12 @@ import { fetchBlogs, fetchDevPosts } from "@/lib/api";
 import React from "react";
 import { Suspense } from "react";
 import EventPageLoading from "@/components/loading/EventPageLoading";
+import type { Metadata } from "next";
 
+export const metadata: Metadata = {
+  title: 'Blogs'
+
+}
 const FetchAndDisplay = async () => {
 
   const devArticles = await fetchDevPosts();

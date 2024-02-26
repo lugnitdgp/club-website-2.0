@@ -4,6 +4,12 @@ import { fetchEvent } from "@/lib/api";
 import PenguineLottie from "@/lottie/penguineLottie";
 import addBlurDataUrl from "@/utils/getBase64";
 import React, { Suspense } from "react";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: 'Events'
+
+}
 
 const FetchAndDisplay = async () => {
   let data = await fetchEvent();
