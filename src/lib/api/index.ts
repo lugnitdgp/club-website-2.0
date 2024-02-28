@@ -7,6 +7,7 @@ export const DEV_POST_URL: string = `${process.env.NEXT_PUBLIC_DEV_POST_URL}`;
 export const fetchEvent = async () => {
   try {
     let response = await axios.get(`${BACKEND_URL}/events`);
+    //console.log(response);
     let data = response.data;
     return data;
   } catch (error) {
@@ -18,9 +19,8 @@ export const fetchMembers = async () => {
   try {
     let response = await axios.get(`${BACKEND_URL}/profiles`);
     let data = response.data;
-    console.log(data);
+    // console.log(data);
     return data;
-
   } catch (error) {
     console.log(error);
     return [];
@@ -47,21 +47,23 @@ export const fetchBlogs = async () => {
     console.log(error);
     return [];
   }
-}
+};
 
 export const fetchTimeline = async () => {
   try {
     const { data } = await axios.get(`${BACKEND_URL}/timeline_monthly`);
-    const result = Object.keys(data).map(key => {
-      return {
-        month: key.split(" ")[0],
-        year: key.split(" ")[1],
-        events: data[key]
-      }
-    }).filter(event => event.events.length > 0)
-    return result
+    const result = Object.keys(data)
+      .map((key) => {
+        return {
+          month: key.split(" ")[0],
+          year: key.split(" ")[1],
+          events: data[key],
+        };
+      })
+      .filter((event) => event.events.length > 0);
+    return result;
   } catch (err) {
-    console.error(err)
+    console.error(err);
   }
   // try {
   //   const response = await axios.get(`${BACKEND_URL}/timeline`);
