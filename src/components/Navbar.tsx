@@ -8,6 +8,7 @@ import {
   group,
   video_light,
   logo,
+  home_icon
 } from '../../public/assets';
 import ThemeSwitcher from './ThemeSwitcher';
 import MobileNav from './MobileNav';
@@ -16,6 +17,7 @@ import { useState } from 'react';
 
 type Props = {};
 const icons = [
+  { path: "/", icon: home_icon, name: 'Home' },
   { path: '/events', icon: video_light, name: 'Events' },
   { path: '/timeline', icon: calendar, name: 'Timeline' },
   { path: '/blogs', icon: edit_light, name: 'Blogs' },

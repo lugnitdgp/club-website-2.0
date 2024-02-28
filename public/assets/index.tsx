@@ -32,6 +32,7 @@ import landing_image_2 from "./Images/Landing_img_2.jpeg";
 import landing_image_3 from "./Images/Landing_img_3.jpeg";
 import blog_img from "./Images/blog_img.svg";
 import blog_img2 from "./Images/blog_img2.svg";
+import home_icon from "./Images/home-icon.svg"
 export {
   add_square_light,
   calendar,
@@ -66,5 +67,6 @@ export {
   landing_image_2,
   landing_image_3,
   blog_img,
-  blog_img2
+  blog_img2,
+  home_icon
 };
