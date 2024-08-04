@@ -6,6 +6,7 @@ import {
   calendar,
   edit_light,
   group,
+  alumni,
   video_light,
   home_icon,
 } from '../../public/assets';
@@ -19,6 +20,7 @@ const icons = [
   { path: '/timeline', icon: calendar, name: 'Timeline' },
   { path: '/blogs', icon: edit_light, name: 'Blogs' },
   { path: '/members', icon: group, name: 'Members' },
+  { path: '/alumni', icon: alumni, name: 'Alumni' },
 ];
 
 const navigation = [
@@ -26,6 +28,7 @@ const navigation = [
   { name: 'Timeline', href: '#', icon: calendar, current: false },
   { name: 'Blogs', href: '#', icon: edit_light, current: false },
   { name: 'Members', href: '#', icon: group, current: false },
+  { name: 'Alumni', href: '#', icon: alumni, current: false },
 ];
 
 function classNames(...classes: string[]) {

@@ -6,6 +6,7 @@ import {
   calendar,
   edit_light,
   group,
+  alumni,
   video_light,
   logo,
   home_icon
@@ -22,6 +23,7 @@ const icons = [
   { path: '/timeline', icon: calendar, name: 'Timeline' },
   { path: '/blogs', icon: edit_light, name: 'Blogs' },
   { path: '/members', icon: group, name: 'Members' },
+  { path: '/alumni', icon: alumni, name: 'Alumni' },
 ];
 
 const IconComponent = ({ icon }: { icon: any }) => {

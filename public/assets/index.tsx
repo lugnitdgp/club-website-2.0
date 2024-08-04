@@ -2,6 +2,7 @@ import add_square_light from "./Images/Add_square_light.svg";
 import calendar from "./Images/Calendar.svg";
 import edit_light from "./Images/Edit_light.svg";
 import group from "./Images/Group.svg";
+import alumni from "./Images/Alumni.svg";
 import mortarboard_light from "./Images/Mortarboard_light.svg";
 import polygon1 from "./Images/Polygon1.svg";
 import polygon2 from "./Images/Polygon2.svg";
@@ -38,6 +39,7 @@ export {
   calendar,
   edit_light,
   group,
+  alumni,
   mortarboard_light,
   polygon1,
   polygon2,

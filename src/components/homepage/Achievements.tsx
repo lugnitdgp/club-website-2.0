@@ -76,7 +76,7 @@ export const Achievements = () => {
       <Achievement
         icon={groups_icon}
         icon_dark={grops_icon_dark}
-        num={50}
+        num={54}
         text="Members"
         isPrimary={true}
       />

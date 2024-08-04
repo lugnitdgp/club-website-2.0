@@ -21,7 +21,7 @@ const Tabs = ({
             onClick={() => setTab(item)}
             style={{ position: "relative", cursor: "pointer" }}
             key={item}
-            className="px-4 text-center "
+            className="px-2 md:px-3 lg:px-4 text-center"
           >
             <span>{item}</span>
 

@@ -16,7 +16,7 @@ const LandingEvents = () => {
     };
     fetchEvents();
   }, [JSON.stringify(events)]);
-  console.log(events);
+  //console.log("events:",events);
 
   return (
     <motion.div

@@ -5,9 +5,10 @@ import Tabs from "@/components/Tabs";
 import MemberCardLoading from "@/components/loading/MemberCardLoading";
 import { AnimatePresence } from "framer-motion";
 import { motion } from "framer-motion";
-// import { Members } from "@/lib/sampledata";
+import { Members } from "@/lib/sampledata";
 
 const TabContent = ({ membersArray }: { membersArray: any[] }) => {
+  //console.log("Rendering TabContent: ", membersArray);
   return (
     <div className="flex flex-wrap justify-center w-full pb-12 mb-12">
       {membersArray?.map((memberObj, index) => (
@@ -52,9 +53,9 @@ const MembersPage = ({
             <TabContent membersArray={finalYearsArray} key={1} />
           ) : activeTab === "THIRD YEAR" ? (
             <TabContent membersArray={thirdYearsArray} key={2} />
-          ) : (
+          ) : activeTab === "SECOND YEAR" ?(
             <TabContent membersArray={secondYearsArray} key={3} />
-          )}
+          ): undefined}
         </AnimatePresence>
       </div>
     </>

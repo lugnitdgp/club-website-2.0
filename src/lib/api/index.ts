@@ -11,7 +11,7 @@ export const fetchEvent = async () => {
     let data = response.data;
     return data;
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     return [];
   }
 };
@@ -20,6 +20,17 @@ export const fetchMembers = async () => {
     let response = await axios.get(`${BACKEND_URL}/profiles`);
     let data = response.data;
     // console.log(data);
+    return data;
+  } catch (error) {
+    console.log(error);
+    return [];
+  }
+};
+export const fetchAlumni = async () => {
+  try {
+    let response = await axios.get(`${BACKEND_URL}/alumni`);
+    let data = response.data;
+    //console.log(data);
     return data;
   } catch (error) {
     console.log(error);
