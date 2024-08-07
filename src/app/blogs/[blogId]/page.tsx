@@ -13,7 +13,7 @@ const FetchAndDisplay = async ({blogId}:{blogId:string|string[]}) => {
     (article: any, index: number) => article.id == blogId
   );
   return (
-    <div className="flex flex-col items-center justify-center px-4 md:px-32 py-4">
+    <div className="flex flex-col items-center justify-center px-16 md:px-32 py-20">
       <h1 className="text-3xl font-bold">{blogPost.title}</h1>
       <h3 className="text-xl font-light py-2 italic">{blogPost.author_name}</h3>
       <Image

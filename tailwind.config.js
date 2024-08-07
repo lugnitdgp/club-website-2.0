@@ -39,6 +39,10 @@ module.exports = {
       fontSize: {
         heading: '6.25rem',
       },
+      spacing: {
+        '20': '5rem',  
+        '16': '4rem',  
+      },
     },
   },
   plugins: [],

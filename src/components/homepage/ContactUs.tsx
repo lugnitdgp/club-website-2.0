@@ -49,33 +49,33 @@ const ContactUs = () => {
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mt-6 md:mt-8">
         <Contact
           position="President"
-          name="Shashank Shekhar"
+          name="Suman Karmakar"
           email="president@nitdgplug.org"
-          phone="+91 9554355234"
+          phone="+91 9679670516"
         />
         <Contact
           position="General Secretary"
-          name="Mohammad Rafivulla"
+          name="Ayush Bhartia"
           email="gs@nitdgplug.org"
-          phone="+91 9100287724"
+          phone="+91 7890912728"
         />
         <Contact
           position="Treasurer"
-          name="Archit Lall"
+          name="Navneet Berwal"
           email="treasurer@nitdgplug.org"
-          phone="+91 9144648481"
+          phone="+91 8529622552"
         />
         <Contact
           position="Convener"
-          name="Ruchika Shaw"
+          name="Siddhi Agarkar"
           email="convenor@nitdgplug.org"
-          phone="+91 9007445741"
+          phone="+91 9372583314"
         />
         <Contact
           position="Vice President"
-          name="Shruti Singh"
+          name="Aiman Aisha"
           email="vp@nitdgplug.org"
-          phone="+91 7980012430"
+          phone="+91 8515080541"
         />
       </div>
     </div>
