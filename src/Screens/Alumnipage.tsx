@@ -74,7 +74,7 @@ const AlumniPage = ({
           ) : activeTab === "2018" ? (
             <TabContent alumniArray={seventhlastYearsArray} key={7} />
           ) : undefined}
-        </AnimatePresence>
+        </AnimatePresence>  
       </div>
     </>
   );

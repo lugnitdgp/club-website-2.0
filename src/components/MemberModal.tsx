@@ -38,22 +38,22 @@ const MemberModal = ({ memberObj, open, setOpen }: MemberModalProps) => {
               leaveFrom="opacity-100 translate-y-0 sm:scale-100"
               leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
             >
-              <div className="relative z-50 px-4 py-6 mx-auto shadow-lg bg-yellowPrimary md:w-96 md:h-auto max-w-full max-h-full overflow-auto rounded-xl">
+              <div className="relative z-50 px-4 py-6 mx-auto shadow-lg bg-yellowPrimary md:w-96 max-h-full overflow-auto rounded-xl">
                 <div className="flex flex-col items-center">
                   <div className="w-40 h-40 mb-6 rounded-full overflow-hidden">
-                  <Image
-                        src={memberObj.image || "/assets/Images/homepage_penguin_dark.png"}
-                        alt="member Image"
-                        width={153}
-                        height={153}
-                        loading="lazy"
-                        blurDataURL={memberObj.blurDataURL || "random"}
-                        placeholder="blur"
-                        className="object-contain rounded-full w-[153px] h-[153px]"
+                    <Image
+                      src={memberObj.image || "/assets/Images/homepage_penguin_dark.png"}
+                      alt="member Image"
+                      width={153}
+                      height={153}
+                      loading="lazy"
+                      blurDataURL={memberObj.blurDataURL || "random"}
+                      placeholder="blur"
+                      className="object-contain rounded-full w-[153px] h-[153px]"
                     />
                   </div>
                   <h2 className="text-2xl font-semibold mb-2 dark:text-black">{memberObj.first_name + " " + memberObj.last_name}</h2>
-                  <p className="text-lg mb-4 text-center dark:text-black">{memberObj.bio || "GLUG Member"}</p>
+                  <p className="text-lg w-72 md:w-auto mb-4 text-center dark:text-black">{memberObj.bio || "GLUG Member"}</p>
                   <div className="flex flex-row justify-center gap-4 mb-4">
                     {memberObj.facebook_link && (
                       <a href={memberObj.facebook_link} target="_blank" rel="noopener noreferrer">
