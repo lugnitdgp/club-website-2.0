@@ -1,23 +1,32 @@
+"use client";
+
 import Blogpage from "@/Screens/Blogpage";
 import { fetchBlogs, fetchDevPosts } from "@/lib/api";
-import React from "react";
-import { Suspense } from "react";
+import React, { useEffect, useState } from "react";
 import EventPageLoading from "@/components/loading/EventPageLoading";
-import type { Metadata } from "next";
 
-export const metadata: Metadata = {
-  title: 'Blogs'
+const Blogs = () => {
+  const [loading, setLoading] = useState(true);
+  const [devArticles, setDevArticles] = useState<any[]>([]);
+  const [blogPosts, setBlogPosts] = useState<any[]>([]);
 
-}
-const FetchAndDisplay = async () => {
+  useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true);
+      const fetchedDevArticles = await fetchDevPosts();
+      const fetchedBlogPosts = await fetchBlogs();
+      setDevArticles(fetchedDevArticles);
+      setBlogPosts(fetchedBlogPosts);
+      setLoading(false);
+    };
 
-  const devArticles = await fetchDevPosts();
-  const blogPosts = await fetchBlogs();
+    fetchData();
+  }, []);
 
-  return <Blogpage devArticles={devArticles} blogPosts={blogPosts} />
-};
+  if (loading) {
+    return <EventPageLoading />;
+  }
 
-const blogs = () => {
   return (
     <>
       <div className="flex justify-center pt-8 md:pt-0">
@@ -34,11 +43,9 @@ const blogs = () => {
           </div>
         </div>
       </div>
-      <Suspense fallback={<EventPageLoading />}>
-        <FetchAndDisplay />
-      </Suspense>
+      <Blogpage devArticles={devArticles} blogPosts={blogPosts} />
     </>
   );
 };
 
-export default blogs;
+export default Blogs;
