@@ -1,7 +1,7 @@
 import AlumniPage from "@/Screens/Alumnipage";
 import EventPageLoading from "@/components/loading/EventPageLoading";
 import { fetchAlumni } from "@/lib/api";
-import addBlurDataUrl from "@/utils/getBase64";
+import addBlurDataUrl from "@/lib/getBase64";
 import React, { Suspense } from "react";
 import type { Metadata } from "next";
 

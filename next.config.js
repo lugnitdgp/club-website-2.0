@@ -10,6 +10,9 @@ const nextConfig = {
       },
       {
         hostname: "media.dev.to"
+      },
+      {
+        hostname: "images.unsplash.com"
       }
     ],
   },

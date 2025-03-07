@@ -1,18 +1,32 @@
-import React from "react";
-import LandingComponent from "../components/homepage/LandingComponent";
+"use client";
+
+import React, { useEffect, useState } from "react";
+import LandingComponent from "../components/homepage/HeroSection";
 import { Achievements } from "@/components/homepage/Achievements";
-import LandingAbout from "@/components/homepage/LandingAbout";
-import LandingEvents from "@/components/homepage/LandingEvents";
-import ContactUs from "@/components/homepage/ContactUs";
+import Footer from "@/components/Footer";
+import WorldMap from "@/components/homepage/WorldMap";
+import FlagshipEvents from "@/components/homepage/FlagShipEvents";
+import FullScreenLoader from "@/components/loading/FullScreenLoader";
 function HomePage() {
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(false);
+    },13000);
+  }, []);
+
+  if (loading) {
+    return <FullScreenLoader />;
+  }
   return (
     <>
       <div className="snap-y  overflow-y-auto ">
         <LandingComponent />
+        <FlagshipEvents />
         <Achievements />
-        <LandingAbout />
-        <LandingEvents />
-        <ContactUs />
+        <WorldMap />
+
+        <Footer />
       </div>
     </>
   );
