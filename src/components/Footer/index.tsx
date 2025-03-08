@@ -92,7 +92,7 @@ export default function Footer() {
               href="mailto:contact@nitdgplug.org"
               className="text-blue-600 hover:text-blue-800"
             >
-              contact@nitdgplug.org
+              president@nitdgplug.org
             </a>
           </p>
           <p>
@@ -109,8 +109,13 @@ export default function Footer() {
 
         {/* Resources Section */}
         <div>
-          <h3 className="font-bold text-lg">Resources</h3>
+          <h3 className="font-bold text-lg">Links</h3>
           <ul className="mt-2 space-y-2">
+            <li>
+              <a href="#" className="text-blue-600 hover:text-blue-800">
+                GLUG internal Portal
+              </a>
+            </li>
             <li>
               <a href="#" className="text-blue-600 hover:text-blue-800">
                 Blog
@@ -123,12 +128,17 @@ export default function Footer() {
             </li>
             <li>
               <a href="#" className="text-blue-600 hover:text-blue-800">
-                Projects
+                ShowDownn {new Date().getFullYear()}
               </a>
             </li>
             <li>
               <a href="#" className="text-blue-600 hover:text-blue-800">
-                Events
+                Mukti {new Date().getFullYear()}
+              </a>
+            </li>
+            <li>
+              <a href="#" className="text-blue-600 hover:text-blue-800">
+                Aarohan {new Date().getFullYear()}
               </a>
             </li>
           </ul>

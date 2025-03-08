@@ -14,7 +14,7 @@ function Navbar() {
     { url: "/linit", name: "Linit" },
     { url: "/members", name: "Members" },
     { url: "/alumni", name: "Alumni" },
-    { url: "/join-us", name: "Join Us" },
+    { url: "/mukti", name: "Mukti 2025" },
   ];
 
   return (
