@@ -1,10 +1,10 @@
 import "./globals.css";
 import { Montserrat } from "next/font/google";
-import Navbar from "@/components/Navbar";
 import CustomThemeProvider from "@/providers/Providers";
 import type { Metadata } from "next";
 import { DotPattern } from "@/components/magicui/dots";
 import { cn } from "@/lib/utils";
+import Navbar from "@/components/Navbar/Navbar";
 
 export const metadata: Metadata = {
   title: {
@@ -35,7 +35,7 @@ export default function RootLayout({
         </div>
         <CustomThemeProvider>
           <Navbar />
-          <div className="md:ml-20 ">{children}</div>
+          <div className=" ">{children}</div>
         </CustomThemeProvider>
       </body>
     </html>

@@ -8,11 +8,11 @@ import WorldMap from "@/components/homepage/WorldMap";
 import FlagshipEvents from "@/components/homepage/FlagShipEvents";
 import FullScreenLoader from "@/components/loading/FullScreenLoader";
 function HomePage() {
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   useEffect(() => {
     setTimeout(() => {
       setLoading(false);
-    },13000);
+    }, 13000);
   }, []);
 
   if (loading) {

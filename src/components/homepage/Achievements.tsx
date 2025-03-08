@@ -11,6 +11,7 @@ import {
 import { motion } from "framer-motion";
 import { BentoCard, BentoGrid } from "../magicui/bento-grid";
 import { features } from "@/lib/constants";
+import { AnimatedGradientText } from "../magicui/animated-gradient-text";
 
 const Achievement = ({ icon, icon_dark, num, text, isPrimary }: any) => {
   if (isPrimary) {
@@ -18,8 +19,9 @@ const Achievement = ({ icon, icon_dark, num, text, isPrimary }: any) => {
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: .300 }}
-        className="flex md:flex-col md:row-span-2 justify-between items-center bg-tertiary dark:bg-[#292322] text-onTertiary dark:text-[#EDE0DE] px-6 py-2 md:py-4 md:pb-6 rounded-md ">
+        transition={{ duration: 0.3 }}
+        className="flex md:flex-col md:row-span-2 justify-between items-center bg-tertiary dark:bg-[#292322] text-onTertiary dark:text-[#EDE0DE] px-6 py-2 md:py-4 md:pb-6 rounded-md "
+      >
         <Image
           src={icon}
           alt={"error"}
@@ -43,12 +45,11 @@ const Achievement = ({ icon, icon_dark, num, text, isPrimary }: any) => {
   } else {
     return (
       <motion.div
-
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: .300 }}
-
-        className="flex justify-between items-center bg-primaryContainer  dark:bg-[#292322] dark:text-[#EDE0DE] text-onPrimaryContainer px-6 py-2  rounded-md ">
+        transition={{ duration: 0.3 }}
+        className="flex justify-between items-center bg-primaryContainer  dark:bg-[#292322] dark:text-[#EDE0DE] text-onPrimaryContainer px-6 py-2  rounded-md "
+      >
         <Image
           src={icon}
           alt={"error"}
@@ -74,13 +75,18 @@ const Achievement = ({ icon, icon_dark, num, text, isPrimary }: any) => {
 
 export const Achievements = () => {
   return (
-    <div className=" w-full ">
-      <p>Our Project Showcase</p>
-    <BentoGrid className="">
-      {features.map((feature) => (
-        <BentoCard key={feature.name} {...feature} />
-      ))}
-    </BentoGrid>
+    <div className=" w-full flex flex-col gap-5 items-center">
+      <p className=" text-3xl font-bold">
+        Our <AnimatedGradientText> Project Showcase</AnimatedGradientText>
+      </p>
+      <div className=" w-4/5 grid">
+        {" "}
+        <BentoGrid className="">
+          {features.map((feature) => (
+            <BentoCard key={feature.name} {...feature} />
+          ))}
+        </BentoGrid>
+      </div>
     </div>
   );
 };

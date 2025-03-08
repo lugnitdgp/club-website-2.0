@@ -161,7 +161,15 @@ module.exports = {
   					bottom: '50%',
   					right: '25%'
   				}
+  			},
+  			gradient: {
+  				to: {
+  					backgroundPosition: 'var(--bg-size, 300%) 0'
+  				}
   			}
+  		},
+  		animation: {
+  			gradient: 'gradient 8s linear infinite'
   		}
   	}
   },
