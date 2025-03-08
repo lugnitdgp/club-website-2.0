@@ -1,13 +1,22 @@
 "use client";
 
 import { thumbnail } from "@/assets";
+import { Play } from "lucide-react";
 import Image from "next/image";
 import React, { useState } from "react";
 
 function Trailer() {
   const [trailer, setTrailer] = useState(false);
   return (
-    <div className=" h-[65vh] my-7 py-7 aspect-video mx-auto ">
+    <div className=" h-[65vh] my-7 py-7 aspect-video mx-auto cursor-pointer relative ">
+      {!trailer && (
+        <div
+          className="absolute top-0 left-0 w-full h-full flex justify-center items-center z-5  opacity-50"
+          onClick={() => setTrailer(true)}
+        >
+          <Play className="w-16 h-16 text-white border-2 rounded-full p-3" />
+        </div>
+      )}
       {trailer ? (
         <iframe
           className="w-full h-full rounded-xl"
@@ -17,10 +26,14 @@ function Trailer() {
           referrerPolicy="strict-origin-when-cross-origin"
           allowFullScreen
           allowTransparency
-          
         ></iframe>
       ) : (
-        <Image src={thumbnail} alt="" onClick={() => setTrailer(true)} className=" rounded-xl" />
+        <Image
+          src={thumbnail}
+          alt=""
+          onClick={() => setTrailer(true)}
+          className=" rounded-xl"
+        />
       )}
     </div>
   );

@@ -1,6 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+   output: 'export',
   images: {
+    unoptimized: true,
     remotePatterns: [
       {
         hostname: "res.cloudinary.com",
@@ -13,6 +15,9 @@ const nextConfig = {
       },
       {
         hostname: "images.unsplash.com"
+      },
+      {
+        hostname: "randomuser.me"
       }
     ],
   },

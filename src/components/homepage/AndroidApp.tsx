@@ -4,7 +4,7 @@ import Image from "next/image";
 
 function AndroidApp() {
   return (
-    <div className="h-[40vh] w-full bg-gradient-to-r from-purple-200 to-purple-100 relative overflow-hidden">
+    <div className="h-[50vh] w-4/5 mx-auto bg-gradient-to-r from-purple-200 to-purple-100 rounded-[5rem] relative overflow-hidden shadow-md">
       {/* Text Section */}
       <div className="flex flex-col items-center justify-center absolute z-10 h-full w-3/5 text-center">
         <p className="text-4xl font-bold text-gray-900">
@@ -27,7 +27,7 @@ function AndroidApp() {
       <div className="relative">
         <Image
           src={android_app}
-          className="absolute z-10 h-[80vh] w-[45vh] right-20 top-10  rounded-lg"
+          className="absolute z-10 h-[70vh] w-[55vh] right-20 top-10  rounded-lg"
           alt="Android App"
         />
       </div>

@@ -3,7 +3,7 @@ import { AnimatedSpan, Terminal, TypingAnimation } from "../magicui/terminal";
 
 function FullScreenLoader() {
   return (
-    <div className="h-screen w-screen flex items-center justify-center">
+    <div className="h-screen w-screen flex items-center justify-center absolute z-50 bg-white">
       {" "}
       <Terminal>
         <TypingAnimation>&gt; sudo -g install glug@latest </TypingAnimation>

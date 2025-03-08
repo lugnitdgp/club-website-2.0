@@ -1,7 +1,5 @@
+import { File } from "lucide-react";
 import React from "react";
-import { CiBellOn } from "react-icons/ci";
-import { MdCalendarMonth, MdFileCopy } from "react-icons/md";
-import { RxGlobe, RxInput } from "react-icons/rx";
 
 interface ContentItem {
   title: string;
@@ -45,7 +43,7 @@ export const content: ContentItem[] = [
 
 export const features = [
   {
-    Icon: MdFileCopy,
+    Icon: File,
     name: "Save your files",
     description: "We automatically save your files as you type.",
     href: "/",
@@ -54,7 +52,7 @@ export const features = [
     className: "md:col-start-1 md:col-end-2 md:row-start-1 md:row-end-2",
   },
   {
-    Icon: RxInput,
+    Icon: File,
     name: "Full text search",
     description: "Search through all your files in one place.",
     href: "/",
@@ -63,7 +61,7 @@ export const features = [
     className: "md:col-start-2 md:col-end-3 md:row-start-1 md:row-end-2",
   },
   {
-    Icon: RxGlobe,
+    Icon: File,
     name: "Multilingual",
     description: "Supports 100+ languages and counting.",
     href: "/",
@@ -72,7 +70,7 @@ export const features = [
     className: "md:col-start-3 md:col-end-4 md:row-start-1 md:row-end-2",
   },
   {
-    Icon: MdCalendarMonth,
+    Icon: File,
     name: "Calendar",
     description: "Use the calendar to filter your files by date.",
     href: "/",
@@ -81,7 +79,7 @@ export const features = [
     className: "md:col-start-1 md:col-end-3 md:row-start-2 md:row-end-3",
   },
   {
-    Icon: CiBellOn,
+    Icon: File,
     name: "Notifications",
     description:
       "Get notified when someone shares a file or mentions you in a comment.",
@@ -103,4 +101,47 @@ export const techStack = [
   { name: "Kubernetes", color: "bg-blue-400", x: "30%", y: "30%" },
   { name: "Firebase", color: "bg-yellow-500", x: "75%", y: "10%" },
   { name: "GitHub", color: "bg-gray-900", x: "80%", y: "20%" },
+];
+
+export const socialLinks = [
+  {
+    name: "Facebook",
+    icon: "Facebook", // Lucide icon name
+    url: "https://www.facebook.com/nitdgplug"
+  },
+  {
+    name: "Gitter",
+    icon: "MessageCircle", // No direct Gitter icon, using MessageCircle as an alternative
+    url: "https://gitter.im/lugnitdgp"
+  },
+  {
+    name: "YouTube",
+    icon: "Youtube",
+    url: "https://www.youtube.com/channel/UCYZPnN5vP5B1sINLLkI1aDA"
+  },
+  {
+    name: "GitHub",
+    icon: "Github",
+    url: "https://github.com/lugnitdgp"
+  },
+  {
+    name: "Instagram",
+    icon: "Instagram",
+    url: "https://www.instagram.com/nitdgplug"
+  },
+  {
+    name: "Email",
+    icon: "Mail",
+    url: "mailto:contact@nitdgplug.org"
+  },
+  {
+    name: "LinkedIn",
+    icon: "Linkedin",
+    url: "https://in.linkedin.com/company/lugnitdgp"
+  },
+  {
+    name: "Dev.to",
+    icon: "Code", // No direct Dev.to icon, using Code as an alternative
+    url: "https://dev.to/nitdgplug"
+  }
 ];

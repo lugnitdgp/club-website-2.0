@@ -4,7 +4,8 @@ import CustomThemeProvider from "@/providers/Providers";
 import type { Metadata } from "next";
 import { DotPattern } from "@/components/magicui/dots";
 import { cn } from "@/lib/utils";
-import Navbar from "@/components/Navbar/Navbar";
+import StateProvider from "@/providers/StateProvider";
+import LayoutProvider from "@/providers/LayoutProvider";
 
 export const metadata: Metadata = {
   title: {
@@ -29,14 +30,15 @@ export default function RootLayout({
         id="page-wrap no-scrollbar relative"
       >
         <div className=" h-screen w-screen absolute  ">
-          <DotPattern className={cn(
-          "[mask-image:radial-gradient(700px_circle_at_center,white,transparent)]",
-        )} />
+          <DotPattern
+            className={cn(
+              "[mask-image:radial-gradient(700px_circle_at_center,white,transparent)]"
+            )}
+          />
         </div>
-        <CustomThemeProvider>
-          <Navbar />
-          <div className=" ">{children}</div>
-        </CustomThemeProvider>
+          <StateProvider>
+            <LayoutProvider>{children}</LayoutProvider>
+          </StateProvider>
       </body>
     </html>
   );

@@ -1,12 +1,12 @@
 "use client";
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import { mindersnatch } from "../../assets";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { MagicCard } from "../magicui/card";
 import { CardBody, CardContainer, CardItem } from "../ui/3d-card";
 import { AnimatedGradientText } from "../magicui/animated-gradient-text";
+import SectionTitle from "../Title";
 
 const FlagshipEvents = () => {
   const [events, setEvents] = useState<any>([]);
@@ -17,11 +17,12 @@ const FlagshipEvents = () => {
       initial={{ y: 20, opacity: 0 }}
       whileInView={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.3 }}
-      className="snap-y px-12 md:px-24 mt-24  flex flex-col gap-5 items-center bg-orange-200 h-[80vh] justify-center"
+      className="snap-y py-10   flex flex-col  items-center bg-orange-200 h-[80vh] justify-center"
     >
-       <p className=" text-3xl font-bold">
-         Our  <AnimatedGradientText> Flagship Events</AnimatedGradientText>
-        </p>
+       <SectionTitle
+        title="Our Flagship Events"
+        description=" New Events every month"
+      />
 
       <div className="flex flex-row gap-4">
         <CardContainer className="inter-var">

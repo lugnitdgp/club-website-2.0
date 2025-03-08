@@ -1,11 +1,9 @@
 "use client";
 import Link from "next/link";
-
-import { Home, User, Briefcase, FileText } from "lucide-react";
+import { ShineBorder } from "@/components/magicui/shine-border";
 
 import React from "react";
 import Image from "next/image";
-import { BorderBeam } from "../magicui/border-beam";
 import { logo } from "@/assets";
 
 function Navbar() {
@@ -20,7 +18,7 @@ function Navbar() {
   ];
 
   return (
-    <div className="md:w-1/2 mx-auto flex flex-row justify-between items-center gap-8  backdrop-blur-md py-3 px-12 sticky z-50 top-4 rounded-3xl border-1 border-black/10">
+    <div className=" max-w-5xl mx-auto flex flex-row justify-between items-center gap-8  backdrop-blur-md py-3 px-12 sticky z-20 top-4 rounded-3xl border-2 border-black/5">
       <div className="flex flex-row items-center">
         <Link href="/">
           <Image src={logo} alt="logo" width={30} height={30} />
@@ -37,17 +35,7 @@ function Navbar() {
           </Link>
         ))}
       </div>
-      <BorderBeam
-        duration={6}
-        size={400}
-        className="from-transparent via-red-500 to-transparent"
-      />
-      <BorderBeam
-        duration={6}
-        delay={3}
-        size={400}
-        className="from-transparent via-blue-500 to-transparent"
-      />
+      <ShineBorder shineColor={["#A07CFE", "#FE8FB5", "#FFBE7B"]} />
     </div>
   );
 }
