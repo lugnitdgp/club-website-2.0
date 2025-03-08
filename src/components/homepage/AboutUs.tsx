@@ -1,113 +1,20 @@
-'use client';
-import Image from "next/image";
-import {
-  group_photo,
-  landing_image_1,
-  landing_image_2,
-  landing_image_3,
-} from "../../../public/assets";
-import { motion } from "framer-motion";
+import React from "react";
+import { AnimatedGradientText } from "../magicui/animated-gradient-text";
+import { StickyScroll } from "../ui/sticky-scroll-reveal";
+import { content } from "@/lib/constants";
+import SectionTitle from "../Title";
 
-const fadeAnimation = {
+function AboutUs() {
+  return (
+    <div className="w-full h-[70vh] py-7 flex flex-col items-center justify-evenly gap-5 my-5">
+      <SectionTitle
+        title="About Us"
+        description="We are a team of passionate developers and designers who love to create amazing things"
+      />
+
+      <StickyScroll content={content} />
+    </div>
+  );
 }
 
-const AboutSection = ({ heading, content, image, reverse }: any) => {
-  let flexProperty;
-  if (reverse)
-    flexProperty =
-      "md:flex gap-4 justify-between items-center flex-row-reverse ";
-  else flexProperty = "md:flex gap-4 justify-between items-center ";
-  return (
-    <div
-      className={flexProperty}>
-      <motion.div
-        initial={{ y: 40, opacity: 0 }}
-        whileInView={{ y: 0, opacity: 1 }}
-        transition={{ duration: .4, ease: 'easeIn' }}
-        viewport={{ once: true }}
-        className="md:w-[40%]">
-        <h2
-          data-scroll
-          data-scroll-speed="0.1"
-
-          className="text-4xl font-bold text-onBackground dark:text-onBackgroundDark">
-          {heading}
-        </h2>
-        <p
-
-          data-scroll
-          data-scroll-speed="0.1"
-          className="mt-6 leading-6 text-sm mb-12 text-onBackground dark:text-onBackgroundDark">
-          {content}
-        </p>
-      </motion.div>
-      <motion.div
-        initial={{ y: 40, opacity: 0 }}
-        whileInView={{ y: 0, opacity: 1 }}
-        transition={{ duration: .4, ease: 'easeIn' }}
-        viewport={{ once: true }}
-        data-scroll
-        data-scroll-speed="0.2"
-        className="relative w-full md:w-[40%] h-max">
-        <Image src={image} alt="people" className="w-full h-auto rounded-2" />
-      </motion.div>
-    </div>
-  );
-};
-
-const LandingAbout = () => {
-  return (
-    <div className="snap-start flex flex-col gap-16 md:gap-24 h-full mt-4 justify-between pt-16 px-12 md:px-24">
-      <AboutSection
-        heading={
-          <>
-            <span className="text-primary dark:text-primaryDark">Who</span> We
-            Are
-          </>
-        }
-        content={`The GNU/Linux Users' Group, NIT Durgapur is a community of GNU/Linux
-            Users that promote the use of Free and Open Source Software. The
-            Group was established in 2003 by a bunch of FOSS enthusiasts with
-            the idea of popularising and contributing to Open Source. We are a
-            plethora of designers, contributors and developers that believe in
-            learning and sharing through opening up your mind to Open Source.`}
-        image={landing_image_1}
-      />
-      <AboutSection
-        heading={
-          <>
-            <span className="text-primary dark:text-primaryDark">What</span> We
-            Do
-          </>
-        }
-        content={`We provide budding enthusiasts like ourselves a forum to contribute
-            and learn about FOSS. Through varied workshops on revolutionary Open
-            Technologies throughout the year, we spread the idea of Open Source
-            to beginners and veterans alike. We bring people together to ideate
-            and contribute to the leading Open technologies. We provide help and
-            resources to everyone who wants to make the web world a better
-            place.`}
-        image={landing_image_2}
-        reverse={true}
-      />
-      <AboutSection
-        heading={
-          <>
-            Our{" "}
-            <span className="text-primary dark:text-primaryDark">Vision</span>
-          </>
-        }
-        content={`Being a bunch of FOSS enthusiasts, we preach the idea of “free
-            things are the best things” and firmly believe in sharing knowledge.
-            We strive to elevate the tech culture in our college and believe
-            that this can only be done through giving people digital resources
-            and knowledge in all realms from hardware to software and data to
-            design. We promote FOSS through various endeavours because we
-            believe in the freedom of expression for everyone.`}
-        image={landing_image_3}
-      />
-    </div>
-  );
-};
-
-export default LandingAbout;
+export default AboutUs;

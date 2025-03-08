@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import { mindersnatch } from "../../../public/assets";
+import { mindersnatch } from "../../assets";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { MagicCard } from "../magicui/card";

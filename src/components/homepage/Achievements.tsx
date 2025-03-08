@@ -7,7 +7,7 @@ import {
   grops_icon_dark,
   events_dark,
   computer_dark,
-} from "../../../public/assets";
+} from "../../assets";
 import { motion } from "framer-motion";
 import { BentoCard, BentoGrid } from "../magicui/bento-grid";
 import { features } from "@/lib/constants";

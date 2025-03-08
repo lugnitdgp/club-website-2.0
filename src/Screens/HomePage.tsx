@@ -7,6 +7,10 @@ import Footer from "@/components/Footer";
 import WorldMap from "@/components/homepage/WorldMap";
 import FlagshipEvents from "@/components/homepage/FlagShipEvents";
 import FullScreenLoader from "@/components/loading/FullScreenLoader";
+import Trailer from "@/components/homepage/Trailer";
+import AboutUs from "@/components/homepage/AboutUs";
+import Gallery from "@/components/homepage/Gallery";
+import AndroidApp from "@/components/homepage/AndroidApp";
 function HomePage() {
   const [loading, setLoading] = useState(false);
   useEffect(() => {
@@ -22,10 +26,13 @@ function HomePage() {
     <>
       <div className="snap-y  overflow-y-auto ">
         <LandingComponent />
+        <Trailer />
+        <AboutUs />
+        <Gallery />
         <FlagshipEvents />
         <Achievements />
         <WorldMap />
-
+        <AndroidApp />
         <Footer />
       </div>
     </>
