@@ -15,31 +15,29 @@ import {
   ModalTrigger,
 } from "@/components/ui/animated-modal";
 import { Button } from "@/components/ui/button";
+import DataLoader from "@/components/loading/DataLoader";
 
 function EventsPage() {
-  const { data, isLoading } = useFetchEventsQuery({});
+  const { data, isLoading, error } = useFetchEventsQuery({});
 
   const trimDescription = (description: string, maxLength: number) => {
     if (description.length <= maxLength) return description;
     return description.substring(0, maxLength) + "...";
   };
 
-  if (isLoading)
+  if (isLoading) return <DataLoader text="Loading events data..." />;
+  if (error)
     return (
-      <div className="flex justify-center items-center h-[20vh] pt-10">
-        <TextShimmerWave
-          className="[--base-color:#0D74CE] [--base-gradient-color:#5EB1EF]"
-          duration={1}
-          spread={1}
-          zDistance={1}
-          scaleDistance={1.1}
-          rotateYDistance={20}
-        >
-          Loading Our Time Clock...
-        </TextShimmerWave>
+      <div className=" h-[70vh] w-screen text-center">
+        Error loading the events data.
       </div>
     );
-  if (!data) return <div>No data</div>;
+  if (!data)
+    return (
+      <div className=" h-[70vh] w-screen text-center">
+        No events data found.
+      </div>
+    );
 
   return (
     <div className="p-6 pt-24">

@@ -5,30 +5,17 @@ import { useFetchDevArticlesQuery } from "@/store/slices/devArticlesSlice";
 import React from "react";
 import InteractiveBentoBlogs from "@/components/blocks/interactive-bento-blogs";
 import SectionTitle from "@/components/Title";
+import DataLoader from "@/components/loading/DataLoader";
 
 function BlogsPage() {
-  const { data, isLoading } = useFetchDevArticlesQuery({});
-
-  if (isLoading) {
+  const { data, isLoading, error } = useFetchDevArticlesQuery({});
+  if (isLoading) return <DataLoader text="Loading Blogs data..." />;
+  if (error)
     return (
-      <div className="flex justify-center items-center h-[20vh]">
-        <TextShimmerWave
-          className="[--base-color:#0D74CE] [--base-gradient-color:#5EB1EF]"
-          duration={1}
-          spread={1}
-          zDistance={1}
-          scaleDistance={1.1}
-          rotateYDistance={20}
-        >
-          Loading Our Time Clock...
-        </TextShimmerWave>
-      </div>
+      <div className=" h-[70vh] w-screen text-center">Error loading the Blogs data.</div>
     );
-  }
-
-  if (!data) {
-    return <div>No data</div>;
-  }
+  if (!data)
+    return <div className=" h-[70vh] w-screen text-center">No Blogs data found.</div>;
 
   const mediaItems = data.map((article: any, index: number) => ({
     id: article.id,

@@ -16,6 +16,7 @@ import {
 import Image from "next/image";
 import { logo } from "@/assets";
 import { Particles } from "../magicui/particles";
+import Link from "next/link";
 
 const socialLinks = [
   {
@@ -113,21 +114,21 @@ export default function Footer() {
           <p className="mt-2">📍 NIT Durgapur, West Bengal, India 713209</p>
           <p>
             📧{" "}
-            <a
+            <Link
               href="mailto:contact@nitdgplug.org"
               className=" text-gray-700 font-medium hover:underline hover:text-black"
             >
               president@nitdgplug.org
-            </a>
+            </Link>
           </p>
           <p>
             📞{" "}
-            <a
+            <Link
               href="tel:+919679670516"
               className=" text-gray-700 font-medium hover:underline hover:text-black"
             >
               +91 9679670516
-            </a>
+            </Link>
           </p>
           {!isLoading || people ? (
             <AnimatedTooltip items={addImagesToUsers(people)} />
@@ -139,52 +140,52 @@ export default function Footer() {
           <h3 className="font-bold text-lg">Links</h3>
           <ul className="mt-2 space-y-2">
             <li>
-              <a
+              <Link
                 href="#"
                 className=" text-gray-700 font-medium hover:underline hover:text-black"
               >
                 GLUG internal Portal
-              </a>
+              </Link>
             </li>
             <li>
-              <a
+              <Link
                 href="#"
                 className=" text-gray-700 font-medium hover:underline hover:text-black"
               >
                 Blog
-              </a>
+              </Link>
             </li>
             <li>
-              <a
+              <Link
                 href="#"
                 className=" text-gray-700 font-medium hover:underline hover:text-black"
               >
                 CTF
-              </a>
+              </Link>
             </li>
             <li>
-              <a
+              <Link
                 href="#"
                 className=" text-gray-700 font-medium hover:underline hover:text-black"
               >
                 ShowDownn {new Date().getFullYear()}
-              </a>
+              </Link>
             </li>
             <li>
-              <a
+              <Link
                 href="#"
                 className=" text-gray-700 font-medium hover:underline hover:text-black"
               >
                 Mukti {new Date().getFullYear()}
-              </a>
+              </Link>
             </li>
             <li>
-              <a
+              <Link
                 href="#"
                 className=" text-gray-700 font-medium hover:underline hover:text-black"
               >
                 Aarohan {new Date().getFullYear()}
-              </a>
+              </Link>
             </li>
           </ul>
         </div>
@@ -194,53 +195,53 @@ export default function Footer() {
           <h3 className="font-bold text-lg">Community</h3>
           <ul className="mt-2 space-y-2">
             <li>
-              <a
-                href="#"
+              <Link
+                href="/faculty-advisors"
                 className=" text-gray-700 font-medium hover:underline hover:text-black"
               >
                 Faculty Advisors
-              </a>
+              </Link>
             </li>
             <li>
-              <a
-                href="#"
+              <Link
+                href="/alumni"
                 className=" text-gray-700 font-medium hover:underline hover:text-black"
               >
                 Alumni
-              </a>
+              </Link>
             </li>
             <li>
-              <a
-                href="#"
+              <Link
+                href="/sponsers"
                 className=" text-gray-700 font-medium hover:underline hover:text-black"
               >
                 Sponsers
-              </a>
+              </Link>
             </li>
             <li>
-              <a
+              <Link
                 href="#"
                 className=" text-gray-700 font-medium hover:underline hover:text-black"
               >
                 Discord
-              </a>
+              </Link>
             </li>
           </ul>
           {/* Google Play Button */}
-          <a href="https://play.google.com/store" className="mt-4">
+          <Link href="https://play.google.com/store" className="mt-4">
             <img
               src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg"
               alt="Get it on Google Play"
               className="w-40"
             />
-          </a>
+          </Link>
         </div>
       </div>
 
       {/* Social Media Links */}
       <div className="mt-8 text-center flex justify-center space-x-4">
         {socialLinks.map(({ name, icon: Icon, url, hover }) => (
-          <a
+          <Link
             key={name}
             href={url}
             target="_blank"
@@ -248,7 +249,7 @@ export default function Footer() {
             className={`text-gray-700 transition-colors duration-300 ${hover}`}
           >
             <Icon className="w-6 h-6" />
-          </a>
+          </Link>
         ))}
       </div>
 

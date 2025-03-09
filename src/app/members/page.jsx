@@ -8,14 +8,19 @@ import Link from "next/link";
 import SectionTitle from "@/components/Title";
 import { placeholder } from "@/assets";
 import { FaFacebook, FaGithub, FaLinkedin } from "react-icons/fa";
+import DataLoader from "@/components/loading/DataLoader";
 
 function MembersPage() {
-  const { data, isLoading } = useFetchMembersQuery({});
+  const { data, isLoading, error } = useFetchMembersQuery({});
 
-  if (isLoading) return <div>Loading...</div>;
-  if (!data) return <div>No data found</div>;
+  if (isLoading) return <DataLoader text="Loading members data..." />;
+  if (error)
+    return (
+      <div className=" h-[70vh] w-screen text-center">Error loading the members data.</div>
+    );
+  if (!data)
+    return <div className=" h-[70vh] w-screen text-center">No members data found.</div>;
 
-  // Group members by year
   const fourthYearMembers = data.filter((member) => member.year_name === 4);
   const thirdYearMembers = data.filter((member) => member.year_name === 3);
   const secondYearMembers = data.filter((member) => member.year_name === 2);
@@ -26,7 +31,13 @@ function MembersPage() {
         {members.map((member) => (
           <div
             key={member.id}
-            className="shadow-lg p-6  rounded-xl bg-slate-100"
+            className={`shadow-lg p-6 rounded-xl bg-gradient-to-r ${
+              member.id % 3 === 0
+                ? "from-blue-500/5 to-purple-500/5"
+                : member.id % 3 === 1
+                ? "from-orange-500/5 to-yellow-500/5"
+                : "from-pink-500/5 to-purple-500/5"
+            }`}
           >
             <div className="flex flex-col items-center mb-4">
               <Image
@@ -34,7 +45,7 @@ function MembersPage() {
                 alt={`${member.first_name} ${member.last_name}`}
                 width={160}
                 height={160}
-                className="w-40 h-40 object-cover rounded-full mb-4"
+                className="w-24 h-24 object-cover rounded-full mb-4"
               />
               <div className="text-xl font-bold text-neutral-600 dark:text-white">
                 {member.first_name} {member.last_name}
@@ -42,23 +53,23 @@ function MembersPage() {
             </div>
 
             <div className="border-t border-gray-200 dark:border-gray-700 pt-4">
-              {member.bio && (
+              {/* {member.bio && (
                 <p className="text-gray-600 dark:text-gray-300 mb-4">
                   {member.bio}
                 </p>
-              )}
-              <p className="text-gray-600 dark:text-gray-300 mb-2">
+              )} */}
+              <p className="text-gray-600 dark:text-gray-300 mb-2 text-center">
                 {member.email}
               </p>
-              <div className="flex space-x-4 mt-4">
+              <div className="flex justify-center items-center space-x-4 mt-4">
                 {member.git_link && (
                   <Link
                     href={member.git_link || "#"}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-gray-700 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white"
+                    className="text-gray-700 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white cursor-pointer"
                   >
-                    <FaGithub />
+                    <FaGithub className=" text-xl" />
                   </Link>
                 )}
                 {member.linkedin_link && (
@@ -66,9 +77,9 @@ function MembersPage() {
                     href={member.linkedin_link || "#"}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-gray-700 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white"
+                    className="text-gray-700 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white cursor-pointer"
                   >
-                    <FaLinkedin />
+                    <FaLinkedin className=" text-xl" />
                   </Link>
                 )}
                 {member.facebook_link && (
@@ -76,9 +87,9 @@ function MembersPage() {
                     href={member.facebook_link || "#"}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-gray-700 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white"
+                    className="text-gray-700 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white cursor-pointer"
                   >
-                    <FaFacebook />
+                    <FaFacebook className=" text-xl" />
                   </Link>
                 )}
               </div>
