@@ -1,9 +1,6 @@
 import "./globals.css";
 import { Montserrat } from "next/font/google";
-import CustomThemeProvider from "@/providers/Providers";
 import type { Metadata } from "next";
-import { DotPattern } from "@/components/magicui/dots";
-import { cn } from "@/lib/utils";
 import StateProvider from "@/providers/StateProvider";
 import LayoutProvider from "@/providers/LayoutProvider";
 
@@ -29,13 +26,6 @@ export default function RootLayout({
         className={montserrat.className + "  overflow-x-hidden"}
         id="page-wrap no-scrollbar relative"
       >
-        <div className=" h-screen w-screen absolute  ">
-          <DotPattern
-            className={cn(
-              "[mask-image:radial-gradient(700px_circle_at_center,white,transparent)]"
-            )}
-          />
-        </div>
         <StateProvider>
           <LayoutProvider>{children}</LayoutProvider>
         </StateProvider>

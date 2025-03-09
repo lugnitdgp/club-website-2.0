@@ -14,6 +14,7 @@ function Navbar() {
     { url: "/events", name: "Events" },
     { url: "/timeline", name: "Timeline" },
     { url: "/blogs", name: "Blogs" },
+    { url: "/projects", name: "Projects" },
     { url: "/linit", name: "Linit" },
     { url: "/members", name: "Members" },
     { url: "https://mukti.nitdgplug.org/", name: "Mukti 2025" },
@@ -25,7 +26,7 @@ function Navbar() {
     setIsSideNavOpen(false);
   }, [pathname]);
   return (
-    <div className="w-screen  flex justify-center items-center">
+    <div className="w-screen  flex justify-center items-center relative">
       {isSideNavOpen && (
         <div
           className={`flex flex-col md:flex-row md:items-center md:space-x-8  ${
@@ -70,7 +71,7 @@ function Navbar() {
           </div>
         </div>
       )}
-      <div className=" w-full md:max-w-5xl  mx-auto flex flex-row h-max justify-between items-center gap-8  backdrop-blur-md py-2 px-12 fixed z-20 top-4 rounded-3xl border-2 border-black/5 ">
+      <div className=" w-full md:max-w-6xl  mx-auto flex flex-row h-max justify-between items-center gap-8  backdrop-blur-md py-2 px-12 fixed  z-20 top-4 rounded-3xl border-2 border-black/5 ">
         <div className="flex flex-row items-center w-4/12 md:w-1/12">
           <Link href="/">
             <Image

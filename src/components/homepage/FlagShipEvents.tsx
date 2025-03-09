@@ -35,11 +35,11 @@ const FlagshipEvents = () => {
         description="Highlighting special events each month"
       />
 
-      <div className="flex flex-col md:flex-row gap-4">
+      <div className="flex flex-col md:flex-row gap-4 w-[90%] md:w-max">
         {filteredEvents?.map((event: any) => (
           <Modal key={event.id}>
           <ModalTrigger>
-            <CardContainer className="inter-var hover:shadow-lg min-w-3xl">
+            <CardContainer className="inter-var  shadow-lg min-w-3xl">
               <CardBody className="bg-gray-50 relative group/card dark:hover:shadow-2xl dark:hover:shadow-emerald-500/[0.1] dark:bg-black dark:border-white/[0.2] border-black/[0.1] min-w-7xl h-auto rounded-xl p-6 border">
                 <CardItem
                   translateZ="50"

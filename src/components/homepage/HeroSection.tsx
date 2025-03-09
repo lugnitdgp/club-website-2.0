@@ -7,13 +7,21 @@ import { AnimatedGradientText } from "../magicui/animated-gradient-text";
 import { NumberTicker } from "../magicui/number-ticker";
 import { useFetchCountQuery } from "@/store/slices/countSlice";
 import { cn } from "@/lib/utils";
-import { ChevronRight } from "lucide-react";
+import { DotPattern } from "../magicui/dots";
+
+
 function LandingComponent() {
-  const { data, isLoading, error } = useFetchCountQuery({});
+  const { data, isLoading } = useFetchCountQuery({});
   return (
     <>
-  
-      <div className="snap-start relative flex flex-row overflow-x-hidden justify-between align-middle h-screen pt-10 ">
+      <div className="snap-start relative flex flex-row overflow-x-hidden overflow-y-hidden justify-between align-middle h-screen pt-10 ">
+        <div className=" h-screen w-screen absolute  ">
+          <DotPattern
+            className={cn(
+              "[mask-image:radial-gradient(700px_circle_at_center,white,transparent)]"
+            )}
+          />
+        </div>
         <div className="home-onboard-text flex w-5/6  md:w-3/6 flex-col justify-evenly  md:px-7 mx-auto">
           {/* <div className="group relative mx-auto flex w-max items-center justify-center rounded-full px-4 py-1.5 shadow-[inset_0_-8px_10px_#8fdfff1f] transition-shadow duration-500 ease-out hover:shadow-[inset_0_-5px_10px_#8fdfff3f] ">
             <span

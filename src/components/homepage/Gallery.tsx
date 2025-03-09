@@ -64,7 +64,7 @@ function Gallery() {
   ];
 
   return (
-    <div className="flex flex-col items-center w-full h-[100vh] overflow-y-auto bg-gradient-to-r from-blue-200/20 to-purple-200/20">
+    <div className="flex flex-col items-center w-full md:h-[100vh] overflow-y-auto bg-gradient-to-r from-blue-200/20 to-purple-200/20">
       <SectionTitle
         title="Linux Gallery"
         description="Fun Fact : You can arrange them the way you like"

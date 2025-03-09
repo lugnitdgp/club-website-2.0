@@ -12,7 +12,7 @@ function SectionTitle(
           {title.substring(title.indexOf(" "))}
         </AnimatedGradientText>
       </p>
-      <p>{description}</p>
+      <p className="text-center">{description}</p>
     </div>
   );
 }

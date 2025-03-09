@@ -106,8 +106,7 @@ export default function Footer() {
         color={"#000"}
         refresh
       />
-      <div className="container mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-8">
-        {/* Contact Section */}
+      <div className="container mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-8">
         <div className="flex flex-col  gap-2">
           <Image src={logo} alt="logo" className="w-10 h-10" />
           <h3 className="font-bold text-lg">GNU/Linux Users' Group</h3>
@@ -135,62 +134,52 @@ export default function Footer() {
           ) : null}
         </div>
 
-        {/* Resources Section */}
         <div>
           <h3 className="font-bold text-lg">Links</h3>
           <ul className="mt-2 space-y-2">
-            <li>
-              <Link
-                href="#"
-                className=" text-gray-700 font-medium hover:underline hover:text-black"
-              >
-                GLUG internal Portal
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="#"
-                className=" text-gray-700 font-medium hover:underline hover:text-black"
-              >
-                Blog
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="#"
-                className=" text-gray-700 font-medium hover:underline hover:text-black"
-              >
-                CTF
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="#"
-                className=" text-gray-700 font-medium hover:underline hover:text-black"
-              >
-                ShowDownn {new Date().getFullYear()}
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="#"
-                className=" text-gray-700 font-medium hover:underline hover:text-black"
-              >
-                Mukti {new Date().getFullYear()}
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="#"
-                className=" text-gray-700 font-medium hover:underline hover:text-black"
-              >
-                Aarohan {new Date().getFullYear()}
-              </Link>
-            </li>
+            {[
+              {
+                href: "https://admin.nitdgplug.org/",
+                text: "GLUG internal Portal",
+                target: "_blank",
+              },
+              { href: "#", text: `ShowDownn ${new Date().getFullYear()}` },
+              { href: "#", text: `Mukti ${new Date().getFullYear()}` },
+              { href: "#", text: `Aarohan ${new Date().getFullYear()}` },
+            ].map((link) => (
+              <li key={link.text}>
+                <Link
+                  href={link.href}
+                  target={link.target || undefined}
+                  className="text-gray-700 font-medium hover:underline hover:text-black"
+                >
+                  {link.text}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div>
+          <h3 className="font-bold text-lg">Resources</h3>
+          <ul className="mt-2 space-y-2">
+            {[
+              { href: "/blogs", text: "Blogs" },
+              { href: "/CTF", text: "CTF" },
+              { href: "/articles", text: "Articles" },
+              { href: "/techbytes", text: "Techbytes" },
+            ].map((link) => (
+              <li key={link.text}>
+                <Link
+                  href={link.href}
+                  className="text-gray-700 font-medium hover:underline hover:text-black"
+                >
+                  {link.text}
+                </Link>
+              </li>
+            ))}
           </ul>
         </div>
 
-        {/* Community & Play Store Section */}
         <div className="flex flex-col items-start">
           <h3 className="font-bold text-lg">Community</h3>
           <ul className="mt-2 space-y-2">

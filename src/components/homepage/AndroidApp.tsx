@@ -9,7 +9,7 @@ function AndroidApp() {
         <p className="text-4xl font-bold text-gray-900">
           Download the GLUG App
         </p>
-        <p className="text-md font-medium text-gray-700 mt-2">
+        <p className="text-md font-medium text-gray-700 mt-2 w-4/5 md:w-max">
           Stay updated with the latest news, events, and discussions from GLUG.
         </p>
         {/* Call to Action Button */}
