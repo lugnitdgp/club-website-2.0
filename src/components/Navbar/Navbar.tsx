@@ -59,17 +59,27 @@ function Navbar() {
               {icon.name}
             </Link>
           ))}
-          <Link href="https://admin.nitdgplug.org" target="_blank">
-            <div className=" bg-black shadow-orange-300 text-white px-4 py-2 rounded-md w-[90%] mx-auto">
-              Login
-            </div>
-          </Link>
+          <div
+            onClick={() => {
+              window.open("https://admin.nitdgplug.org", "_blank");
+            }}
+            className="bg-gradient-to-r from-purple-400/70 via-pink-500/70 to-red-500/70 cursor-pointer rounded-xl px-4 py-2 shadow-xl md:hidden block w-[90%] mx-auto"
+          >
+            {" "}
+            Login
+          </div>
         </div>
       )}
       <div className=" w-full md:max-w-5xl  mx-auto flex flex-row h-max justify-between items-center gap-8  backdrop-blur-md py-2 px-12 fixed z-20 top-4 rounded-3xl border-2 border-black/5 ">
-        <div className="flex flex-row items-center w-1/12">
+        <div className="flex flex-row items-center w-4/12 md:w-1/12">
           <Link href="/">
-            <Image src={logo} alt="logo" width={30} height={30} />
+            <Image
+              src={logo}
+              alt="logo"
+              width={30}
+              height={30}
+              className=" shadow-lg rounded-full"
+            />
           </Link>
         </div>
         <div
@@ -79,7 +89,7 @@ function Navbar() {
             <Link
               href={icon.url}
               target={icon.url.includes("http") ? "_blank" : "_self"}
-              className={`uppercase text-lg hover:text-purple-500 font-medium hover:underline cursor-pointer py-2 px-3 md:block hidden whitespace-nowrap  ${
+              className={`uppercase text-lg hover:text-purple-500 font-medium hover:underline cursor-pointer py-2 px-3 md:block hidden whitespace-nowrap mix-blend-difference  ${
                 pathname === icon.url && "text-purple-500 underline"
               }`}
               key={icon.name}
@@ -88,15 +98,16 @@ function Navbar() {
             </Link>
           ))}
         </div>
-        <Link
-          href="https://admin.nitdgplug.org"
-          target="_blank"
-          className=" hidden md:block"
+        <div
+          onClick={() => {
+            window.open("https://admin.nitdgplug.org", "_blank");
+          }}
+          className="bg-gradient-to-r from-purple-400/40 via-pink-500/40 to-red-500/40 cursor-pointer rounded-xl px-4 py-2 shadow-xl hidden md:block"
         >
-          <div className=" bg-black shadow-orange-300 text-white px-4 py-2 rounded-md">
-            Login
-          </div>
-        </Link>
+          {" "}
+          Login
+        </div>
+
         <div
           className="md:hidden block"
           onClick={() => {

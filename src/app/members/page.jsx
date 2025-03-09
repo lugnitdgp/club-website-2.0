@@ -26,7 +26,7 @@ function MembersPage() {
         {members.map((member) => (
           <div
             key={member.id}
-            className="shadow-lg p-6  rounded-xl bg-white dark:bg-black"
+            className="shadow-lg p-6  rounded-xl bg-slate-100"
           >
             <div className="flex flex-col items-center mb-4">
               <Image
@@ -90,7 +90,7 @@ function MembersPage() {
   };
 
   return (
-    <section className="py-12">
+    <section className="mt-8 pt-20">
       <div className="w-[90%] mx-auto">
         <div className="flex flex-col items-center gap-4 text-center">
           <SectionTitle
@@ -100,7 +100,7 @@ function MembersPage() {
         </div>
 
         <div className="mx-auto mt-8 max-w-screen-xl rounded-2xl bg-muted/70 p-6 lg:p-16">
-          <div className="text-center my-10">
+          <div className="text-center">
             <h2 className="text-2xl font-semibold">Fourth Year Members</h2>
             <p className="text-muted-foreground">
               Our senior members leading the way

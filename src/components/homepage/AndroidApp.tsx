@@ -4,9 +4,8 @@ import Image from "next/image";
 
 function AndroidApp() {
   return (
-    <div className="h-[50vh] w-4/5 mx-auto bg-gradient-to-r from-purple-200 to-purple-100 rounded-[5rem] relative overflow-hidden shadow-md">
-      {/* Text Section */}
-      <div className="flex flex-col items-center justify-center absolute z-10 h-full w-3/5 text-center">
+    <div className="md:h-[50vh] h-[70vh] w-[90%] md:w-4/5 mx-auto bg-gradient-to-r from-purple-200 to-purple-100 rounded-[5rem] relative overflow-hidden shadow-md">
+      <div className="flex flex-col items-center md:justify-center absolute z-10 h-full w-full md:w-3/5 text-center pt-16 md:pt-0">
         <p className="text-4xl font-bold text-gray-900">
           Download the GLUG App
         </p>
@@ -23,11 +22,10 @@ function AndroidApp() {
         </a>
       </div>
 
-      {/* App Image */}
       <div className="relative">
         <Image
           src={android_app}
-          className="absolute z-10 h-[70vh] w-[55vh] right-20 top-10  rounded-lg"
+          className="absolute z-10 md:h-[70vh] md:w-[55vh] h-[50vh] w-[35vh] md:right-20 md:top-10 top-80 right-12 rounded-lg"
           alt="Android App"
         />
       </div>

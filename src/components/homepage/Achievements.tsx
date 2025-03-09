@@ -8,7 +8,7 @@ import { AnimatedGradientText } from "../magicui/animated-gradient-text";
 
 export const Achievements = () => {
   return (
-    <div className=" w-full flex flex-col gap-5 items-center">
+    <div className=" w-full flex flex-col gap-5 items-center bg-blue-100">
       <p className=" text-3xl font-bold">
         Our <AnimatedGradientText> Project Showcase</AnimatedGradientText>
       </p>

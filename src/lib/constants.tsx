@@ -13,8 +13,8 @@ export const content: ContentItem[] = [
     description:
       "The GNU/Linux User’s Group, NIT Durgapur is a community of GNU/Linux Users that promote the use of Free and Open Source Software. The Group was established in 2003 by a bunch of FOSS enthusiasts with the idea of popularising and contributing to Open Source. We are a plethora of designers, contributors and developers that believe in learning and sharing through opening up your mind to Open Source.",
     content: (
-      <div className="h-full w-full bg-[linear-gradient(to_bottom_right,var(--cyan-500),var(--emerald-500))] flex items-center justify-center text-white">
-        <img src="https://api.nitdgplug.org/media/card_images/IMG_20180930_230242.jpg" alt="Random Image" className="absolute inset-0 w-full h-full object-cover" />
+      <div className="h-full w-full rounded-xl">
+        <img src="https://res.cloudinary.com/dogqbjx8a/image/upload/WhatsApp_Image_2025-03-09_at_16.21.35_jtfaxn.jpg" alt="Random Image" className="absolute inset-0 w-full h-full object-cover" />
       </div>
     ),
   },
@@ -23,8 +23,8 @@ export const content: ContentItem[] = [
     description:
       "We provide budding enthusiasts like ourselves a forum to contribute and learn about FOSS. Through varied workshops on revolutionary Open Technologies throughout the year, we spread the idea of Open Source to beginners and veterans alike. We bring people together to ideate and contribute to the leading Open technologies. We provide help and resources to everyone who wants to make the web world a better place.",
     content: (
-      <div className="h-full w-full flex items-center justify-center text-white">
-        <img src="https://api.nitdgplug.org/media/card_images/a_3fJa3B7.jpeg" alt="Random Image" className="absolute inset-0 w-full h-full object-cover" />
+      <div className="h-full w-full  rounded-xl">
+        <img src="https://res.cloudinary.com/dogqbjx8a/image/upload/WhatsApp_Image_2025-03-09_at_16.23.55_zpdzkp.jpg" alt="Random Image" className="absolute inset-0 w-full h-full object-cover" />
       </div>
     ),
   },
@@ -33,7 +33,7 @@ export const content: ContentItem[] = [
     description:
       "Being a bunch of FOSS enthusiasts, we preach the idea of “free things are the best things” and firmly believe in sharing knowledge. We strive to elevate the tech culture in our college and believe that this can only be done through giving people digital resources and knowledge in all realms from hardware to software and data to design. We promote FOSS through various endeavours because we believe in the freedom of expression for everyone.",
     content: (
-      <div className="h-full w-full bg-[linear-gradient(to_bottom_right,var(--orange-500),var(--yellow-500))] flex items-center justify-center text-white">
+      <div className="h-full w-full  rounded-xl">
         <img src="https://res.cloudinary.com/dogqbjx8a/image/upload/WhatsApp_Image_2025-03-09_at_10.27.30_ugugge.jpg" alt="Random Image" className="absolute inset-0 w-full h-full object-cover" />
       </div>
     ),

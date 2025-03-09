@@ -15,7 +15,7 @@ function LandingComponent() {
   
       <div className="snap-start relative flex flex-row overflow-x-hidden justify-between align-middle h-screen pt-10 ">
         <div className="home-onboard-text flex w-5/6  md:w-3/6 flex-col justify-evenly  md:px-7 mx-auto">
-          <div className="group relative mx-auto flex w-max items-center justify-center rounded-full px-4 py-1.5 shadow-[inset_0_-8px_10px_#8fdfff1f] transition-shadow duration-500 ease-out hover:shadow-[inset_0_-5px_10px_#8fdfff3f] ">
+          {/* <div className="group relative mx-auto flex w-max items-center justify-center rounded-full px-4 py-1.5 shadow-[inset_0_-8px_10px_#8fdfff1f] transition-shadow duration-500 ease-out hover:shadow-[inset_0_-5px_10px_#8fdfff3f] ">
             <span
               className={cn(
                 "absolute inset-0 block  animate-gradient rounded-[inherit] bg-gradient-to-r from-[#ffaa40]/50 via-[#9c40ff]/50 to-[#ffaa40]/50 bg-[length:300%_100%] p-[1px]"
@@ -33,7 +33,7 @@ function LandingComponent() {
             <AnimatedGradientText className="text-base font-medium cursor-pointer">
               MUKTI 2026 Coming Soon
             </AnimatedGradientText>
-          </div>
+          </div> */}
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}

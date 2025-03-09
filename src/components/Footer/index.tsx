@@ -85,13 +85,13 @@ export default function Footer() {
         image =
           "https://api.nitdgplug.org/media/member_images/42FB0696-90A8-47FC-88C4-2F993B138FA4.jpeg";
       } else if (user.name === "Aiman Aisha (Vice President)") {
-        image = "https://api.nitdgplug.org/media/member_images/IMG_1499.jpeg";
-      } else if (user.name === "Siddhi Agarkar (Convener)") {
         image =
           "https://api.nitdgplug.org/media/member_images/IMG_20240508_145945.jpg";
+      } else if (user.name === "Siddhi Agarkar (Convener)") {
+        image = "https://api.nitdgplug.org/media/member_images/IMG_1499.jpeg";
       }
 
-      return { ...user, image }; // Return a new object with the updated image
+      return { ...user, image };
     });
     return usersWithImages;
   }
@@ -115,7 +115,7 @@ export default function Footer() {
             📧{" "}
             <a
               href="mailto:contact@nitdgplug.org"
-              className="text-blue-600 hover:text-blue-800"
+              className=" text-gray-700 font-medium hover:underline hover:text-black"
             >
               president@nitdgplug.org
             </a>
@@ -124,7 +124,7 @@ export default function Footer() {
             📞{" "}
             <a
               href="tel:+919679670516"
-              className="text-blue-600 hover:text-blue-800"
+              className=" text-gray-700 font-medium hover:underline hover:text-black"
             >
               +91 9679670516
             </a>
@@ -139,32 +139,50 @@ export default function Footer() {
           <h3 className="font-bold text-lg">Links</h3>
           <ul className="mt-2 space-y-2">
             <li>
-              <a href="#" className="text-blue-600 hover:text-blue-800">
+              <a
+                href="#"
+                className=" text-gray-700 font-medium hover:underline hover:text-black"
+              >
                 GLUG internal Portal
               </a>
             </li>
             <li>
-              <a href="#" className="text-blue-600 hover:text-blue-800">
+              <a
+                href="#"
+                className=" text-gray-700 font-medium hover:underline hover:text-black"
+              >
                 Blog
               </a>
             </li>
             <li>
-              <a href="#" className="text-blue-600 hover:text-blue-800">
+              <a
+                href="#"
+                className=" text-gray-700 font-medium hover:underline hover:text-black"
+              >
                 CTF
               </a>
             </li>
             <li>
-              <a href="#" className="text-blue-600 hover:text-blue-800">
+              <a
+                href="#"
+                className=" text-gray-700 font-medium hover:underline hover:text-black"
+              >
                 ShowDownn {new Date().getFullYear()}
               </a>
             </li>
             <li>
-              <a href="#" className="text-blue-600 hover:text-blue-800">
+              <a
+                href="#"
+                className=" text-gray-700 font-medium hover:underline hover:text-black"
+              >
                 Mukti {new Date().getFullYear()}
               </a>
             </li>
             <li>
-              <a href="#" className="text-blue-600 hover:text-blue-800">
+              <a
+                href="#"
+                className=" text-gray-700 font-medium hover:underline hover:text-black"
+              >
                 Aarohan {new Date().getFullYear()}
               </a>
             </li>
@@ -176,22 +194,34 @@ export default function Footer() {
           <h3 className="font-bold text-lg">Community</h3>
           <ul className="mt-2 space-y-2">
             <li>
-              <a href="#" className="text-blue-600 hover:text-blue-800">
+              <a
+                href="#"
+                className=" text-gray-700 font-medium hover:underline hover:text-black"
+              >
                 Faculty Advisors
               </a>
             </li>
             <li>
-              <a href="#" className="text-blue-600 hover:text-blue-800">
+              <a
+                href="#"
+                className=" text-gray-700 font-medium hover:underline hover:text-black"
+              >
                 Alumni
               </a>
             </li>
             <li>
-              <a href="#" className="text-blue-600 hover:text-blue-800">
+              <a
+                href="#"
+                className=" text-gray-700 font-medium hover:underline hover:text-black"
+              >
                 Sponsers
               </a>
             </li>
             <li>
-              <a href="#" className="text-blue-600 hover:text-blue-800">
+              <a
+                href="#"
+                className=" text-gray-700 font-medium hover:underline hover:text-black"
+              >
                 Discord
               </a>
             </li>

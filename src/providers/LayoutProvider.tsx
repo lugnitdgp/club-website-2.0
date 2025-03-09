@@ -6,7 +6,7 @@ import Navbar from "@/components/Navbar/Navbar";
 import React, { useEffect, useState } from "react";
 
 function LayoutProvider({ children }: { children: React.ReactNode }) {
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
     setTimeout(() => {
       setLoading(false);
