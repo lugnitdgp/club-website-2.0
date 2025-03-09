@@ -13,7 +13,7 @@ function LandingComponent() {
   return (
     <>
   
-      <div className="snap-start relative flex flex-row overflow-x-hidden justify-between align-middle h-screen ">
+      <div className="snap-start relative flex flex-row overflow-x-hidden justify-between align-middle h-screen pt-10 ">
         <div className="home-onboard-text flex w-5/6  md:w-3/6 flex-col justify-evenly  md:px-7 mx-auto">
           <div className="group relative mx-auto flex w-max items-center justify-center rounded-full px-4 py-1.5 shadow-[inset_0_-8px_10px_#8fdfff1f] transition-shadow duration-500 ease-out hover:shadow-[inset_0_-5px_10px_#8fdfff3f] ">
             <span
@@ -52,7 +52,7 @@ function LandingComponent() {
             <Image
               src={header}
               alt={""}
-              className=" w-1/2 h-auto mx-auto pointer-events-none"
+              className=" md:w-1/2 h-auto mx-auto pointer-events-none"
             />
           </motion.div>
 
@@ -67,17 +67,17 @@ function LandingComponent() {
                 GNU/Linux Users' Group
               </AnimatedGradientText>
             </div>
-            <div className="hidden md:block font-normal text-sm md:text-xl mt-2 md:mt-5 text-onBackground dark:text-onBackgroundDark ">
+            <div className=" font-normal text-sm md:text-xl mt-2 md:mt-5 text-onBackground dark:text-onBackgroundDark ">
               <p>
                 GNU/Linux Users' Group NIT Durgapur a community of GNU/Linux
                 Users that promote the use of Free and Open Source Software.
               </p>
             </div>
-            <div className="flex flex-col items-center mt-10">
+            <div className="flex flex-col items-center mt-5 md:mt-10">
               {isLoading || !data ? (
                 <></>
               ) : (
-                <div className="flex flex-row justify-around w-full mt-5">
+                <div className=" grid grid-cols-2 md:grid-cols-4 gap-4 justify-around w-full mt-5">
                   {Object.entries(data).map(([key, value]) => (
                     <div key={key} className="flex flex-col items-center">
                       <NumberTicker value={value as number} />

@@ -34,7 +34,7 @@ export const content: ContentItem[] = [
       "Being a bunch of FOSS enthusiasts, we preach the idea of “free things are the best things” and firmly believe in sharing knowledge. We strive to elevate the tech culture in our college and believe that this can only be done through giving people digital resources and knowledge in all realms from hardware to software and data to design. We promote FOSS through various endeavours because we believe in the freedom of expression for everyone.",
     content: (
       <div className="h-full w-full bg-[linear-gradient(to_bottom_right,var(--orange-500),var(--yellow-500))] flex items-center justify-center text-white">
-        <img src="https://via.placeholder.com/150" alt="Random Image" className="absolute inset-0 w-full h-full object-cover" />
+        <img src="https://res.cloudinary.com/dogqbjx8a/image/upload/WhatsApp_Image_2025-03-09_at_10.27.30_ugugge.jpg" alt="Random Image" className="absolute inset-0 w-full h-full object-cover" />
       </div>
     ),
   },

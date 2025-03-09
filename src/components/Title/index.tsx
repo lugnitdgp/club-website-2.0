@@ -6,7 +6,7 @@ function SectionTitle(
 ) {
   return (
     <div className="  py-4 flex flex-col items-center w-full gap-4 ">
-      <p className="md:text-5xl font-bold">
+      <p className=" text-2xl md:text-5xl font-bold">
         {title.substring(0, title.indexOf(" "))}{" "}
         <AnimatedGradientText>
           {title.substring(title.indexOf(" "))}

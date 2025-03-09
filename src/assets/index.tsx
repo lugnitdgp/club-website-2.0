@@ -5,6 +5,9 @@ import DotMap from "./Images/worldmap.png";
 import homepage_penguin_dark from "./Images/homepage_penguin_dark.png";
 import android_app from "./Images/app.png";
 import placeholder from "./Images/placeholder.png";
+import aarhn from "./Images/aarhn.png";
+import aavishkar from "./Images/aavishkar.png";
+import mukti from "./Images/mukti.png";
 export {
   logo,
   header,
@@ -13,4 +16,7 @@ export {
   homepage_penguin_dark,
   android_app,
   placeholder,
+  aarhn,
+  aavishkar,
+  mukti,
 };

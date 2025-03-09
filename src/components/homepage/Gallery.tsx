@@ -7,63 +7,64 @@ function Gallery() {
   const mediaItems = [
     {
       id: 1,
-      type: "image",
-      title: "Anurag Mishra",
+      type: "video",
+      title: "Open Source Starter Pack",
       desc: "Driven, innovative, visionary",
-      url: "https://kxptt4m9j4.ufs.sh/f/9YHhEDeslzkcbP3rYTiXwH7Y106CepJOsoAgQjyFi3MUfDkh",
-      span: "md:col-span-1 md:row-span-3 sm:col-span-1 sm:row-span-2",
+      url: "https://res.cloudinary.com/dogqbjx8a/video/upload/WhatsApp_Video_2025-03-09_at_10.28.58_csakq3.mp4",
+      span: "md:col-span-2 md:row-span-4 sm:col-span-2 sm:row-span-3",
     },
     {
       id: 2,
       type: "video",
-      title: "Dog Puppy",
+      title: "ShowDownn",
       desc: "Adorable loyal companion.",
-      url: "https://cdn.pixabay.com/video/2024/07/24/222837_large.mp4",
-      span: "md:col-span-2 md:row-span-2 col-span-1 sm:col-span-2 sm:row-span-2",
+      url: "https://res.cloudinary.com/dogqbjx8a/video/upload/WhatsApp_Video_2025-03-09_at_10.28.57_nl1hdd.mp4",
+      span: "md:col-span-3 md:row-span-3 col-span-2 sm:col-span-3 sm:row-span-3",
     },
     {
       id: 3,
       type: "image",
-      title: "Forest Path",
+      title: "Mukti",
       desc: "Mystical forest trail",
-      url: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e",
-      span: "md:col-span-1 md:row-span-3 sm:col-span-2 sm:row-span-2 ",
+      url: "https://res.cloudinary.com/dogqbjx8a/image/upload/WhatsApp_Image_2025-03-09_at_10.27.27_k8ckl9.jpg",
+      span: "md:col-span-2 md:row-span-4 sm:col-span-3 sm:row-span-3",
     },
     {
       id: 4,
       type: "image",
-      title: "Falling Leaves",
+      title: "Club 25-27",
       desc: "Autumn scenery",
-      url: "https://images.unsplash.com/photo-1506744038136-46273834b3fb",
-      span: "md:col-span-2 md:row-span-2 sm:col-span-1 sm:row-span-2 ",
+      url: "https://res.cloudinary.com/dogqbjx8a/image/upload/WhatsApp_Image_2025-03-09_at_10.27.29_1_gkl96r.jpg",
+      span: "md:col-span-3 md:row-span-3 sm:col-span-2 sm:row-span-3",
     },
     {
       id: 5,
-      type: "video",
-      title: "Bird Parrot",
+      type: "image",
+      title: "Mandatory",
       desc: "Vibrant feathered charm",
-      url: "https://cdn.pixabay.com/video/2020/07/30/46026-447087782_large.mp4",
-      span: "md:col-span-1 md:row-span-3 sm:col-span-1 sm:row-span-2 ",
+      url: "https://res.cloudinary.com/dogqbjx8a/image/upload/WhatsApp_Image_2025-03-09_at_10.27.29_vw9vgc.jpg",
+      span: "md:col-span-2 md:row-span-4 sm:col-span-2 sm:row-span-3",
     },
     {
       id: 6,
       type: "image",
-      title: "Beach Paradise",
+      title: "One more ",
       desc: "Sunny tropical beach",
-      url: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e",
-      span: "md:col-span-2 md:row-span-2 sm:col-span-1 sm:row-span-2 ",
+      url: "https://res.cloudinary.com/dogqbjx8a/image/upload/WhatsApp_Image_2025-03-09_at_10.27.27_1_tsvq4m.jpg",
+      span: "md:col-span-3 md:row-span-3 sm:col-span-2 sm:row-span-3",
     },
     {
       id: 7,
-      type: "video",
+      type: "image",
       title: "Shiva Temple",
       desc: "Peaceful Shiva sanctuary.",
-      url: "https://cdn.pixabay.com/video/2020/05/25/40130-424930032_large.mp4",
-      span: "md:col-span-1 md:row-span-3 sm:col-span-1 sm:row-span-2 ",
+      url: "https://res.cloudinary.com/dogqbjx8a/image/upload/WhatsApp_Image_2025-03-09_at_10.27.30_ugugge.jpg",
+      span: "md:col-span-2 md:row-span-4 sm:col-span-2 sm:row-span-3",
     },
   ];
+
   return (
-    <div className=" flex flex-col items-center  w-full h-[80vh] overflow-y-auto">
+    <div className=" flex flex-col items-center  w-full h-[100vh] overflow-y-auto">
       <SectionTitle
         title="Linux Gallery"
         description="Fun Fact : You can arrange them the way you like"

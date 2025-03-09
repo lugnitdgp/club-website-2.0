@@ -17,7 +17,9 @@ function LayoutProvider({ children }: { children: React.ReactNode }) {
   }
   return (
     <>
-      <Navbar />
+      <div className=" mx-auto">
+        <Navbar />
+      </div>
       {children}
       <Footer />
     </>

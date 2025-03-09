@@ -23,10 +23,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en scroll-smooth">
+    <html lang="en scroll-smooth" className="overflow-x-hidden">
       <body
         data-scroll-container
-        className={montserrat.className}
+        className={montserrat.className + "  overflow-x-hidden"}
         id="page-wrap no-scrollbar relative"
       >
         <div className=" h-screen w-screen absolute  ">
@@ -36,9 +36,9 @@ export default function RootLayout({
             )}
           />
         </div>
-          <StateProvider>
-            <LayoutProvider>{children}</LayoutProvider>
-          </StateProvider>
+        <StateProvider>
+          <LayoutProvider>{children}</LayoutProvider>
+        </StateProvider>
       </body>
     </html>
   );

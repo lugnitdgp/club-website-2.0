@@ -8,7 +8,7 @@ import React, { useState } from "react";
 function Trailer() {
   const [trailer, setTrailer] = useState(false);
   return (
-    <div className=" h-[65vh] my-7 py-7 aspect-video mx-auto cursor-pointer relative ">
+    <div className=" md:h-[65vh] my-7 py-7 aspect-video mx-auto cursor-pointer relative ">
       {!trailer && (
         <div
           className="absolute top-0 left-0 w-full h-full flex justify-center items-center z-5  opacity-50"

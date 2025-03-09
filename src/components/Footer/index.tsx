@@ -71,6 +71,31 @@ const socialLinks = [
 export default function Footer() {
   const { data: people, isLoading } = useFetchContactQuery({});
 
+  function addImagesToUsers(users: []) {
+    const usersWithImages = users.map((user: any) => {
+      let image = user.image; // Default to existing image if any
+
+      if (user.name === "Suman Karmakar (President)") {
+        image =
+          "https://api.nitdgplug.org/media/member_images/WhatsApp_Image_2022-05-31_at_9.58.25_PM.jpeg";
+      } else if (user.name === "Ayush Bhartia (General Secretary)") {
+        image =
+          "https://api.nitdgplug.org/media/member_images/WhatsApp_Image_2024-01-26_at_1.44.23_AM.jpeg";
+      } else if (user.name === "Navneet Berwal (Treasurer)") {
+        image =
+          "https://api.nitdgplug.org/media/member_images/42FB0696-90A8-47FC-88C4-2F993B138FA4.jpeg";
+      } else if (user.name === "Aiman Aisha (Vice President)") {
+        image = "https://api.nitdgplug.org/media/member_images/IMG_1499.jpeg";
+      } else if (user.name === "Siddhi Agarkar (Convener)") {
+        image =
+          "https://api.nitdgplug.org/media/member_images/IMG_20240508_145945.jpg";
+      }
+
+      return { ...user, image }; // Return a new object with the updated image
+    });
+    return usersWithImages;
+  }
+
   return (
     <footer className="bg-gradient-to-r from-[#d9d8f1] via-[#f7e0f1] to-[#FFF4D8] text-gray-900 py-10 mt-10 relative">
       <Particles
@@ -104,7 +129,9 @@ export default function Footer() {
               +91 9679670516
             </a>
           </p>
-          {!isLoading || people ? <AnimatedTooltip items={people} /> : null}
+          {!isLoading || people ? (
+            <AnimatedTooltip items={addImagesToUsers(people)} />
+          ) : null}
         </div>
 
         {/* Resources Section */}
@@ -150,12 +177,12 @@ export default function Footer() {
           <ul className="mt-2 space-y-2">
             <li>
               <a href="#" className="text-blue-600 hover:text-blue-800">
-                Discord
+                Faculty Advisors
               </a>
             </li>
             <li>
               <a href="#" className="text-blue-600 hover:text-blue-800">
-                Faculty Advisors
+                Alumni
               </a>
             </li>
             <li>
@@ -165,7 +192,7 @@ export default function Footer() {
             </li>
             <li>
               <a href="#" className="text-blue-600 hover:text-blue-800">
-                Team
+                Discord
               </a>
             </li>
           </ul>

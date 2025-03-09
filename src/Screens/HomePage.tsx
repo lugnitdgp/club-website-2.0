@@ -10,6 +10,7 @@ import Trailer from "@/components/homepage/Trailer";
 import AboutUs from "@/components/homepage/AboutUs";
 import Gallery from "@/components/homepage/Gallery";
 import AndroidApp from "@/components/homepage/AndroidApp";
+import Fests from "@/components/homepage/Fests";
 function HomePage() {
   
 
@@ -21,6 +22,7 @@ function HomePage() {
         <Trailer />
         <AboutUs />
         <Gallery />
+        <Fests />
         <FlagshipEvents />
         <Achievements />
         <WorldMap />
