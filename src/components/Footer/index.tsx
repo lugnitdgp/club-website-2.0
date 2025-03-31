@@ -143,8 +143,8 @@ export default function Footer() {
                 text: "GLUG internal Portal",
                 target: "_blank",
               },
-              { href: "#", text: `ShowDownn ${new Date().getFullYear()}` },
-              { href: "#", text: `Mukti ${new Date().getFullYear()}` },
+              { href: "https://showdownn.nitdgplug.org/", text: `ShowDownn ${new Date().getFullYear()}` },
+              { href: "https://mukti.nitdgplug.org/", text: `Mukti ${new Date().getFullYear()}` },
               { href: "#", text: `Aarohan ${new Date().getFullYear()}` },
             ].map((link) => (
               <li key={link.text}>

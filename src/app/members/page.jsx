@@ -27,7 +27,7 @@ function MembersPage() {
 
   const renderMemberCards = (members) => {
     return (
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 mt-8">
         {members.map((member) => (
           <div
             key={member.id}
@@ -110,7 +110,7 @@ function MembersPage() {
           />
         </div>
 
-        <div className="mx-auto mt-8 max-w-screen-xl rounded-2xl bg-muted/70 p-6 lg:p-16">
+        <div className="mx-auto mt-8 max-w-screen-2xl rounded-2xl bg-muted/70 p-6 lg:p-16">
           <div className="text-center">
             <h2 className="text-2xl font-semibold">Fourth Year Members</h2>
             <p className="text-muted-foreground">
