@@ -16,86 +16,95 @@ function MembersPage() {
   if (isLoading) return <DataLoader text="Loading members data..." />;
   if (error)
     return (
-      <div className=" h-[70vh] w-screen text-center">Error loading the members data.</div>
+      <div className=" h-[70vh] w-screen text-center">
+        Error loading the members data.
+      </div>
     );
   if (!data)
-    return <div className=" h-[70vh] w-screen text-center">No members data found.</div>;
+    return (
+      <div className=" h-[70vh] w-screen text-center">
+        No members data found.
+      </div>
+    );
 
   const fourthYearMembers = data.filter((member) => member.year_name === 4);
   const thirdYearMembers = data.filter((member) => member.year_name === 3);
   const secondYearMembers = data.filter((member) => member.year_name === 2);
+  const firstYearMembers = data.filter((member) => member.year_name === 1);
 
   const renderMemberCards = (members) => {
     return (
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 mt-8">
-        {members.map((member) => (
-          <div
-            key={member.id}
-            className={`shadow-lg p-6 rounded-xl bg-gradient-to-r ${
-              member.id % 3 === 0
-                ? "from-blue-500/5 to-purple-500/5"
-                : member.id % 3 === 1
-                ? "from-orange-500/5 to-yellow-500/5"
-                : "from-pink-500/5 to-purple-500/5"
-            }`}
-          >
-            <div className="flex flex-col items-center mb-4">
-              <Image
-                src={member.image || placeholder}
-                alt={`${member.first_name} ${member.last_name}`}
-                width={160}
-                height={160}
-                className="w-24 h-24 object-cover rounded-full mb-4"
-              />
-              <div className="text-xl font-bold text-neutral-600 dark:text-white">
-                {member.first_name} {member.last_name}
+        {members
+          .sort((a, b) => a.first_name.localeCompare(b.first_name))
+          .map((member) => (
+            <div
+              key={member.id}
+              className={`shadow-lg p-6 rounded-xl bg-gradient-to-r ${
+                member.id % 3 === 0
+                  ? "from-blue-500/5 to-purple-500/5"
+                  : member.id % 3 === 1
+                  ? "from-orange-500/5 to-yellow-500/5"
+                  : "from-pink-500/5 to-purple-500/5"
+              }`}
+            >
+              <div className="flex flex-col items-center mb-4">
+                <Image
+                  src={member.image || placeholder}
+                  alt={`${member.first_name} ${member.last_name}`}
+                  width={160}
+                  height={160}
+                  className="w-24 h-24 object-cover rounded-full mb-4"
+                />
+                <div className="text-xl font-bold text-neutral-600 dark:text-white">
+                  {member.first_name} {member.last_name}
+                </div>
+                {member.bio && (
+                  <p className="text-gray-600 dark:text-gray-300 text-xs mt-2 font-medium text-center ">
+                    {member.bio}
+                  </p>
+                )}
               </div>
-            </div>
 
-            <div className="border-t border-gray-200 dark:border-gray-700 pt-4">
-              {/* {member.bio && (
-                <p className="text-gray-600 dark:text-gray-300 mb-4">
-                  {member.bio}
+              <div className="border-t border-gray-200 dark:border-gray-700 pt-4">
+                <p className="text-gray-600 dark:text-gray-300 mb-2 text-center">
+                  {member.email}
                 </p>
-              )} */}
-              <p className="text-gray-600 dark:text-gray-300 mb-2 text-center">
-                {member.email}
-              </p>
-              <div className="flex justify-center items-center space-x-4 mt-4">
-                {member.git_link && (
-                  <Link
-                    href={member.git_link || "#"}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-gray-700 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white cursor-pointer"
-                  >
-                    <FaGithub className=" text-xl" />
-                  </Link>
-                )}
-                {member.linkedin_link && (
-                  <Link
-                    href={member.linkedin_link || "#"}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-gray-700 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white cursor-pointer"
-                  >
-                    <FaLinkedin className=" text-xl" />
-                  </Link>
-                )}
-                {member.facebook_link && (
-                  <Link
-                    href={member.facebook_link || "#"}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-gray-700 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white cursor-pointer"
-                  >
-                    <FaFacebook className=" text-xl" />
-                  </Link>
-                )}
+                <div className="flex justify-center items-center space-x-4 mt-4">
+                  {member.git_link && (
+                    <Link
+                      href={member.git_link || "#"}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-gray-700 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white cursor-pointer"
+                    >
+                      <FaGithub className=" text-xl" />
+                    </Link>
+                  )}
+                  {member.linkedin_link && (
+                    <Link
+                      href={member.linkedin_link || "#"}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-gray-700 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white cursor-pointer"
+                    >
+                      <FaLinkedin className=" text-xl" />
+                    </Link>
+                  )}
+                  {member.facebook_link && (
+                    <Link
+                      href={member.facebook_link || "#"}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-gray-700 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white cursor-pointer"
+                    >
+                      <FaFacebook className=" text-xl" />
+                    </Link>
+                  )}
+                </div>
               </div>
             </div>
-          </div>
-        ))}
+          ))}
       </div>
     );
   };
@@ -134,6 +143,19 @@ function MembersPage() {
             </p>
           </div>
           {renderMemberCards(secondYearMembers)}
+
+          {firstYearMembers && firstYearMembers.length > 0 && (
+            <>
+              {" "}
+              <div className="text-center my-10">
+                <h2 className="text-2xl font-semibold">First Year Members</h2>
+                <p className="text-muted-foreground">
+                  Our enthusiastic members growing with the club
+                </p>
+              </div>
+              {renderMemberCards(firstYearMembers)}
+            </>
+          )}
         </div>
       </div>
     </section>

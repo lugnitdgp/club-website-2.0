@@ -1,5 +1,6 @@
 "use client";
 
+import DataLoader from "@/components/loading/DataLoader";
 import { TextShimmerWave } from "@/components/ui/text-shimmer-wave";
 import { Timeline } from "@/components/ui/timeline";
 import { useFetchTimelineQuery } from "@/store/slices/timelineSlice";
@@ -33,23 +34,7 @@ function TimelinePage() {
     });
   }
 
-  if (isLoading)
-    return (
-      <div className="flex justify-center items-center h-[20vh]">
-        {" "}
-        <TextShimmerWave
-          className="[--base-color:#0D74CE] [--base-gradient-color:#5EB1EF]"
-          duration={1}
-          spread={1}
-          zDistance={1}
-          scaleDistance={1.1}
-          rotateYDistance={20}
-        >
-          Loading Our Time Clock...
-        </TextShimmerWave>
-        ...
-      </div>
-    );
+  if (isLoading) return <DataLoader text="Loading Timeline Data..." />;
   if (!data) return <div>No data</div>;
   return (
     <div className="w-full">
