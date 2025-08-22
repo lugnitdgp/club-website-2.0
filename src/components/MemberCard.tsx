@@ -1,12 +1,23 @@
-"use client";
-import React from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import { email, facebook, github } from "../../public/assets";
+import { motion } from "framer-motion";
+import MemberModal from "./MemberModal";
 
 const MemberCard = ({ memberObj, index }: any) => {
+  const [modalOpen, setModalOpen] = useState(false);
+
   return (
     <>
-      <div className=" flex w-max mt-[90px]">
+      <motion.div
+        key={memberObj.id || index}
+        className="flex w-max mt-[90px] cursor-pointer"
+        initial={{ y: 20, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        exit={{ y: 20, opacity: 0 }}
+        transition={{ duration: 0.3, ease: "easeIn" }}
+        onClick={() => setModalOpen(true)}
+      >
         <div
           className={
             index % 2 === 0
@@ -15,17 +26,30 @@ const MemberCard = ({ memberObj, index }: any) => {
           }
         >
           <div className="absolute left-0 right-0 flex justify-center -top-16 ">
-            <Image
-              src={memberObj.image}
-              alt="member Image"
-              width={100}
-              height={100}
-              blurDataURL="iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8Xw8AAoMBgDTD2qgAAAAASUVORK5CYII="
-              placeholder="blur"
-              className="object-contain rounded-full w-[153px] h-[153px]"
-            />
+            <motion.div
+              className="w-[153px] h-[153px] relative"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.3, duration: 0.2 }}
+            >
+              <Image
+                src={memberObj.image || "/assets/Images/homepage_penguin_dark.png"}
+                alt="member Image"
+                width={153}
+                height={153}
+                loading="lazy"
+                blurDataURL={memberObj.blurDataURL || "random"}
+                placeholder="blur"
+                className="object-contain rounded-full w-[153px] h-[153px]"
+              />
+            </motion.div>
           </div>
-          <div className="absolute bottom-4 left-0 right-0">
+          <motion.div
+            className="absolute bottom-4 left-0 right-0"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.3, duration: 0.1, ease: "easeIn" }}
+          >
             <p className="mt-16 text-lg text-center truncate ">
               {memberObj.first_name + " " + memberObj.last_name}
             </p>
@@ -34,27 +58,40 @@ const MemberCard = ({ memberObj, index }: any) => {
                 {memberObj?.bio?.length > 0 ? memberObj.bio : "GLUG Member"}
               </p>
             </div>
-            <div className="flex flex-row justify-center h-8 gap-6 items-center  ">
-              <div id="image" className="justify-center  rounded-20xl ">
-                <a href={memberObj.facebook_link}>
-                  <Image src={facebook} alt="" className="object-contain " />
-                </a>
-              </div>
-              <div id="image" className=" rounded-20xl">
-                <a href={memberObj.reddit_link}>
-                  <Image src={email} alt="" className="object-contain " />
-                </a>
-              </div>
-              <div id="image" className=" rounded-20xl my-">
-                <a href={memberObj.linkedin_link}>
-                  <Image src={github} alt="" className="object-contain " />
-                </a>
-              </div>
-            </div>
-          </div>
+            <motion.div
+              className="flex flex-row justify-center h-8 gap-6 items-center"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.3, duration: 0.1, ease: "easeIn" }}
+            >
+              {memberObj.facebook_link ? (
+                <div id="image" className="justify-center rounded-20xl">
+                  <a href={memberObj.facebook_link}>
+                    <Image src={facebook} alt="" className="object-contain" />
+                  </a>
+                </div>
+              ) : null}
+              {memberObj?.email ? (
+                <div id="image" className="rounded-20xl">
+                  <a href={`mailto:${memberObj.email}`}>
+                    <Image src={email} alt="" className="object-contain" />
+                  </a>
+                </div>
+              ) : null}
+              {memberObj.git_link ? (
+                <div id="image" className="rounded-20xl my-">
+                  <a href={memberObj.git_link}>
+                    <Image src={github} alt="" className="object-contain" />
+                  </a>
+                </div>
+              ) : null}
+            </motion.div>
+          </motion.div>
         </div>
-      </div>
+      </motion.div>
+      <MemberModal memberObj={memberObj} open={modalOpen} setOpen={setModalOpen} />
     </>
   );
 };
+
 export default MemberCard;

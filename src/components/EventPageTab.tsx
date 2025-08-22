@@ -1,6 +1,7 @@
-'use client';
+"use client";
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
+import { motion } from "framer-motion";
 
 const EventPageTab = ({ displayText, activeTab, setactiveTab }: any) => {
   const [active, setActive] = useState(() =>
@@ -12,25 +13,20 @@ const EventPageTab = ({ displayText, activeTab, setactiveTab }: any) => {
 
   return (
     <>
-      {active ? (
-        <div
-          className="w-full p-4 text-sm font-semibold text-center border-b-2 cursor-pointer round-2 md:text-2xl text-primary border-primary dark:bg-primaryContainer dark:text-onPrimaryContainer"
-          onClick={() => {
-            setactiveTab(displayText);
-          }}
-        >
-          <p>{displayText}</p>
-        </div>
-      ) : (
-        <div
-          className="w-full p-4 text-sm font-semibold text-center cursor-pointer dark:text-primaryDark md:text-2xl text-primary "
-          onClick={() => {
-            setactiveTab(displayText);
-          }}
-        >
-          <p>{displayText}</p>
-        </div>
-      )}
+      <div
+        className="relative w-full p-4 text-sm font-semibold text-center cursor-pointer dark:text-primaryDark md:text-2xl text-primary "
+        onClick={() => {
+          setactiveTab(displayText);
+        }}
+      >
+        {active ? (
+          <motion.div
+            className="absolute h-[2px] left-0 right-0 -bottom-1 bg-primary"
+            layoutId="underline"
+          />
+        ) : null}
+        <p>{displayText}</p>
+      </div>
     </>
   );
 };

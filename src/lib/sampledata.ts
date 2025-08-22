@@ -1,5 +1,5 @@
 import { TDOC } from "../../public/assets";
-
+import {blog_img} from "../../public/assets";
 export const Events = [
   {
     id:1,

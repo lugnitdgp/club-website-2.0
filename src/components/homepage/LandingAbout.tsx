@@ -1,3 +1,4 @@
+'use client';
 import Image from "next/image";
 import {
   group_photo,
@@ -5,6 +6,10 @@ import {
   landing_image_2,
   landing_image_3,
 } from "../../../public/assets";
+import { motion } from "framer-motion";
+
+const fadeAnimation = {
+}
 
 const AboutSection = ({ heading, content, image, reverse }: any) => {
   let flexProperty;
@@ -13,18 +18,39 @@ const AboutSection = ({ heading, content, image, reverse }: any) => {
       "md:flex gap-4 justify-between items-center flex-row-reverse ";
   else flexProperty = "md:flex gap-4 justify-between items-center ";
   return (
-    <div className={flexProperty}>
-      <div className="md:w-[40%]">
-        <h2 className="text-4xl font-bold text-onBackground dark:text-onBackgroundDark">
+    <div
+      className={flexProperty}>
+      <motion.div
+        initial={{ y: 40, opacity: 0 }}
+        whileInView={{ y: 0, opacity: 1 }}
+        transition={{ duration: .4, ease: 'easeIn' }}
+        viewport={{ once: true }}
+        className="md:w-[40%]">
+        <h2
+          data-scroll
+          data-scroll-speed="0.1"
+
+          className="text-4xl font-bold text-onBackground dark:text-onBackgroundDark">
           {heading}
         </h2>
-        <p className="mt-6 leading-6 text-sm mb-12 text-onBackground dark:text-onBackgroundDark">
+        <p
+
+          data-scroll
+          data-scroll-speed="0.1"
+          className="mt-6 leading-6 text-sm mb-12 text-onBackground dark:text-onBackgroundDark">
           {content}
         </p>
-      </div>
-      <div className="relative w-full md:w-[40%] h-max">
+      </motion.div>
+      <motion.div
+        initial={{ y: 40, opacity: 0 }}
+        whileInView={{ y: 0, opacity: 1 }}
+        transition={{ duration: .4, ease: 'easeIn' }}
+        viewport={{ once: true }}
+        data-scroll
+        data-scroll-speed="0.2"
+        className="relative w-full md:w-[40%] h-max">
         <Image src={image} alt="people" className="w-full h-auto rounded-2" />
-      </div>
+      </motion.div>
     </div>
   );
 };

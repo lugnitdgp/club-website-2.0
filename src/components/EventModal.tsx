@@ -23,7 +23,7 @@ const EventModal = ({ eventObj, isOpen, onClose }: any) => {
   return (
     <div
       onClick={onClose}
-      className="fixed z-50 flex items-center justify-center overflow-x-hidden overflow-y-auto outline-none rounded-3xl inset-4 focus:outline-none"
+      className="fixed z-50 flex items-center w-full h-full justify-center overflow-x-hidden overflow-y-auto outline-none inset-0 focus:outline-none backdrop-blur-md bg-[#1e1b1b73]"
     >
       {/* <button
         className="modal-overlay absolute   z-[100] h-8 w-8 top-2 right-2"

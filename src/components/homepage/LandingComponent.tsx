@@ -1,17 +1,21 @@
-"use-client";
-
+"use client";
 import React from "react";
 import Image from "next/image";
-import {
-  homepage_penguin,
-  homepage_penguin_dark,
-} from "../../../public/assets";
+import { homepage_penguin_dark } from "../../../public/assets";
+import { motion } from "framer-motion";
+
 function LandingComponent() {
   return (
     <>
-      <div className="snap-start relative flex flex-row  justify-between align-middle h-screen ">
+      <div className="snap-start relative flex flex-row overflow-x-hidden justify-between align-middle h-screen ">
         <div className="home-onboard-text flex w-5/6  md:w-3/6 flex-col mt-20  md:mt-0 md:justify-evenly md:px-7 mx-auto">
-          <div className="hidden md:block">
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: .4, ease: 'easeIn' }}
+
+            viewport={{ once: true }}
+            className="hidden md:block">
             <div className="font-bold text-heading leading-10 text-onBackground dark:text-onBackgroundDark">
               Explore
             </div>
@@ -21,11 +25,24 @@ function LandingComponent() {
             <div className=" font-bold text-heading leading-10 text-onBackground dark:text-onBackgroundDark">
               Inspire
             </div>
-          </div>
-          <p className="text-6xl font-bold text-onBackground dark:text-onBackgroundDark md:hidden text-left">
+          </motion.div>
+          <motion.p
+
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: .4, ease: 'easeIn' }}
+
+            viewport={{ once: true }}
+            className="text-6xl font-bold text-onBackground dark:text-onBackgroundDark md:hidden text-left">
             Explore <span className="text-primary">Create</span> Inspire
-          </p>
-          <div>
+          </motion.p>
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: .4, ease: 'easeIn' }}
+
+            viewport={{ once: true }}
+          >
             <div className="font-bold xl:whitespace-nowrap text-2xl md:text-6xl mt-8 md:mt-10 pb-1 text-left text-onBackground dark:text-onBackgroundDark">
               GNU/Linux Users' Group
             </div>
@@ -35,24 +52,34 @@ function LandingComponent() {
                 Users that promote the use of Free and Open Source Software.
               </p>
             </div>
-          </div>
+          </motion.div>
         </div>
-        <div className=" w-2/6  h-screen hidden md:block">
+        <motion.div
+          className=" w-2/6  h-screen hidden md:block"
+          initial={{ x: 200, rotate: 30, opacity: 0 }}
+          whileInView={{ x: 0, rotate: 0, opacity: 1 }}
+          transition={{ duration: 0.4, ease: 'easeIn' }}
+
+          viewport={{ once: true }}
+        >
           <Image
             src={homepage_penguin_dark}
             alt={""}
-            className="-z-1 h-screen dark:hidden"
+            className="-z-1 h-screen "
           />
-          <Image
-            src={homepage_penguin_dark}
-            alt={""}
-            className="-z-1 h-screen hidden dark:block"
-          />
-        </div>
-        <p className="absolute left-8 md:hidden bottom-52 text-xs w-1/3">
+        </motion.div>
+        <motion.p
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: .4, ease: 'easeIn' }}
+          data-scroll
+          data-scroll-speed="0.3"
+          viewport={{ once: true }}
+          className="absolute left-8 md:hidden bottom-52 text-xs w-1/3">
           GNU/Linux Users' Group NIT Durgapur a community of GNU/Linux Users
           that promote the use of Free and Open Source Software.
-        </p>
+        </motion.p>
+
         <Image
           src={homepage_penguin_dark}
           alt={""}

@@ -1,5 +1,4 @@
 "use client";
-
 import EventPageLoading from "@/components/loading/EventPageLoading";
 
 export default function Loading() {

@@ -3,28 +3,24 @@ import Link from 'next/link';
 import Image from 'next/image';
 
 import {
-  add_square_light,
   calendar,
   edit_light,
   group,
-  mortarboard_light,
+  alumni,
   video_light,
-  logo,
-  notebook,
+  home_icon,
 } from '../../public/assets';
 import ThemeSwitcher from './ThemeSwitcher';
-import { Dialog, Transition } from '@headlessui/react';
-import { Fragment, useState } from 'react';
-import { MdOutlineCancel } from 'react-icons/md';
-import { CiMenuBurger } from 'react-icons/ci';
 import { slide as Menu } from 'react-burger-menu';
 
 type Props = { icons: any[] };
 const icons = [
+  { path: '/', icon: home_icon, name: 'Home' },
   { path: '/events', icon: video_light, name: 'Events' },
   { path: '/timeline', icon: calendar, name: 'Timeline' },
   { path: '/blogs', icon: edit_light, name: 'Blogs' },
   { path: '/members', icon: group, name: 'Members' },
+  { path: '/alumni', icon: alumni, name: 'Alumni' },
 ];
 
 const navigation = [
@@ -32,13 +28,14 @@ const navigation = [
   { name: 'Timeline', href: '#', icon: calendar, current: false },
   { name: 'Blogs', href: '#', icon: edit_light, current: false },
   { name: 'Members', href: '#', icon: group, current: false },
+  { name: 'Alumni', href: '#', icon: alumni, current: false },
 ];
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ');
 }
 
-function MobileNav({}: Props) {
+function MobileNav({ }: Props) {
   return (
     <Menu className="bg-[#fffbff] dark:bg-[#201A19]">
       {icons.map((icon, index) => {

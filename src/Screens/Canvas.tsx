@@ -38,13 +38,15 @@ const MonthCircle = ({
 const Paths = ({
   source,
   dest,
+  stroke,
 }: {
   source: { x: number; y: number };
   dest: { x: number; y: number };
+  stroke: string;
 }) => {
   return (
     <Shape
-      stroke={"black"}
+      stroke={stroke}
       strokeWidth={1}
       sceneFunc={(ctx, shape) => {
         ctx.beginPath();
@@ -61,11 +63,13 @@ const TextGroup = ({
   x,
   y,
   width,
+  fill,
 }: {
-  events: string[];
+  events: any[];
   x: number;
   y: number;
   width: number;
+  fill: string;
 }) => {
   const shift = 20,
     initial = Math.floor(events.length / 2) * shift;
@@ -73,34 +77,33 @@ const TextGroup = ({
   return events.map((event, index) => {
     return (
       <Text
-        text={event}
+        text={event.event_name}
         x={x}
         y={y - initial + index * shift}
         align="center"
         width={width}
         fontSize={shift - 4}
         key={index}
+        fill={fill}
       />
     );
   });
 };
 
-const months = [
-  "JAN",
-  "FEB",
-  "MAR",
-  "APR",
-  "MAY",
-  "JUN",
-  "JUL",
-  "AUG",
-  "SEP",
-  "OCT",
-  "NOV",
-  "DEC",
-];
-
-function Canvas({ timelineData }: { timelineData: any }) {
+function Canvas({
+  timelineData,
+  darkConfig,
+}: {
+  timelineData: any;
+  darkConfig?: {
+    monthColor1: string;
+    monthColor2: string;
+    lineColor: string;
+    textColor: string;
+    onMonthColorl: string;
+    onMonthColor2: string;
+  };
+}) {
   const [width, height] = useWindowSize();
   const [dimensions, setDimensions] = useState({
     width: 0,
@@ -109,7 +112,6 @@ function Canvas({ timelineData }: { timelineData: any }) {
   const divRef = useRef<any>(null);
 
   useEffect(() => {
-    console.log(divRef.current?.offsetHeight);
     if (divRef.current?.offsetHeight && divRef.current?.offsetWidth) {
       setDimensions({
         width: divRef.current.offsetWidth,
@@ -126,11 +128,11 @@ function Canvas({ timelineData }: { timelineData: any }) {
         y: 100 + idx * 200,
         rad: 35,
         text: monthData.month,
-        fill: "#FCDFA6",
+        fill: darkConfig?.monthColor1 || "#FCDFA6",
         fontSize: 18,
         events,
       };
-      if (idx % 2 != 0) config.fill = "#FFDAD5";
+      if (idx % 2 != 0) config.fill = darkConfig?.monthColor2 || "#FFDAD5";
 
       return config;
     }
@@ -140,7 +142,7 @@ function Canvas({ timelineData }: { timelineData: any }) {
         y: 500 + idx * 300,
         rad: 60,
         text: monthData.month,
-        fill: "#FCDFA6",
+        fill: darkConfig?.monthColor1 || "#FCDFA6",
         events,
       };
     } else {
@@ -149,7 +151,7 @@ function Canvas({ timelineData }: { timelineData: any }) {
         y: 500 + idx * 300,
         rad: 60,
         text: monthData.month,
-        fill: "#FFDAD5",
+        fill: darkConfig?.monthColor2 || "#FFDAD5",
         events,
       };
     }
@@ -178,6 +180,7 @@ function Canvas({ timelineData }: { timelineData: any }) {
           y={month.y}
           width={width - 100}
           key={index}
+          fill={darkConfig?.textColor || "#201a19"}
         />
       );
     }
@@ -188,6 +191,7 @@ function Canvas({ timelineData }: { timelineData: any }) {
         y={month.y}
         key={month}
         width={width - 500 - 400}
+        fill={darkConfig?.textColor || "#201a19"}
       />
     );
   });
@@ -205,6 +209,7 @@ function Canvas({ timelineData }: { timelineData: any }) {
         source={{ x: currx, y: curry }}
         dest={{ x: currdest, y: currdesty }}
         key={i}
+        stroke={darkConfig?.lineColor || "#201a19"}
       />
     );
   }
@@ -219,12 +224,13 @@ function Canvas({ timelineData }: { timelineData: any }) {
         <p className="mt-2">Through our Lense</p>
       </div>
       <div ref={divRef} className="h-full">
-        <Stage width={width} height={500 * 23}>
+        <Stage width={width} height={width > 768 ? monthConfig.length * 312 : monthConfig.length * 200}>
           <Layer>
             {width > 768 ? (
               <Paths
                 source={{ x: width - 500, y: 150 }}
                 dest={{ x: 400, y: 500 }}
+                stroke={darkConfig?.lineColor || "#201a19"}
               />
             ) : null}
             {width > 768 ? (

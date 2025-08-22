@@ -2,6 +2,7 @@ import add_square_light from "./Images/Add_square_light.svg";
 import calendar from "./Images/Calendar.svg";
 import edit_light from "./Images/Edit_light.svg";
 import group from "./Images/Group.svg";
+import alumni from "./Images/Alumni.svg";
 import mortarboard_light from "./Images/Mortarboard_light.svg";
 import polygon1 from "./Images/Polygon1.svg";
 import polygon2 from "./Images/Polygon2.svg";
@@ -32,11 +33,13 @@ import landing_image_2 from "./Images/Landing_img_2.jpeg";
 import landing_image_3 from "./Images/Landing_img_3.jpeg";
 import blog_img from "./Images/blog_img.svg";
 import blog_img2 from "./Images/blog_img2.svg";
+import home_icon from "./Images/home-icon.svg"
 export {
   add_square_light,
   calendar,
   edit_light,
   group,
+  alumni,
   mortarboard_light,
   polygon1,
   polygon2,
@@ -66,5 +69,6 @@ export {
   landing_image_2,
   landing_image_3,
   blog_img,
-  blog_img2
+  blog_img2,
+  home_icon
 };

@@ -1,3 +1,4 @@
+"use client";
 import Image from "next/image";
 import {
   computer_icon,
@@ -7,11 +8,16 @@ import {
   events_dark,
   computer_dark,
 } from "../../../public/assets";
+import { motion } from "framer-motion";
 
 const Achievement = ({ icon, icon_dark, num, text, isPrimary }: any) => {
   if (isPrimary) {
     return (
-      <div className="flex md:flex-col md:row-span-2 justify-between items-center bg-tertiary dark:bg-[#292322] text-onTertiary dark:text-[#EDE0DE] px-6 py-2 md:py-4 md:pb-6 rounded-md ">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: .300 }}
+        className="flex md:flex-col md:row-span-2 justify-between items-center bg-tertiary dark:bg-[#292322] text-onTertiary dark:text-[#EDE0DE] px-6 py-2 md:py-4 md:pb-6 rounded-md ">
         <Image
           src={icon}
           alt={"error"}
@@ -30,11 +36,17 @@ const Achievement = ({ icon, icon_dark, num, text, isPrimary }: any) => {
             {text}
           </p>
         </div>
-      </div>
+      </motion.div>
     );
   } else {
     return (
-      <div className="flex justify-between items-center bg-primaryContainer  dark:bg-[#292322] dark:text-[#EDE0DE] text-onPrimaryContainer px-6 py-2  rounded-md ">
+      <motion.div
+
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: .300 }}
+
+        className="flex justify-between items-center bg-primaryContainer  dark:bg-[#292322] dark:text-[#EDE0DE] text-onPrimaryContainer px-6 py-2  rounded-md ">
         <Image
           src={icon}
           alt={"error"}
@@ -53,7 +65,7 @@ const Achievement = ({ icon, icon_dark, num, text, isPrimary }: any) => {
             {text}
           </p>
         </div>
-      </div>
+      </motion.div>
     );
   }
 };
@@ -64,7 +76,7 @@ export const Achievements = () => {
       <Achievement
         icon={groups_icon}
         icon_dark={grops_icon_dark}
-        num={50}
+        num={54}
         text="Members"
         isPrimary={true}
       />
