@@ -18,6 +18,9 @@ const nextConfig = {
       },
       {
         hostname: "randomuser.me"
+      },
+      {
+        hostname: "cdnjs.cloudflare.com"
       }
     ],
   },

@@ -69,10 +69,17 @@ const socialLinks = [
   },
 ];
 
+// Type for User
+type User = {
+  name: string;
+  role: string;
+  image?: string;
+};
+
 export default function Footer() {
   const { data: people, isLoading } = useFetchContactQuery({});
 
-  function addImagesToUsers(users: []) {
+  function addImagesToUsers(users: User[]) {
     const usersWithImages = users.map((user: any) => {
       let image = user.image; // Default to existing image if any
 
