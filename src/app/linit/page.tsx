@@ -9,7 +9,6 @@ import LinitItem from "@/components/linitViewer/linit-item";
 
 function LinitPage() {
   const { data, isLoading, error } = useFetchLinitQuery({});
-  console.log(data);
   const [isViewerOpen, setViewerOpen] = useState(false);
   const [pdf, setPdf] = useState("");
 

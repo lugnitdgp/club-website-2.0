@@ -7,6 +7,8 @@ import { eventsApi } from './slices/eventsSlice'
 import { membersApi } from './slices/membersSlice'
 import { alumniApi } from './slices/alumniSlice'
 import { linitApi } from './slices/linitSlice'
+import { projectApi } from './slices/projectsSlice'
+
 export const store = configureStore({
     reducer: {
         [countApi.reducerPath]: countApi.reducer,
@@ -16,8 +18,9 @@ export const store = configureStore({
         [eventsApi.reducerPath]: eventsApi.reducer,
         [membersApi.reducerPath]: membersApi.reducer,
         [alumniApi.reducerPath]: alumniApi.reducer,
-        [linitApi.reducerPath]: linitApi.reducer
+        [linitApi.reducerPath]: linitApi.reducer,
+        [projectApi.reducerPath]: projectApi.reducer,
     },
     middleware: (getDefaultMiddleware) =>
-        getDefaultMiddleware().concat(countApi.middleware, contactApi.middleware, timelineApi.middleware, devArticlesApi.middleware, eventsApi.middleware, membersApi.middleware, alumniApi.middleware, linitApi.middleware),
+        getDefaultMiddleware().concat(countApi.middleware, contactApi.middleware, timelineApi.middleware, devArticlesApi.middleware, eventsApi.middleware, membersApi.middleware, alumniApi.middleware, linitApi.middleware, projectApi.middleware),
 })

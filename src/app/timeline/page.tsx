@@ -27,7 +27,7 @@ function TimelinePage() {
             <p className="text-neutral-800 dark:text-neutral-200 text-xs md:text-2xl font-medium mb-8">
               {event.event_name}
             </p>
-            <div dangerouslySetInnerHTML={{ __html: event.detail }} />
+            <div dangerouslySetInnerHTML={{ __html: event.detail_markdown }} />
           </div>
         ),
       };
