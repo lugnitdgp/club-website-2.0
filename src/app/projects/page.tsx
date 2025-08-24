@@ -15,6 +15,7 @@ import {
   ModalTrigger,
 } from "@/components/ui/animated-modal";
 import { Button } from "@/components/ui/button";
+import { Code, Link2 } from "lucide-react";
 
 function ProjectPage() {
   const { data, isLoading, error } = useFetchProjectsQuery({});
@@ -75,29 +76,33 @@ function ProjectPage() {
                       className="h-60 w-full object-cover rounded-xl group-hover/card:shadow-xl"
                     />
                   </CardItem>
-                  <div className="flex flex-col mt-8 gap-2">
+                  <div className="flex flex-row mt-8 gap-2">
                     {project.gitlink && (
-                      <CardItem
-                        translateZ={20}
-                        as={Link}
-                        href={project.gitlink}
-                        className="text-blue-500"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        GitHub Repo
+                      <CardItem translateZ={20} as="div">
+                        <Link
+                          href={project.gitlink}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          <Button variant="outline" className="gap-2 rounded-xl">
+                            <Code size={18} />
+                            Code
+                          </Button>
+                        </Link>
                       </CardItem>
                     )}
                     {project.hosted_link && (
-                      <CardItem
-                        translateZ={20}
-                        as={Link}
-                        href={project.hosted_link}
-                        className="text-green-600"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        Live Demo
+                      <CardItem translateZ={20} as="div">
+                        <Link
+                          href={project.hosted_link}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          <Button variant="outline" className="gap-2 rounded-xl">
+                            <Link2 size={18} />
+                            Demo
+                          </Button>
+                        </Link>
                       </CardItem>
                     )}
                   </div>
