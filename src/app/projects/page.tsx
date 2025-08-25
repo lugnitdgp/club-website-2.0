@@ -21,6 +21,7 @@ function ProjectPage() {
   const { data, isLoading, error } = useFetchProjectsQuery({});
 
   const trimDescription = (description: string, maxLength: number) => {
+    if(!description) return "";
     if (description.length <= maxLength) return description;
     return description.substring(0, maxLength) + "...";
   };
