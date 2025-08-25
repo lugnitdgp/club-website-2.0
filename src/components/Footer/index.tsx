@@ -80,6 +80,7 @@ export default function Footer() {
   const { data: people, isLoading } = useFetchContactQuery({});
 
   function addImagesToUsers(users: User[]) {
+    if (!users) return [];
     const usersWithImages = users.map((user: any) => {
       let image = user.image; // Default to existing image if any
 

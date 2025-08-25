@@ -50,34 +50,7 @@ const FlipbookViewer = ({
   onClose,
   pdfURL ,
 } : FlipbookViewerProps) => {
-    console.log(pdfjs.version);
-    // const [pdf, setPdf] = useState<PDFDocumentProxy>();
     const [numPages, setNumPages] = useState<number | null>(null);
-
-    function onDocumentLoadSuccess({ numPages }: { numPages: number }) {
-        setNumPages(numPages);
-    }
-  
-
-//   useEffect(() => {
-//     if (!isOpen) return;
-
-//     const loadPDF = async () => {
-//       if (!pdfURL) return;
-
-//       try {
-//         const loadingTask = pdfjs.getDocument(pdfURL);
-//         const pdf = await loadingTask.promise;
-//         const numPages = pdf.numPages;
-//         setNumPages(numPages);
-//         setPdf(pdf);
-//       } catch (error) {
-//         console.error("Error loading PDF:", error);
-//       }
-//     };
-
-//     loadPDF();
-//   }, [isOpen, pdfURL]);
 
     const [currentPage, setCurrentPage] = useState(1);
 
@@ -86,6 +59,8 @@ const FlipbookViewer = ({
     }, [isOpen, pdfURL]);
 
   useEffect(() => {
+     if (typeof window === "undefined" || typeof document === "undefined") return;
+
     const handleFullscreenChange = () => {
       if (!document.fullscreenElement && isOpen) {
         onClose();
@@ -112,7 +87,7 @@ const FlipbookViewer = ({
     const pageHeight = screenHeight;
     const pageWidth = Math.round(pageHeight * ASPECT_RATIO);
 
-  if (!isOpen) return null;
+  if (typeof window === "undefined" || typeof document === "undefined" || !isOpen) return null;
 
   return (
     <div className="fixed inset-0 z-[100] bg-black">

@@ -1,11 +1,14 @@
 "use client";
 
+import dynamic from 'next/dynamic';
 import DataLoader from "@/components/loading/DataLoader";
 import { useFetchLinitQuery } from "@/store/slices/linitSlice";
 import React from "react";
 import { useState } from "react";
-import FlipbookViewer from "@/components/linitViewer/FlipbookViewer";
+// import FlipbookViewer from "@/components/linitViewer/FlipbookViewer";
 import LinitItem from "@/components/linitViewer/linit-item";
+
+const FlipbookViewer = dynamic(() => import('@/components/linitViewer/FlipbookViewer'), { ssr: false });
 
 function LinitPage() {
   const { data, isLoading, error } = useFetchLinitQuery({});
