@@ -1,4 +1,3 @@
-import DataLoader from "@/components/loading/DataLoader";
 import React from "react";
 
 function FacultyAdvisorsPage() {
