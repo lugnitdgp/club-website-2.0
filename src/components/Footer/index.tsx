@@ -84,20 +84,20 @@ export default function Footer() {
     const usersWithImages = users.map((user: any) => {
       let image = user.image; // Default to existing image if any
 
-      if (user.name === "Suman Karmakar (President)") {
+      if (user.name === "Akash Gupta (President)") {
         image =
-          "https://api.nitdgplug.org/media/member_images/WhatsApp_Image_2022-05-31_at_9.58.25_PM.jpeg";
-      } else if (user.name === "Ayush Bhartia (General Secretary)") {
+          "https://res.cloudinary.com/dcivgunp5/image/upload/akash_gupta_dyhjtx.jpg";
+      } else if (user.name === "Sankeerth Reddy (General Secretary)") {
         image =
-          "https://api.nitdgplug.org/media/member_images/WhatsApp_Image_2024-01-26_at_1.44.23_AM.jpeg";
-      } else if (user.name === "Navneet Berwal (Treasurer)") {
+          "https://res.cloudinary.com/dcivgunp5/image/upload/sankeerth_reddy_lqib1k.jpg";
+      } else if (user.name === "Anand Amar (Treasurer)") {
         image =
-          "https://api.nitdgplug.org/media/member_images/42FB0696-90A8-47FC-88C4-2F993B138FA4.jpeg";
-      } else if (user.name === "Aiman Aisha (Vice President)") {
+          "https://res.cloudinary.com/dcivgunp5/image/upload/anand_amar_pkzggh.jpg";
+      } else if (user.name === "Yoshitha Reddy (Vice President)") {
         image =
-          "https://api.nitdgplug.org/media/member_images/IMG_20240508_145945.jpg";
-      } else if (user.name === "Siddhi Agarkar (Convener)") {
-        image = "https://api.nitdgplug.org/media/member_images/IMG_1499.jpeg";
+          "https://res.cloudinary.com/dcivgunp5/image/upload/yosittha_reddy_qjtrtl.jpg";
+      } else if (user.name === "Dipayan Das (Convener)") {
+        image = "https://res.cloudinary.com/dcivgunp5/image/upload/dipayan-das_fzikxe.jpg";
       }
 
       return { ...user, image };
