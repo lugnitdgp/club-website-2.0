@@ -13,7 +13,7 @@ function AndroidApp() {
           Stay updated with the latest news, events, and discussions from GLUG.
         </p>
         {/* Call to Action Button */}
-        <a href="https://play.google.com/store" className="mt-4">
+        <a href="https://play.google.com/store/apps/details?id=com.nitdlug.app" className="mt-4">
           <img
             src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg"
             alt="Get it on Google Play"
