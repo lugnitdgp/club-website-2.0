@@ -18,20 +18,31 @@ function LinitItem({ title, description, pdfURL, year , handleViewerOpen}: Linit
         <p className="text-gray-700 mb-4">{description}</p>
       </div>
       <div className="flex flex-row gap-4 justify-end">
-        <Button
-          as={Link}
-          href={pdfURL}
-          target="_blank"
-          className="bg-amber-400 hover:bg-amber-500 transition-all duration-300 font-semibold px-4 py-6 rounded-3xl"
-          size="sm"
-          download
-        >
-          Download
-        </Button>
+        {pdfURL ? (
+          <Button
+            as={Link}
+            href={pdfURL}
+            target="_blank"
+            className="bg-amber-400 hover:bg-amber-500 transition-all duration-300 font-semibold px-4 py-6 rounded-3xl"
+            size="sm"
+            download
+          >
+            Download
+          </Button>
+        ) : (
+          <Button
+            isDisabled
+            className="bg-gray-400 font-semibold px-4 py-6 rounded-3xl cursor-not-allowed"
+            size="sm"
+          >
+            Download
+          </Button>
+        )}
         <Button
           onPress={() => handleViewerOpen(true)}
           className="bg-violet-300 hover:bg-violet-400 transition-all duration-300 font-semibold px-4 py-6 rounded-3xl"
           size="sm"
+          isDisabled={!pdfURL}
         >
           View
         </Button>

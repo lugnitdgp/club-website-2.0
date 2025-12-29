@@ -2,7 +2,7 @@
 
 import { cn } from "@/lib/utils";
 import { easeInOut } from "framer-motion";
-import { motion, MotionStyle, Transition } from "motion/react";
+import { motion, MotionStyle, Transition } from "framer-motion";
 
 interface BorderBeamProps {
   /**

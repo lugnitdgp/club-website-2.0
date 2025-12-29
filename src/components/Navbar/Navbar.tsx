@@ -17,7 +17,7 @@ function Navbar() {
     { url: "/projects", name: "Projects" },
     { url: "/linit", name: "Linit" },
     { url: "/members", name: "Members" },
-    { url: "https://mukti.nitdgplug.org/", name: "Mukti 2025" },
+    // { url: "https://mukti.nitdgplug.org/", name: "Mukti 2025" }, // Hidden for now
   ];
 
   const pathname = usePathname();
@@ -60,6 +60,7 @@ function Navbar() {
               {icon.name}
             </Link>
           ))}
+          {/* Login button hidden for now
           <div
             onClick={() => {
               window.open("https://admin.nitdgplug.org", "_blank");
@@ -69,6 +70,7 @@ function Navbar() {
             {" "}
             Login
           </div>
+          */}
         </div>
       )}
       <div className=" w-full md:max-w-6xl  mx-auto flex flex-row h-max justify-between items-center gap-8  backdrop-blur-md py-2 px-12 fixed  z-20 top-4 rounded-3xl border-2 border-black/5 ">
@@ -99,6 +101,7 @@ function Navbar() {
             </Link>
           ))}
         </div>
+        {/* Login button hidden for now
         <div
           onClick={() => {
             window.open("https://admin.nitdgplug.org", "_blank");
@@ -108,6 +111,7 @@ function Navbar() {
           {" "}
           Login
         </div>
+        */}
 
         <div
           className="md:hidden block"

@@ -69,13 +69,19 @@ function ProjectPage() {
                     ></div>
                   </CardItem>
                   <CardItem translateZ="100" className="w-full mt-4">
-                    <Image
-                      src={project.image_link}
-                      alt={project.title}
-                      height={1000}
-                      width={1000}
-                      className="h-60 w-full object-cover rounded-xl group-hover/card:shadow-xl"
-                    />
+                    {project.image_link ? (
+                      <Image
+                        src={project.image_link}
+                        alt={project.title}
+                        height={1000}
+                        width={1000}
+                        className="h-60 w-full object-cover rounded-xl group-hover/card:shadow-xl"
+                      />
+                    ) : (
+                      <div className="h-60 w-full bg-gray-200 dark:bg-gray-800 rounded-xl flex items-center justify-center">
+                        <span className="text-gray-400">No image available</span>
+                      </div>
+                    )}
                   </CardItem>
                   <div className="flex flex-row mt-8 gap-2">
                     {project.gitlink && (
@@ -115,13 +121,19 @@ function ProjectPage() {
                 <div className="text-xl font-bold text-neutral-600 dark:text-white">
                   {project.title}
                 </div>
-                <Image
-                  src={project.image_link}
-                  alt={project.title}
-                  height={1000}
-                  width={1000}
-                  className="h-60 w-full object-cover rounded-xl group-hover/card:shadow-xl"
-                />
+                {project.image_link ? (
+                  <Image
+                    src={project.image_link}
+                    alt={project.title}
+                    height={1000}
+                    width={1000}
+                    className="h-60 w-full object-cover rounded-xl group-hover/card:shadow-xl"
+                  />
+                ) : (
+                  <div className="h-60 w-full bg-gray-200 dark:bg-gray-800 rounded-xl flex items-center justify-center">
+                    <span className="text-gray-400">No image available</span>
+                  </div>
+                )}
                 <div
                   className="h-[40vh] overflow-y-scroll"
                   dangerouslySetInnerHTML={{
