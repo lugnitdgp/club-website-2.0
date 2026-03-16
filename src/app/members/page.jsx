@@ -46,8 +46,7 @@ function MemberCard({ member, variant }) {
     boxShadow: "0px 2px 16px rgba(0,0,0,0.07)",
     borderRadius: "25px",
     willChange: "transform",
-    aspectRatio: "3/4",   // ← maintains card shape without fixed px
-    width: "100%",        // ← fills grid cell
+    height: "400px",
   }}
 >
       <PixelCard variant={variant}>
