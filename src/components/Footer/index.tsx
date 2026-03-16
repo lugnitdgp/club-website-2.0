@@ -87,7 +87,7 @@ export default function Footer() {
       if (user.name === "Akash Gupta (President)") {
         image =
           "https://res.cloudinary.com/dcivgunp5/image/upload/akash_gupta_dyhjtx.jpg";
-      } else if (user.name === "Sankeerth Reddy (General Secretary)") {
+      } else if (user.name === "Sankeerth Reddy Suravaram (General Secretary)") {
         image =
           "https://res.cloudinary.com/dcivgunp5/image/upload/sankeerth_reddy_lqib1k.jpg";
       } else if (user.name === "Anand Amar (Treasurer)") {
