@@ -4,10 +4,12 @@ import React, { useRef } from "react";
 import Link from "next/link";
 import SectionTitle from "@/components/Title";
 import { FaFacebook, FaGithub, FaLinkedin } from "react-icons/fa";
-import PixelCard from "@/components/PixelCard";
+// import PixelCard from "@/components/PixelCard";
 // import ProfileCard from "./ProfileCard";
 import { useFetchMembersQuery } from "@/store/slices/membersSlice";
 import DataLoader from "@/components/loading/DataLoader";
+import dynamic from "next/dynamic";
+const PixelCard = dynamic(() => import("@/components/PixelCard"), { ssr: false });
 
 function MemberCard({ member, variant }) {
   const cardRef = useRef(null);
