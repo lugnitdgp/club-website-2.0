@@ -36,21 +36,20 @@ function MemberCard({ member, variant }) {
   };
 
   return (
-    <div
-      ref={cardRef}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
-      style={{
-        transform: "perspective(800px) rotateX(0deg) rotateY(0deg)",
-        transition: "transform 0.15s ease-out, box-shadow 0.15s ease-out",
-        boxShadow: "0px 4px 20px rgba(0,0,0,0.08)",
-        borderRadius: "25px",
-        willChange: "transform",
-        width: "300px",
-        height: "400px",
-        flexShrink: 0,
-      }}
-    >
+<div
+  ref={cardRef}
+  onMouseMove={handleMouseMove}
+  onMouseLeave={handleMouseLeave}
+  style={{
+    transform: "perspective(800px) rotateX(0deg) rotateY(0deg)",
+    transition: "transform 0.15s ease-out, box-shadow 0.15s ease-out",
+    boxShadow: "0px 2px 16px rgba(0,0,0,0.07)",
+    borderRadius: "25px",
+    willChange: "transform",
+    aspectRatio: "3/4",   // ← maintains card shape without fixed px
+    width: "100%",        // ← fills grid cell
+  }}
+>
       <PixelCard variant={variant}>
         <div className="absolute inset-0 flex flex-col items-center justify-center p-4 text-center gap-2">
           {member.image ? (
