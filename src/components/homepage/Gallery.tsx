@@ -1,5 +1,6 @@
+"use client";
+
 import React from "react";
-import { AnimatedGradientText } from "../magicui/animated-gradient-text";
 import InteractiveBentoGallery from "../blocks/interactive-bento-gallery";
 import SectionTitle from "../Title";
 
@@ -48,7 +49,7 @@ function Gallery() {
     {
       id: 6,
       type: "image",
-      title: "One more ",
+      title: "One more",
       desc: "Sunny tropical beach",
       url: "https://res.cloudinary.com/dogqbjx8a/image/upload/WhatsApp_Image_2025-03-09_at_10.27.27_1_tsvq4m.jpg",
       span: "md:col-span-3 md:row-span-3 sm:col-span-2 sm:row-span-3",
@@ -64,17 +65,18 @@ function Gallery() {
   ];
 
   return (
-    <div className="flex flex-col items-center w-full md:h-[100vh] overflow-y-auto bg-gradient-to-r from-blue-200/20 to-purple-200/20">
+    <div className="flex flex-col items-center w-full py-16 bg-gradient-to-r from-blue-200/20 to-purple-200/20 dark:from-blue-900/10 dark:to-purple-900/10 transition-colors duration-300">
       <SectionTitle
         title="Linux Gallery"
         description="Fun Fact : You can arrange them the way you like"
       />
-
-      <InteractiveBentoGallery
-        mediaItems={mediaItems}
-        title=""
-        description=""
-      />
+      <div className="w-full max-w-7xl mx-auto px-4 mt-6">
+        <InteractiveBentoGallery
+          mediaItems={mediaItems}
+          title=""
+          description=""
+        />
+      </div>
     </div>
   );
 }

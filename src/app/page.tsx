@@ -2,7 +2,6 @@
 
 import React from "react";
 import LandingComponent from "../components/homepage/HeroSection";
-import Footer from "@/components/Footer";
 import WorldMap from "@/components/homepage/WorldMap";
 import FlagshipEvents from "@/components/homepage/FlagShipEvents";
 import Trailer from "@/components/homepage/Trailer";
@@ -22,7 +21,6 @@ function HomePage() {
       <FlagshipEvents />
       <WorldMap />
       <AndroidApp />
-      <Footer />
     </div>
   );
 }

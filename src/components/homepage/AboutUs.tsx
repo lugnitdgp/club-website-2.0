@@ -1,18 +1,20 @@
+"use client";
+
 import React from "react";
-import { AnimatedGradientText } from "../magicui/animated-gradient-text";
-import { StickyScroll } from "../ui/sticky-scroll-reveal";
-import { content } from "@/lib/constants";
+import { StickyScroll } from "@/components/ui/sticky-scroll-reveal";
+import { content } from "@/components/homepage/about-content";
 import SectionTitle from "../Title";
 
 function AboutUs() {
   return (
-    <div className="w-full h-[70vh] py-7 flex flex-col items-center justify-evenly gap-5 my-5">
+    <div className="w-full py-16 bg-background transition-colors duration-300">
       <SectionTitle
         title="About Us"
         description="We are a team of passionate developers and designers who love to create amazing things"
       />
-
-      <StickyScroll content={content} />
+      <div className="mt-8 w-full">
+        <StickyScroll content={content} />
+      </div>
     </div>
   );
 }
