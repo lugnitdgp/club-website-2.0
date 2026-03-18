@@ -17,6 +17,7 @@ import Image from "next/image";
 import { logo } from "@/assets";
 import { Particles } from "../magicui/particles";
 import Link from "next/link";
+import { useTheme } from "next-themes";
 
 const socialLinks = [
   {
@@ -41,7 +42,7 @@ const socialLinks = [
     name: "GitHub",
     icon: Github,
     url: "https://github.com/lugnitdgp",
-    hover: "hover:text-[#333]",
+    hover: "hover:text-[#333] dark:hover:text-white",
   },
   {
     name: "Instagram",
@@ -65,7 +66,7 @@ const socialLinks = [
     name: "Dev.to",
     icon: Code,
     url: "https://dev.to/nitdgplug",
-    hover: "hover:text-[#0A0A0A]",
+    hover: "hover:text-[#0A0A0A] dark:hover:text-white",
   },
 ];
 
@@ -78,6 +79,7 @@ type User = {
 
 export default function Footer() {
   const { data: people, isLoading } = useFetchContactQuery({});
+  const { resolvedTheme } = useTheme();
 
   function addImagesToUsers(users: User[]) {
     if (!users) return [];
@@ -106,24 +108,24 @@ export default function Footer() {
   }
 
   return (
-    <footer className="bg-gradient-to-r from-[#d9d8f1] via-[#f7e0f1] to-[#FFF4D8] text-gray-900 py-10 mt-10 relative">
+    <footer className="bg-gradient-to-r from-[#d9d8f1] via-[#f7e0f1] to-[#FFF4D8] dark:from-[#0d1117] dark:via-[#0f1724] dark:to-[#0d1117] text-gray-900 dark:text-gray-100 py-10 mt-10 relative transition-colors duration-300">
       <Particles
         className="absolute inset-0 z-0"
         quantity={100}
         ease={80}
-        color={"#000"}
+        color={resolvedTheme === "dark" ? "#38bdf8" : "#000"}
         refresh
       />
-      <div className="container mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-8">
-        <div className="flex flex-col  gap-2">
+      <div className="container mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-8 relative z-10">
+        <div className="flex flex-col gap-2">
           <Image src={logo} alt="logo" className="w-10 h-10" />
-          <h3 className="font-bold text-lg">GNU/Linux Users' Group</h3>
+          <h3 className="font-bold text-lg">GNU/Linux Users&apos; Group</h3>
           <p className="mt-2">📍 NIT Durgapur, West Bengal, India 713209</p>
           <p>
             📧{" "}
             <Link
               href="mailto:contact@nitdgplug.org"
-              className=" text-gray-700 font-medium hover:underline hover:text-black"
+              className="text-gray-700 dark:text-gray-300 font-medium hover:underline hover:text-black dark:hover:text-white"
             >
               president@nitdgplug.org
             </Link>
@@ -132,7 +134,7 @@ export default function Footer() {
             📞{" "}
             <Link
               href="tel:+919679670516"
-              className=" text-gray-700 font-medium hover:underline hover:text-black"
+              className="text-gray-700 dark:text-gray-300 font-medium hover:underline hover:text-black dark:hover:text-white"
             >
               +91 9679670516
             </Link>
@@ -159,7 +161,7 @@ export default function Footer() {
                 <Link
                   href={link.href}
                   target={link.target || undefined}
-                  className="text-gray-700 font-medium hover:underline hover:text-black"
+                  className="text-gray-700 dark:text-gray-300 font-medium hover:underline hover:text-black dark:hover:text-white"
                 >
                   {link.text}
                 </Link>
@@ -167,6 +169,7 @@ export default function Footer() {
             ))}
           </ul>
         </div>
+
         <div>
           <h3 className="font-bold text-lg">Resources</h3>
           <ul className="mt-2 space-y-2">
@@ -179,7 +182,7 @@ export default function Footer() {
               <li key={link.text}>
                 <Link
                   href={link.href}
-                  className="text-gray-700 font-medium hover:underline hover:text-black"
+                  className="text-gray-700 dark:text-gray-300 font-medium hover:underline hover:text-black dark:hover:text-white"
                 >
                   {link.text}
                 </Link>
@@ -194,7 +197,7 @@ export default function Footer() {
             <li>
               <Link
                 href="/faculty-advisors"
-                className=" text-gray-700 font-medium hover:underline hover:text-black"
+                className="text-gray-700 dark:text-gray-300 font-medium hover:underline hover:text-black dark:hover:text-white"
               >
                 Faculty Advisors
               </Link>
@@ -202,7 +205,7 @@ export default function Footer() {
             <li>
               <Link
                 href="/alumni"
-                className=" text-gray-700 font-medium hover:underline hover:text-black"
+                className="text-gray-700 dark:text-gray-300 font-medium hover:underline hover:text-black dark:hover:text-white"
               >
                 Alumni
               </Link>
@@ -210,7 +213,7 @@ export default function Footer() {
             <li>
               <Link
                 href="/sponsers"
-                className=" text-gray-700 font-medium hover:underline hover:text-black"
+                className="text-gray-700 dark:text-gray-300 font-medium hover:underline hover:text-black dark:hover:text-white"
               >
                 Sponsers
               </Link>
@@ -218,7 +221,7 @@ export default function Footer() {
             <li>
               <Link
                 href="#"
-                className=" text-gray-700 font-medium hover:underline hover:text-black"
+                className="text-gray-700 dark:text-gray-300 font-medium hover:underline hover:text-black dark:hover:text-white"
               >
                 Discord
               </Link>
@@ -236,14 +239,14 @@ export default function Footer() {
       </div>
 
       {/* Social Media Links */}
-      <div className="mt-8 text-center flex justify-center space-x-4">
+      <div className="mt-8 text-center flex justify-center space-x-4 relative z-10">
         {socialLinks.map(({ name, icon: Icon, url, hover }) => (
           <Link
             key={name}
             href={url}
             target="_blank"
             rel="noopener noreferrer"
-            className={`text-gray-700 transition-colors duration-300 ${hover}`}
+            className={`text-gray-700 dark:text-gray-400 transition-colors duration-300 ${hover}`}
           >
             <Icon className="w-6 h-6" />
           </Link>
@@ -251,9 +254,9 @@ export default function Footer() {
       </div>
 
       {/* Footer Bottom */}
-      <div className="mt-6 mb-4 text-center text-gray-600 text-sm">
+      <div className="mt-6 mb-4 text-center text-gray-600 dark:text-gray-400 text-sm relative z-10">
         <p>
-          © {new Date().getFullYear()} GNU/Linux Users' Group NIT Durgapur. All
+          © {new Date().getFullYear()} GNU/Linux Users&apos; Group NIT Durgapur. All
           rights reserved.
         </p>
       </div>
