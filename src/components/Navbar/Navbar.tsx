@@ -1,6 +1,7 @@
 "use client";
 import Link from "next/link";
 import { ShineBorder } from "@/components/magicui/shine-border";
+import ThemeSwitcher from "@/components/ThemeSwitcher";
 
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
@@ -17,7 +18,8 @@ function Navbar() {
     { url: "/projects", name: "Projects" },
     { url: "/linit", name: "Linit" },
     { url: "/members", name: "Members" },
-    // { url: "https://mukti.nitdgplug.org/", name: "Mukti 2025" }, // Hidden for now
+    { url: "/faculty-advisors", name: "Fac Ad" },
+    { url: "https://mukti.nitdgplug.org/", name: "Mukti 2025" },
   ];
 
   const pathname = usePathname();
@@ -101,7 +103,7 @@ function Navbar() {
             </Link>
           ))}
         </div>
-        {/* Login button hidden for now
+        {/* Login button hidden for now */}
         <div
           onClick={() => {
             window.open("https://admin.nitdgplug.org", "_blank");
@@ -111,7 +113,12 @@ function Navbar() {
           {" "}
           Login
         </div>
-        */}
+       
+
+        {/* Theme Switcher */}
+        {/* <div className="hidden md:flex items-center">
+          <ThemeSwitcher />
+        </div> */}
 
         <div
           className="md:hidden block"
@@ -123,7 +130,7 @@ function Navbar() {
           <MdMenu size={30} />
         </div>
 
-        <ShineBorder shineColor={["#A07CFE", "#FE8FB5", "#FFBE7B"]} />
+        {/* <ShineBorder shineColor={["#A07CFE", "#FE8FB5", "#FFBE7B"]} /> */}
       </div>
     </div>
   );
