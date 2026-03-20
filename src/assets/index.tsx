@@ -1,5 +1,6 @@
 import logo from "./Images/logo.svg";
 import header from "./Images/header.png";
+import header_dark from "./Images/header_dark.png";
 import thumbnail from "./Images/thumbnail.jpg";
 import DotMap from "./Images/worldmap.png";
 import homepage_penguin_dark from "./Images/homepage_penguin_dark.png";
@@ -11,6 +12,7 @@ import mukti from "./Images/mukti.png";
 export {
   logo,
   header,
+  header_dark,
   thumbnail,
   DotMap,
   homepage_penguin_dark,
