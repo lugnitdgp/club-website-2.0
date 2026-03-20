@@ -142,7 +142,7 @@ function MembersPage() {
     <section className="mt-8 pt-20">
       <div className="w-[90%] mx-auto">
         <div className="flex flex-col items-center gap-4 text-center">
-          <SectionTitle title="Meet Our Members" description="No of us is smarter than all of us" />
+          <SectionTitle title="Meet Our Members" description="None of us is smarter than all of us" />
         </div>
         <div className="mx-auto mt-8 max-w-screen-2xl rounded-2xl bg-muted/70 p-6 lg:p-12">
           <div className="text-center">

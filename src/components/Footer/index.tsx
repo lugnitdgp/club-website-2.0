@@ -148,14 +148,15 @@ export default function Footer() {
           <h3 className="font-bold text-lg">Links</h3>
           <ul className="mt-2 space-y-2">
             {[
-              {
-                href: "https://admin.nitdgplug.org/",
-                text: "GLUG internal Portal",
-                target: "_blank",
-              },
-              { href: "https://showdownn.nitdgplug.org/", text: `ShowDownn ${new Date().getFullYear()}` },
-              { href: "https://mukti.nitdgplug.org/", text: `Mukti ${new Date().getFullYear()}` },
-              { href: "#", text: `Aarohan ${new Date().getFullYear()}` },
+              // {
+              //   href: "https://admin.nitdgplug.org/",
+              //   text: "GLUG internal Portal",
+              //   target: "_blank",
+              // },
+              // { href: "https://showdownn.nitdgplug.org/", text: `ShowDownn ${new Date().getFullYear()}` },
+              { href: "https://mukti.nitdgplug.org/", text: `Mukti 2025` }, 
+              // ${new Date().getFullYear()}
+              // { href: "#", text: `Aarohan ${new Date().getFullYear()}` },
             ].map((link) => (
               <li key={link.text}>
                 <Link
@@ -212,7 +213,7 @@ export default function Footer() {
             </li>
             <li>
               <Link
-                href="/sponsers"
+                href="/sponsors"
                 className="text-gray-700 dark:text-gray-300 font-medium hover:underline hover:text-black dark:hover:text-white"
               >
                 Sponsers
