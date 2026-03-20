@@ -21,7 +21,7 @@ function ProjectPage() {
   const { data, isLoading, error } = useFetchProjectsQuery({});
 
   const trimDescription = (description: string, maxLength: number) => {
-    if(!description) return "";
+    if (!description) return "";
     if (description.length <= maxLength) return description;
     return description.substring(0, maxLength) + "...";
   };
@@ -29,29 +29,29 @@ function ProjectPage() {
   if (isLoading) return <DataLoader text="Loading Projects..." />;
   if (error)
     return (
-      <div className=" h-[70vh] w-screen text-center">
+      <div className="h-[70vh] w-screen text-center">
         Error loading projects.
       </div>
     );
   if (!data)
     return (
-      <div className=" h-[70vh] w-screen text-center">
+      <div className="h-[70vh] w-screen text-center">
         No project found.
       </div>
     );
 
   return (
-    <div className="p-6 pt-24">
+    <div className="px-2 sm:px-6 pt-24 overflow-x-hidden">
       <SectionTitle
         title="Our Projects"
         description="Explore our open source projects"
       />
-      <div className="w-[90%] mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 p-6">
+      <div className="w-full max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 px-4 sm:px-6">
         {data.map((project: any) => (
           <Modal key={project.id}>
             <ModalTrigger>
-              <CardContainer className="inter-var hover:shadow-lg min-w-3xl">
-                <CardBody className="bg-gray-50 relative group/card dark:hover:shadow-2xl dark:hover:shadow-emerald-500/[0.1] dark:bg-black dark:border-white/[0.2] border-black/[0.1] min-w-7xl h-auto rounded-xl p-6 border">
+              <CardContainer className="inter-var hover:shadow-lg w-full">
+                <CardBody className="bg-gray-50 relative group/card dark:hover:shadow-2xl dark:hover:shadow-emerald-500/[0.1] dark:bg-black dark:border-white/[0.2] border-black/[0.1] w-full h-auto rounded-xl p-6 border">
                   <CardItem
                     translateZ="50"
                     className="text-xl font-bold text-neutral-600 dark:text-white"

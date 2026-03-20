@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-   output: 'export',
+  output: 'export',
   images: {
     unoptimized: true,
     remotePatterns: [
@@ -23,6 +23,11 @@ const nextConfig = {
         hostname: "cdnjs.cloudflare.com"
       }
     ],
+  },
+  webpack: (config) => {
+    config.resolve.alias.canvas = false;
+    config.resolve.alias.encoding = false;
+    return config;
   },
 };
 
