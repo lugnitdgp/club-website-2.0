@@ -20,12 +20,24 @@ const FlagshipEvents = () => {
     .map((title) => data?.find((event: any) => event.title.includes(title)))
     .filter(Boolean);
 
-  const trimDescription = (description: string, maxLength: number) => {
-    if (!description) return "";
-    const plain = description.replace(/<[^>]*>/g, "");
-    if (plain.length <= maxLength) return plain;
-    return plain.substring(0, maxLength) + "...";
-  };
+const trimDescription = (description: string, maxLength: number) => {
+  if (!description) return "";
+  // Strip HTML tags
+  const stripped = description.replace(/<[^>]*>/g, "");
+  // Decode HTML entities
+  const decoded = stripped
+    .replace(/&amp;/g, "&")
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;/g, "'")
+    .replace(/&apos;/g, "'")
+    .replace(/&nbsp;/g, " ")
+    .replace(/&#(\d+);/g, (_, code) => String.fromCharCode(Number(code)))
+    .replace(/&[a-z]+;/gi, "");
+  if (decoded.length <= maxLength) return decoded;
+  return decoded.substring(0, maxLength) + "...";
+};
 
   return (
     <motion.div
