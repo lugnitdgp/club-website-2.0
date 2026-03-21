@@ -1,10 +1,32 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import InteractiveBentoGallery from "../blocks/interactive-bento-gallery";
 import SectionTitle from "../Title";
 
 function Gallery() {
+  const titleRef = useRef<HTMLDivElement>(null);
+  const gridRef = useRef<HTMLDivElement>(null);
+  const [titleVisible, setTitleVisible] = useState(false);
+  const [gridVisible, setGridVisible] = useState(false);
+
+  useEffect(() => {
+    const obs = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            if (entry.target === titleRef.current) setTitleVisible(true);
+            if (entry.target === gridRef.current) setGridVisible(true);
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+    if (titleRef.current) obs.observe(titleRef.current);
+    if (gridRef.current) obs.observe(gridRef.current);
+    return () => obs.disconnect();
+  }, []);
+
   const mediaItems = [
     {
       id: 1,
@@ -65,12 +87,37 @@ function Gallery() {
   ];
 
   return (
-    <div className="flex flex-col items-center w-full py-16 bg-gradient-to-r from-blue-200/20 to-purple-200/20 dark:from-blue-900/10 dark:to-purple-900/10 transition-colors duration-300">
-      <SectionTitle
-        title="Linux Gallery"
-        description="Fun Fact : You can arrange them the way you like"
-      />
-      <div className="w-full max-w-7xl mx-auto px-4 mt-6">
+    <div className="flex flex-col items-center w-full pt-20 pb-16 bg-gradient-to-r from-blue-200/20 to-purple-200/20 dark:from-blue-900/10 dark:to-purple-900/10 transition-colors duration-300">
+      <div
+        ref={titleRef}
+        style={{
+          opacity: titleVisible ? 1 : 0,
+          transform: titleVisible ? "translateY(0)" : "translateY(24px)",
+          transition: "opacity 0.6s ease 0.1s, transform 0.6s ease 0.1s",
+          width: "100%",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+      >
+        <SectionTitle
+          title="Linux Gallery"
+          description="Fun Fact : You can arrange them the way you like"
+        />
+      </div>
+      <div
+        ref={gridRef}
+        style={{
+          opacity: gridVisible ? 1 : 0,
+          transform: gridVisible ? "translateY(0)" : "translateY(32px)",
+          transition: "opacity 0.7s ease 0.25s, transform 0.7s ease 0.25s",
+          width: "100%",
+          maxWidth: "80rem",
+          margin: "0 auto",
+          padding: "0 1rem",
+          marginTop: "1.5rem",
+        }}
+      >
         <InteractiveBentoGallery
           mediaItems={mediaItems}
           title=""

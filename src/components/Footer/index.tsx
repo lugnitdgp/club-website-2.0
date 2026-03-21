@@ -77,6 +77,12 @@ type User = {
   image?: string;
 };
 
+type NavLink = {
+  href: string;
+  text: string;
+  target?: string;
+};
+
 export default function Footer() {
   const { data: people, isLoading } = useFetchContactQuery({});
   const { resolvedTheme } = useTheme();
@@ -147,17 +153,19 @@ export default function Footer() {
         <div>
           <h3 className="font-bold text-lg">Links</h3>
           <ul className="mt-2 space-y-2">
-            {[
-              // {
-              //   href: "https://admin.nitdgplug.org/",
-              //   text: "GLUG internal Portal",
-              //   target: "_blank",
-              // },
-              // { href: "https://showdownn.nitdgplug.org/", text: `ShowDownn ${new Date().getFullYear()}` },
-              { href: "https://mukti.nitdgplug.org/", text: `Mukti 2025` }, 
-              // ${new Date().getFullYear()}
-              // { href: "#", text: `Aarohan ${new Date().getFullYear()}` },
-            ].map((link) => (
+            {(
+              [
+                // {
+                //   href: "https://admin.nitdgplug.org/",
+                //   text: "GLUG internal Portal",
+                //   target: "_blank",
+                // },
+                // { href: "https://showdownn.nitdgplug.org/", text: `ShowDownn ${new Date().getFullYear()}` },
+                { href: "https://mukti.nitdgplug.org/", text: `Mukti 2025` },
+                // ${new Date().getFullYear()}
+                // { href: "#", text: `Aarohan ${new Date().getFullYear()}` },
+              ] as NavLink[]
+            ).map((link) => (
               <li key={link.text}>
                 <Link
                   href={link.href}

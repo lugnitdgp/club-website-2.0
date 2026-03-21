@@ -11,15 +11,17 @@ import { useTheme } from "next-themes";
 
 const PixelCard = dynamic(() => import("@/components/PixelCard"), { ssr: false });
 
-function AlumniCard({ alumni, variant }) {
-  const cardRef = useRef(null);
+type PixelVariant = "default" | "blue" | "pink" | "yellow";
+
+function AlumniCard({ alumni, variant }: { alumni: any; variant: PixelVariant }) {
+  const cardRef = useRef<HTMLDivElement>(null);
   const { resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
   useEffect(() => setMounted(true), []);
 
   const isDark = mounted && resolvedTheme === "dark";
 
-  const handleMouseMove = (e) => {
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     const card = cardRef.current;
     if (!card) return;
     const rect = card.getBoundingClientRect();
@@ -64,7 +66,7 @@ function AlumniCard({ alumni, variant }) {
                 src={alumni.image}
                 alt={`${alumni.first_name} ${alumni.last_name}`}
                 className="w-28 h-28 object-cover object-top rounded-full border-4 border-white/60 shadow-xl"
-                onError={(e) => { e.currentTarget.style.display = "none"; }}
+                onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = "none"; }}
               />
             ) : (
               <div className="w-28 h-28 rounded-full border-4 border-white/60 shadow-xl bg-gradient-to-br from-purple-200 to-blue-200 flex items-center justify-center text-3xl font-bold text-gray-600">
@@ -116,22 +118,24 @@ function AlumniPage() {
   const { data, isLoading, error } = useFetchAlumniQuery({});
 
   if (isLoading) return <DataLoader text="Loading alumni data..." />;
-  if (error)
-    return <div className="h-[70vh] w-screen text-center">Error loading the alumni data.</div>;
-  if (!data)
-    return <div className="h-[70vh] w-screen text-center">No alumni data found.</div>;
+  if (error) return <div className="h-[70vh] w-screen text-center">Error loading the alumni data.</div>;
+  if (!data) return <div className="h-[70vh] w-screen text-center">No alumni data found.</div>;
 
-  const getVariant = (id) => ["pink", "blue", "yellow"][id % 3];
+  const getVariant = (id: number): PixelVariant => {
+    const variants: PixelVariant[] = ["pink", "blue", "yellow"];
+    return variants[id % 3];
+  };
 
-  const renderAlumniCards = (alumniList) => (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mt-8">
-      {[...alumniList]
-        .sort((a, b) => a.first_name.localeCompare(b.first_name))
-        .map((alumni: any) => (
+  const renderAlumniCards = (alumniList: any[]) => {
+    const sorted = alumniList.slice().sort((a, b) => a.first_name.localeCompare(b.first_name));
+    return (
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mt-8">
+        {sorted.map((alumni) => (
           <AlumniCard key={alumni.id} alumni={alumni} variant={getVariant(alumni.id)} />
         ))}
-    </div>
-  );
+      </div>
+    );
+  };
 
   return (
     <section className="mt-8 pt-20">

@@ -17,7 +17,7 @@ function Navbar() {
     { url: "/linit", name: "Linit" },
     { url: "/members", name: "Members" },
     { url: "/faculty-advisors", name: "Fac Ad" },
-    { url: "https://mukti.nitdgplug.org/", name: "Mukti 2025" },
+    // { url: "https://mukti.nitdgplug.org/", name: "Mukti 2025" },
   ];
 
   const pathname = usePathname();
