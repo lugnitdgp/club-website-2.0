@@ -76,7 +76,7 @@ const trimDescription = (description: string, maxLength: number) => {
 
                 {/* Content */}
                 <div className="p-5 flex flex-col gap-3 flex-1">
-                  <h3 className="text-base font-bold text-neutral-800 dark:text-white leading-snug line-clamp-2">
+                  <h3 className="text-base font-bold text-neutral-800 dark:text-white leading-snug line-clamp-2 text-center">
                     {event.title}
                   </h3>
 
