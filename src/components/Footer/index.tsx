@@ -161,7 +161,7 @@ export default function Footer() {
                 //   target: "_blank",
                 // },
                 // { href: "https://showdownn.nitdgplug.org/", text: `ShowDownn ${new Date().getFullYear()}` },
-                { href: "https://mukti.nitdgplug.org/", text: `Mukti 2025` },
+                { href: "/mukti", text: `Mukti 2025` },
                 // ${new Date().getFullYear()}
                 // { href: "#", text: `Aarohan ${new Date().getFullYear()}` },
               ] as NavLink[]
@@ -224,7 +224,7 @@ export default function Footer() {
                 href="/sponsors"
                 className="text-gray-700 dark:text-gray-300 font-medium hover:underline hover:text-black dark:hover:text-white"
               >
-                Sponsers
+                Sponsors
               </Link>
             </li>
             <li>
