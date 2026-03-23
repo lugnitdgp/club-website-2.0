@@ -1,9 +1,9 @@
 "use client";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useCallback } from "react";
+import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { X } from "lucide-react";
 
-// MediaItemType defines the structure of a media item
 interface MediaItemType {
   id: number;
   type: string;
@@ -25,7 +25,8 @@ interface MediaItemType {
     profile_image_90: string;
   } | null;
 }
-// MediaItem component renders either a video or image based on item.type
+
+// ─── MediaItem ────────────────────────────────────────────────────────────────
 const MediaItem = ({
   item,
   className,
@@ -35,70 +36,40 @@ const MediaItem = ({
   className?: string;
   onClick?: () => void;
 }) => {
-  const videoRef = useRef<HTMLVideoElement>(null); // Reference for video element
-  const [isInView, setIsInView] = useState(false); // To track if video is in the viewport
-  const [isBuffering, setIsBuffering] = useState(true); // To track if video is buffering
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [isInView, setIsInView] = useState(false);
+  const [isBuffering, setIsBuffering] = useState(true);
 
-  // Intersection Observer to detect if video is in view and play/pause accordingly
   useEffect(() => {
-    const options = {
-      root: null,
-      rootMargin: "50px",
-      threshold: 0.1,
-    };
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        setIsInView(entry.isIntersecting); // Set isInView to true if the video is in view
-      });
-    }, options);
-
-    if (videoRef.current) {
-      observer.observe(videoRef.current); // Start observing the video element
-    }
-
-    return () => {
-      if (videoRef.current) {
-        observer.unobserve(videoRef.current); // Clean up observer when component unmounts
-      }
-    };
+    const observer = new IntersectionObserver(
+      (entries) => entries.forEach((e) => setIsInView(e.isIntersecting)),
+      { root: null, rootMargin: "50px", threshold: 0.1 }
+    );
+    if (videoRef.current) observer.observe(videoRef.current);
+    return () => { if (videoRef.current) observer.unobserve(videoRef.current); };
   }, []);
-  // Handle video play/pause based on whether the video is in view or not
+
   useEffect(() => {
-    let mounted = true;
-
-    const handleVideoPlay = async () => {
-      if (!videoRef.current || !isInView || !mounted) return; // Don't play if video is not in view or component is unmounted
-
+    let alive = true;
+    const play = async () => {
+      if (!videoRef.current || !isInView || !alive) return;
       try {
         if (videoRef.current.readyState >= 3) {
           setIsBuffering(false);
-          await videoRef.current.play(); // Play the video if it's ready
+          await videoRef.current.play();
         } else {
           setIsBuffering(true);
-          await new Promise((resolve) => {
-            if (videoRef.current) {
-              videoRef.current.oncanplay = resolve; // Wait until the video can start playing
-            }
+          await new Promise<void>((res) => {
+            if (videoRef.current) videoRef.current.oncanplay = () => res();
           });
-          if (mounted) {
-            setIsBuffering(false);
-            await videoRef.current.play();
-          }
+          if (alive) { setIsBuffering(false); await videoRef.current?.play(); }
         }
-      } catch (error) {
-        console.warn("Video playback failed:", error);
-      }
+      } catch (err) { console.warn("Video playback failed:", err); }
     };
-
-    if (isInView) {
-      handleVideoPlay();
-    } else if (videoRef.current) {
-      videoRef.current.pause();
-    }
-
+    if (isInView) play();
+    else videoRef.current?.pause();
     return () => {
-      mounted = false;
+      alive = false;
       if (videoRef.current) {
         videoRef.current.pause();
         videoRef.current.removeAttribute("src");
@@ -107,8 +78,6 @@ const MediaItem = ({
     };
   }, [isInView]);
 
-  // Render either a video or image based on item.type
-
   if (item.type === "video") {
     return (
       <div className={`${className} relative overflow-hidden`}>
@@ -116,16 +85,8 @@ const MediaItem = ({
           ref={videoRef}
           className="w-full h-full object-cover"
           onClick={onClick}
-          playsInline
-          muted
-          loop
-          preload="auto"
-          style={{
-            opacity: isBuffering ? 0.8 : 1,
-            transition: "opacity 0.2s",
-            transform: "translateZ(0)",
-            willChange: "transform",
-          }}
+          playsInline muted loop preload="auto"
+          style={{ opacity: isBuffering ? 0.8 : 1, transition: "opacity 0.2s" }}
         >
           <source src={item.url} type="video/mp4" />
         </video>
@@ -140,214 +101,213 @@ const MediaItem = ({
 
   return (
     <img
-      src={item.bg} // Image source URL
-      alt={item.title} // Alt text for the image
-      className={`${className} object-cover cursor-pointer`} // Style the image
-      onClick={onClick} // Trigger onClick when the image is clicked
-      loading="lazy" // Lazy load the image for performance
-      decoding="async" // Decode the image asynchronously
+      src={item.bg}
+      alt={item.title}
+      className={`${className} object-cover cursor-pointer`}
+      onClick={onClick}
+      loading="lazy"
+      decoding="async"
     />
   );
 };
 
-// GalleryModal component displays the selected media item in a modal
+// ─── GalleryModal ─────────────────────────────────────────────────────────────
 interface GalleryModalProps {
   selectedItem: MediaItemType;
-  isOpen: boolean;
   onClose: () => void;
-  setSelectedItem: (item: MediaItemType | null) => void;
-  mediaItems: MediaItemType[]; // List of media items to display in the modal
+  onSelectItem: (item: MediaItemType) => void;
+  mediaItems: MediaItemType[];
 }
-const GalleryModal = ({
-  selectedItem,
-  isOpen,
-  onClose,
-  setSelectedItem,
-  mediaItems,
-}: GalleryModalProps) => {
-  const [dockPosition, setDockPosition] = useState({ x: 0, y: 0 }); // Track the position of the dockable panel
 
-  if (!isOpen) return null; // Return null if the modal is not open
+const GalleryModal = ({ selectedItem, onClose, onSelectItem, mediaItems }: GalleryModalProps) => {
+  const [visible, setVisible] = useState(false);
+  const [closing, setClosing] = useState(false);
+  const [dockPos, setDockPos] = useState({ x: 0, y: 0 });
 
-  return (
+  // Trigger enter animation one frame after mount
+  useEffect(() => {
+    const id = requestAnimationFrame(() => setVisible(true));
+    return () => cancelAnimationFrame(id);
+  }, []);
+
+  // Lock body scroll
+  useEffect(() => {
+    document.body.style.overflow = "hidden";
+    return () => { document.body.style.overflow = ""; };
+  }, []);
+
+  // Escape key
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => { if (e.key === "Escape") handleClose(); };
+    window.addEventListener("keydown", handler);
+    return () => window.removeEventListener("keydown", handler);
+  }, []);
+
+  const handleClose = useCallback(() => {
+    if (closing) return;
+    setClosing(true);
+    setTimeout(() => onClose(), 220);
+  }, [closing, onClose]);
+
+  const shown = visible && !closing;
+
+  return createPortal(
     <>
-      {/* Main Modal */}
-      <motion.div
-        initial={{ scale: 0.98 }}
-        animate={{ scale: 1 }}
-        exit={{ scale: 0.98 }}
-        transition={{
-          type: "spring",
-          stiffness: 400,
-          damping: 30,
+      {/* Backdrop */}
+      <div
+        onClick={handleClose}
+        style={{
+          position: "fixed",
+          inset: 0,
+          zIndex: 9998,
+          backgroundColor: "rgba(0,0,0,0.65)",
+          backdropFilter: "blur(14px)",
+          WebkitBackdropFilter: "blur(14px)",
+          opacity: shown ? 1 : 0,
+          transition: "opacity 0.2s ease",
+          cursor: "pointer",
+          pointerEvents: closing ? "none" : "auto",
         }}
-        className="fixed inset-0 w-full min-h-screen sm:h-[90vh] md:h-[600px] backdrop-blur-lg 
-                          rounded-none sm:rounded-lg md:rounded-xl overflow-hidden z-10"
+      />
+
+      {/* Media card */}
+      <div
+        onClick={handleClose}
+        style={{
+          position: "fixed",
+          inset: 0,
+          zIndex: 9999,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          padding: "1rem",
+          opacity: shown ? 1 : 0,
+          transform: shown ? "scale(1)" : "scale(0.96)",
+          transition: "opacity 0.2s ease, transform 0.2s ease",
+          pointerEvents: closing ? "none" : "auto",
+        }}
       >
-        {/* Main Content */}
-        <div className="h-full flex flex-col">
-          <div className="flex-1 p-2 sm:p-3 md:p-4 flex items-center justify-center bg-gray-50/50">
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={selectedItem.id}
-                className="relative w-full aspect-[16/9] max-w-[95%] sm:max-w-[85%] md:max-w-3xl 
-                                         h-auto max-h-[70vh] rounded-lg overflow-hidden shadow-md"
-                initial={{ y: 20, scale: 0.97 }}
-                animate={{
-                  y: 0,
-                  scale: 1,
-                  transition: {
-                    type: "spring",
-                    stiffness: 500,
-                    damping: 30,
-                    mass: 0.5,
-                  },
-                }}
-                exit={{
-                  y: 20,
-                  scale: 0.97,
-                  transition: { duration: 0.15 },
-                }}
-                onClick={onClose}
-              >
-                <MediaItem
-                  item={selectedItem}
-                  className="w-full h-full object-contain bg-gray-900/20"
-                  onClick={() => {
-                    window.open(selectedItem.url, "_blank");
-                  }}
-                />
-                <div
-                  className="absolute bottom-0 left-0 right-0 p-2 sm:p-3 md:p-4 
-                                              bg-gradient-to-t from-black/50 to-transparent"
-                >
-                  <h3 className="text-white text-base sm:text-lg md:text-xl font-semibold">
-                    {selectedItem.title}
-                  </h3>
-                  <p className="text-white/80 text-xs sm:text-sm mt-1">
-                    {selectedItem.desc}
-                  </p>
-                  <div className="flex items-center mt-2">
-                    <img
-                      src={selectedItem.user.profile_image_90}
-                      alt={selectedItem.user.name}
-                      className="w-6 h-6 rounded-full mr-2"
-                    />
-                    <div>
-                      <p className="text-white text-xs">
-                        {selectedItem.user.name}
-                      </p>
-                      <p className="text-white/70 text-xs">
-                        @{selectedItem.user.username}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
-            </AnimatePresence>
+        <div
+          onClick={(e) => e.stopPropagation()}
+          style={{ position: "relative", width: "100%", maxWidth: "56rem", aspectRatio: "16/9" }}
+          className="rounded-2xl overflow-hidden shadow-2xl bg-gray-900"
+        >
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={selectedItem.id}
+              className="w-full h-full"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.15 }}
+            >
+              <MediaItem
+                item={selectedItem}
+                className="w-full h-full"
+                onClick={() => window.open(selectedItem.url, "_blank")}
+              />
+            </motion.div>
+          </AnimatePresence>
+
+          {/* Info overlay */}
+          <div
+            className="absolute bottom-0 left-0 right-0 p-4 sm:p-6 bg-gradient-to-t from-black/70 to-transparent"
+            style={{ pointerEvents: "none" }}
+          >
+            <h3 className="text-white text-lg sm:text-xl md:text-2xl font-semibold">
+              {selectedItem.title}
+            </h3>
+            {selectedItem.desc && (
+              <p className="text-white/80 text-sm mt-1">{selectedItem.desc}</p>
+            )}
+            <div className="flex items-center mt-3">
+              <img
+                src={selectedItem.user.profile_image_90}
+                alt={selectedItem.user.name}
+                className="w-7 h-7 rounded-full mr-2"
+              />
+              <div>
+                <p className="text-white text-sm font-medium">{selectedItem.user.name}</p>
+                <p className="text-white/70 text-xs">@{selectedItem.user.username}</p>
+              </div>
+            </div>
           </div>
         </div>
+      </div>
 
-        {/* Close Button */}
-        <motion.button
-          className="absolute top-2 sm:top-2.5 md:top-3 right-2 sm:right-2.5 md:right-3 
-                              p-2 rounded-full bg-gray-200/80 text-gray-700 hover:bg-gray-300/80 
-                              text-xs sm:text-sm backdrop-blur-sm "
-          onClick={onClose}
-          whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.9 }}
-        >
-          <X className="w-3 h-3" />
-        </motion.button>
-      </motion.div>
+      {/* Close button */}
+      <button
+        onClick={handleClose}
+        style={{
+          position: "fixed",
+          top: "1rem",
+          right: "1rem",
+          zIndex: 10000,
+          opacity: shown ? 1 : 0,
+          transition: "opacity 0.2s ease",
+          pointerEvents: closing ? "none" : "auto",
+        }}
+        className="p-2.5 rounded-full bg-white/20 text-white hover:bg-white/35
+                   backdrop-blur-sm border border-white/20 shadow-lg transition-colors duration-150"
+      >
+        <X className="w-4 h-4" />
+      </button>
 
-      {/* Draggable Dock */}
+      {/* Draggable thumbnail dock */}
       <motion.div
         drag
         dragMomentum={false}
-        dragElastic={0.1}
-        initial={false}
-        animate={{ x: dockPosition.x, y: dockPosition.y }}
-        onDragEnd={(_, info) => {
-          setDockPosition((prev) => ({
-            x: prev.x + info.offset.x,
-            y: prev.y + info.offset.y,
-          }));
+        dragElastic={0.08}
+        onDragEnd={(_, info) =>
+          setDockPos((p) => ({ x: p.x + info.offset.x, y: p.y + info.offset.y }))
+        }
+        style={{
+          position: "fixed",
+          zIndex: 10000,
+          left: "50%",
+          bottom: "1.5rem",
+          x: `calc(-50% + ${dockPos.x}px)`,
+          y: dockPos.y,
+          opacity: shown ? 1 : 0,
+          transition: "opacity 0.2s ease",
+          pointerEvents: closing ? "none" : "auto",
+          touchAction: "none",
         }}
-        className="fixed z-50 left-1/2 bottom-4 -translate-x-1/2 touch-none"
+        className="rounded-xl bg-sky-400/20 backdrop-blur-xl border border-blue-400/30 shadow-lg cursor-grab active:cursor-grabbing"
       >
-        <motion.div
-          className="relative rounded-xl bg-sky-400/20 backdrop-blur-xl 
-                             border border-blue-400/30 shadow-lg
-                             cursor-grab active:cursor-grabbing"
-        >
-          <div className="flex items-center -space-x-2 px-3 py-2">
-            {mediaItems.map((item, index) => (
+        <div className="flex items-center -space-x-2 px-3 py-2">
+          {mediaItems.map((item, index) => {
+            const isActive = selectedItem.id === item.id;
+            return (
               <motion.div
                 key={item.id}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setSelectedItem(item);
-                }}
-                style={{
-                  zIndex:
-                    selectedItem.id === item.id
-                      ? 30
-                      : mediaItems.length - index,
-                }}
-                className={`
-                                    relative group
-                                    w-8 h-8 sm:w-9 sm:h-9 md:w-10 md:h-10 flex-shrink-0 
-                                    rounded-lg overflow-hidden 
-                                    cursor-pointer hover:z-20
-                                    ${
-                                      selectedItem.id === item.id
-                                        ? "ring-2 ring-white/70 shadow-lg"
-                                        : "hover:ring-2 hover:ring-white/30"
-                                    }
-                                `}
+                onClick={(e) => { e.stopPropagation(); onSelectItem(item); }}
+                style={{ zIndex: isActive ? 30 : mediaItems.length - index }}
+                className={`relative w-8 h-8 sm:w-9 sm:h-9 md:w-10 md:h-10 flex-shrink-0
+                  rounded-lg overflow-hidden cursor-pointer
+                  ${isActive ? "ring-2 ring-white/70 shadow-lg" : "hover:ring-2 hover:ring-white/30"}`}
                 initial={{ rotate: index % 2 === 0 ? -15 : 15 }}
                 animate={{
-                  scale: selectedItem.id === item.id ? 1.2 : 1,
-                  rotate:
-                    selectedItem.id === item.id
-                      ? 0
-                      : index % 2 === 0
-                      ? -15
-                      : 15,
-                  y: selectedItem.id === item.id ? -8 : 0,
+                  scale: isActive ? 1.2 : 1,
+                  rotate: isActive ? 0 : index % 2 === 0 ? -15 : 15,
+                  y: isActive ? -8 : 0,
                 }}
-                whileHover={{
-                  scale: 1.3,
-                  rotate: 0,
-                  y: -10,
-                  transition: { type: "spring", stiffness: 400, damping: 25 },
-                }}
+                whileHover={{ scale: 1.3, rotate: 0, y: -10 }}
+                transition={{ type: "spring", stiffness: 400, damping: 25 }}
               >
-                <MediaItem
-                  item={item}
-                  className="w-full h-full"
-                  onClick={() => setSelectedItem(item)}
-                />
+                <MediaItem item={item} className="w-full h-full" onClick={() => onSelectItem(item)} />
                 <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/5 to-white/20" />
-                {selectedItem.id === item.id && (
-                  <motion.div
-                    layoutId="activeGlow"
-                    className="absolute -inset-2 bg-white/20 blur-xl"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ duration: 0.2 }}
-                  />
-                )}
               </motion.div>
-            ))}
-          </div>
-        </motion.div>
+            );
+          })}
+        </div>
       </motion.div>
-    </>
+    </>,
+    document.body
   );
 };
 
+// ─── InteractiveBentoBlogs ────────────────────────────────────────────────────
 interface InteractiveBentoBlogsProps {
   mediaItems: MediaItemType[];
   title: string;
@@ -364,130 +324,116 @@ const InteractiveBentoBlogs: React.FC<InteractiveBentoBlogsProps> = ({
   const [isDragging, setIsDragging] = useState(false);
 
   return (
-    <div className="  mx-auto px-4 py-8  w-full">
-      <div className="mb-8 text-center">
-        <motion.h1
-          className="text-2xl sm:text-3xl md:text-4xl font-bold bg-clip-text text-transparent 
-                             bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900
-                             dark:from-white dark:via-gray-200 dark:to-white"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-        >
-          {title}
-        </motion.h1>
-        <motion.p
-          className="mt-2 text-sm sm:text-base text-gray-600 dark:text-gray-400"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.1 }}
-        >
-          {description}
-        </motion.p>
-      </div>
-      <AnimatePresence mode="wait">
-        {selectedItem ? (
-          <GalleryModal
-            selectedItem={selectedItem}
-            isOpen={true}
-            onClose={() => setSelectedItem(null)}
-            setSelectedItem={setSelectedItem}
-            mediaItems={items}
-          />
-        ) : (
+    <div className="mx-auto px-4 py-8 w-full">
+      {(title || description) && (
+        <div className="mb-8 text-center">
+          <motion.h1
+            className="text-2xl sm:text-3xl md:text-4xl font-bold bg-clip-text text-transparent
+                       bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900
+                       dark:from-white dark:via-gray-200 dark:to-white"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+          >
+            {title}
+          </motion.h1>
+          <motion.p
+            className="mt-2 text-sm sm:text-base text-gray-600 dark:text-gray-400"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+          >
+            {description}
+          </motion.p>
+        </div>
+      )}
+
+      {/* Grid always stays mounted */}
+      <motion.div
+        className="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-[60px]"
+        initial="hidden"
+        animate="visible"
+        variants={{
+          hidden: { opacity: 0 },
+          visible: { opacity: 1, transition: { staggerChildren: 0.1 } },
+        }}
+      >
+        {items.map((item, index) => (
           <motion.div
-            className="grid grid-cols-1  md:grid-cols-3 gap-6 auto-rows-[60px]"
-            initial="hidden"
-            animate="visible"
-            exit="hidden"
+            key={item.id}
+            className={`relative overflow-hidden rounded-xl cursor-move ${item.span}`}
+            onClick={() => !isDragging && setSelectedItem(item)}
             variants={{
-              hidden: { opacity: 0 },
+              hidden: { y: 50, scale: 0.9, opacity: 0 },
               visible: {
-                opacity: 1,
-                transition: { staggerChildren: 0.1 },
+                y: 0, scale: 1, opacity: 1,
+                transition: { type: "spring", stiffness: 350, damping: 25, delay: index * 0.05 },
               },
             }}
+            whileHover={{ scale: 1.02 }}
+            drag
+            dragConstraints={{ left: 0, right: 0, top: 0, bottom: 0 }}
+            dragElastic={1}
+            onDragStart={() => setIsDragging(true)}
+            onDragEnd={(_, info) => {
+              setIsDragging(false);
+              const dist = info.offset.x + info.offset.y;
+              if (Math.abs(dist) > 50) {
+                const next = [...items];
+                const [dragged] = next.splice(index, 1);
+                const target = dist > 0
+                  ? Math.min(index + 1, items.length - 1)
+                  : Math.max(index - 1, 0);
+                next.splice(target, 0, dragged);
+                setItems(next);
+              }
+            }}
           >
-            {items.map((item, index) => (
-              <motion.div
-                key={item.id}
-                layoutId={`media-${item.id}`}
-                className={`relative overflow-hidden rounded-xl cursor-move  ${item.span}`}
-                onClick={() => !isDragging && setSelectedItem(item)}
-                variants={{
-                  hidden: { y: 50, scale: 0.9, opacity: 0 },
-                  visible: {
-                    y: 0,
-                    scale: 1,
-                    opacity: 1,
-                    transition: {
-                      type: "spring",
-                      stiffness: 350,
-                      damping: 25,
-                      delay: index * 0.05,
-                    },
-                  },
-                }}
-                whileHover={{ scale: 1.02 }}
-                drag
-                dragConstraints={{ left: 0, right: 0, top: 0, bottom: 0 }}
-                dragElastic={1}
-                onDragStart={() => setIsDragging(true)}
-                onDragEnd={(e, info) => {
-                  setIsDragging(false);
-                  const moveDistance = info.offset.x + info.offset.y;
-                  if (Math.abs(moveDistance) > 50) {
-                    const newItems = [...items];
-                    const draggedItem = newItems[index];
-                    const targetIndex =
-                      moveDistance > 0
-                        ? Math.min(index + 1, items.length - 1)
-                        : Math.max(index - 1, 0);
-                    newItems.splice(index, 1);
-                    newItems.splice(targetIndex, 0, draggedItem);
-                    setItems(newItems);
-                  }
-                }}
-              >
-                <MediaItem
-                  item={item}
-                  className="absolute inset-0 w-full h-full"
-                  onClick={() => !isDragging && setSelectedItem(item)}
-                />
-                <motion.div
-                  className="absolute inset-0 flex flex-col justify-end p-2 sm:p-3 md:p-4"
-                  initial={{ opacity: 0 }}
-                  whileHover={{ opacity: 1 }}
-                  transition={{ duration: 0.2 }}
-                >
-                  <div className="absolute inset-0 flex flex-col justify-end p-2 sm:p-3 md:p-4">
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
-                    <h3 className="relative text-white text-xs sm:text-sm md:text-base font-medium line-clamp-1">
-                      {item.title}
-                    </h3>
-                    <p className="relative text-white/70 text-[10px] sm:text-xs md:text-sm mt-0.5 line-clamp-2">
-                      {item.desc}
-                    </p>
-                    <div className="flex items-center mt-2 z-40">
-                      <img
-                        src={item.user.profile_image_90}
-                        alt={item.user.name}
-                        className="w-6 h-6 rounded-full mr-2"
-                      />
-                      <div>
-                        <p className="text-white text-sm font-medium">{item.user.name}</p>
-                        <p className="text-white/70 text-sm font-medium">
-                          @{item.user.username}
-                        </p>
-                      </div>
-                    </div>
+            <MediaItem
+              item={item}
+              className="absolute inset-0 w-full h-full"
+              onClick={() => !isDragging && setSelectedItem(item)}
+            />
+            <motion.div
+              className="absolute inset-0"
+              initial={{ opacity: 0 }}
+              whileHover={{ opacity: 1 }}
+              transition={{ duration: 0.2 }}
+            >
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
+              <div className="absolute bottom-0 left-0 right-0 p-2 sm:p-3 md:p-4">
+                <h3 className="relative text-white text-xs sm:text-sm md:text-base font-medium line-clamp-1">
+                  {item.title}
+                </h3>
+                <p className="relative text-white/70 text-[10px] sm:text-xs md:text-sm mt-0.5 line-clamp-2">
+                  {item.desc}
+                </p>
+                <div className="flex items-center mt-2 relative z-10">
+                  <img
+                    src={item.user.profile_image_90}
+                    alt={item.user.name}
+                    className="w-6 h-6 rounded-full mr-2"
+                  />
+                  <div>
+                    <p className="text-white text-sm font-medium">{item.user.name}</p>
+                    <p className="text-white/70 text-xs">@{item.user.username}</p>
                   </div>
-                </motion.div>
-              </motion.div>
-            ))}
+                </div>
+              </div>
+            </motion.div>
           </motion.div>
-        )}
-      </AnimatePresence>
+        ))}
+      </motion.div>
+
+      {/* Portal modal — mounts only when item is selected, handles its own enter/exit */}
+      {selectedItem && (
+        <GalleryModal
+          selectedItem={selectedItem}
+          onClose={() => setSelectedItem(null)}
+          onSelectItem={(item) => setSelectedItem(item)}
+          mediaItems={items}
+        />
+      )}
     </div>
   );
 };
