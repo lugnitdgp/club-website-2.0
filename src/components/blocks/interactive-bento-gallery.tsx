@@ -8,7 +8,7 @@ interface MediaItemType {
     id: number
     type: string
     title: string
-    desc: string
+    desc?: string
     url: string
     span: string
 }
