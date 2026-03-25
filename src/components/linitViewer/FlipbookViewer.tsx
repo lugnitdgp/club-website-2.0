@@ -38,14 +38,26 @@ const Page = React.forwardRef<
     <div ref={ref} style={{ width: "100%", height: "100%", background: "#fff" }}>
       <div style={{ width: "100%", height: "100%", position: "relative", overflow: "hidden", background: "#fafaf8" }}>
         {isLoading ? (
-          <div style={{ width: "100%", height: "100%", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 12, background: "#f5f3ff" }}>
+          <div style={{
+            width: "100%", height: "100%", display: "flex", flexDirection: "column",
+            alignItems: "center", justifyContent: "center", gap: 12,
+            background: "#fff"
+          }}>
             <Loader2 style={{ color: "#7c3aed", animation: "spin 1s linear infinite" }} size={28} />
-            <span style={{ fontSize: "0.8rem", color: "#7c3aed" }}>Page {pageNumber}</span>
+            <span style={{ fontSize: "0.8rem", color: "#7c3aed", fontFamily: "inherit" }}>
+              Page {pageNumber}
+            </span>
           </div>
         ) : (
-          <div ref={containerRef} style={{ width: "100%", height: "100%", display: "flex", alignItems: "center", justifyContent: "center", overflow: "hidden" }} />
+          <div ref={containerRef} style={{
+            width: "100%", height: "100%", display: "flex",
+            alignItems: "center", justifyContent: "center", overflow: "hidden"
+          }} />
         )}
-        <div style={{ position: "absolute", bottom: 8, right: 10, fontSize: "0.65rem", color: "#9ca3af", fontFamily: "Georgia, serif" }}>
+        <div style={{
+          position: "absolute", bottom: 8, right: 10,
+          fontSize: "0.65rem", color: "#a78bfa", letterSpacing: "0.06em"
+        }}>
           {pageNumber}
         </div>
       </div>
@@ -56,19 +68,16 @@ Page.displayName = "Page";
 
 function getBookDimensions(isMobile: boolean) {
   if (typeof window === "undefined") return { width: 420, height: 580, portrait: false };
-
   const vw = window.innerWidth;
   const vh = window.innerHeight;
 
   if (isMobile) {
-    // Single page: use almost full screen
     const navBtnWidth = 44;
     const sidePadding = 12;
     const w = Math.floor(vw - navBtnWidth * 2 - sidePadding * 2 - 8);
     const h = Math.floor(vh * 0.75);
     return { width: Math.max(w, 200), height: Math.max(h, 300), portrait: true };
   } else {
-    // Two-page spread: bigger on desktop
     const navBtnWidth = 56;
     const sidePadding = 24;
     const availableW = vw - navBtnWidth * 2 - sidePadding * 2;
@@ -167,113 +176,192 @@ export default function FlipbookViewer({ isOpen, onClose, pdfURL }: FlipbookView
   return (
     <>
       <style>{`
-        @keyframes fb-spin { to { transform: rotate(360deg); } }
-        @keyframes fb-pulse {
-          0%, 100% { opacity: 1; transform: scale(1); }
-          50% { opacity: 0.6; transform: scale(0.95); }
+        @keyframes fb-spin    { to { transform: rotate(360deg); } }
+        @keyframes fb-fadein  { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes fb-progress {
+          0%   { background-position: 0% 50%; }
+          100% { background-position: 200% 50%; }
         }
+
+        /* ─── Overlay: pure white + dot-grid (matches site exactly) ─── */
         .fb-overlay {
           position: fixed; inset: 0; z-index: 9999;
-          background: radial-gradient(ellipse at center, #1a0a2e 0%, #0d0618 60%, #050208 100%);
+          background-color: #ffffff;
+          background-image: radial-gradient(circle, #d1d5db 1px, transparent 1px);
+          background-size: 24px 24px;
           display: flex; flex-direction: column;
           align-items: center; justify-content: flex-start;
-          font-family: Georgia, serif; overflow: hidden;
+          font-family: 'Inter', system-ui, sans-serif;
+          overflow: hidden;
+          animation: fb-fadein 0.18s ease;
         }
-        .fb-overlay::before {
-          content: ''; position: absolute; inset: 0; pointer-events: none;
-          background-image:
-            radial-gradient(1px 1px at 20% 30%, rgba(167,139,250,0.4) 0%, transparent 100%),
-            radial-gradient(1px 1px at 80% 70%, rgba(167,139,250,0.3) 0%, transparent 100%),
-            radial-gradient(1px 1px at 50% 50%, rgba(139,92,246,0.2) 0%, transparent 100%),
-            radial-gradient(1px 1px at 10% 80%, rgba(196,181,253,0.3) 0%, transparent 100%),
-            radial-gradient(1px 1px at 90% 20%, rgba(167,139,250,0.2) 0%, transparent 100%);
-        }
+
+        /* ─── Top bar ─── */
         .fb-topbar {
           position: relative; z-index: 10; width: 100%; flex-shrink: 0;
           display: flex; align-items: center; justify-content: space-between;
-          padding: 12px 20px;
-          border-bottom: 1px solid rgba(167,139,250,0.15);
-          background: rgba(255,255,255,0.03); backdrop-filter: blur(10px);
+          padding: 14px 28px;
+          background: rgba(255,255,255,0.95);
+          border-bottom: 1.5px solid #f3f4f6;
+          backdrop-filter: blur(8px);
+          -webkit-backdrop-filter: blur(8px);
         }
+
+        /* Bold black title + gradient accent — mirrors site heading style */
         .fb-title {
-          color: #e9d5ff; font-size: 1rem; font-weight: 600;
-          letter-spacing: 0.05em; text-shadow: 0 0 20px rgba(167,139,250,0.5);
           display: flex; align-items: center; gap: 8px;
+          font-size: 1.1rem; font-weight: 800;
+          color: #111111; letter-spacing: -0.02em;
         }
-        .fb-controls { display: flex; align-items: center; gap: 6px; }
+        .fb-title-accent {
+          background: linear-gradient(90deg, #e879a0 0%, #a855f7 50%, #f97316 100%);
+          -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+          background-clip: text;
+        }
+        .fb-title svg { color: #7c3aed; flex-shrink: 0; }
+
+        /* ─── Control buttons ─── */
+        .fb-controls { display: flex; align-items: center; gap: 8px; }
+
         .fb-btn {
-          background: rgba(167,139,250,0.1); border: 1px solid rgba(167,139,250,0.2);
-          color: #c4b5fd; border-radius: 8px; padding: 7px; cursor: pointer;
-          transition: all 0.2s; display: flex; align-items: center; justify-content: center;
+          background: #ffffff; border: 1.5px solid #e5e7eb;
+          color: #374151; border-radius: 10px;
+          padding: 7px 9px; cursor: pointer;
+          display: flex; align-items: center; justify-content: center;
+          transition: all 0.15s ease;
+          box-shadow: 0 1px 3px rgba(0,0,0,0.06);
         }
         .fb-btn:hover {
-          background: rgba(167,139,250,0.25); border-color: rgba(167,139,250,0.5);
-          color: #ede9fe; box-shadow: 0 0 12px rgba(167,139,250,0.3);
+          background: #f5f3ff; border-color: #a78bfa;
+          color: #7c3aed; box-shadow: 0 2px 8px rgba(124,58,237,0.15);
         }
         .fb-close {
-          background: rgba(239,68,68,0.1); border-color: rgba(239,68,68,0.2); color: #fca5a5;
+          background: #fff1f2; border-color: #fecdd3; color: #f43f5e;
         }
         .fb-close:hover {
-          background: rgba(239,68,68,0.25); border-color: rgba(239,68,68,0.5);
-          color: #fee2e2; box-shadow: 0 0 12px rgba(239,68,68,0.3);
+          background: #ffe4e6; border-color: #fb7185; color: #e11d48;
+          box-shadow: 0 2px 8px rgba(244,63,94,0.15);
         }
+
+        /* ─── Stage ─── */
         .fb-stage {
           flex: 1; position: relative; z-index: 10;
           width: 100%; display: flex; align-items: center; justify-content: center;
-          padding: 16px 8px; gap: 8px; min-height: 0;
+          padding: 20px 8px; gap: 10px; min-height: 0;
         }
+
+        /* Round white nav arrows — matches site's rounded button style */
         .fb-nav {
-          background: rgba(167,139,250,0.12); border: 1px solid rgba(167,139,250,0.25);
-          color: #c4b5fd; border-radius: 50%; cursor: pointer; flex-shrink: 0;
+          background: #ffffff; border: 1.5px solid #e5e7eb;
+          color: #7c3aed; border-radius: 50%; cursor: pointer; flex-shrink: 0;
           display: flex; align-items: center; justify-content: center;
-          transition: all 0.25s; width: 44px; height: 44px; min-width: 44px;
+          transition: all 0.15s ease;
+          width: 46px; height: 46px; min-width: 46px;
+          box-shadow: 0 2px 8px rgba(0,0,0,0.07);
         }
         .fb-nav:hover {
-          background: rgba(167,139,250,0.3); transform: scale(1.1);
-          box-shadow: 0 0 20px rgba(167,139,250,0.4);
+          background: #f5f3ff; border-color: #a78bfa;
+          box-shadow: 0 4px 16px rgba(124,58,237,0.18);
+          transform: scale(1.07);
         }
+
+        /* Book drop-shadow — neutral, no colour cast */
         .fb-book-wrap {
           flex-shrink: 0; display: flex; align-items: center; justify-content: center;
-          filter: drop-shadow(0 24px 48px rgba(0,0,0,0.85)) drop-shadow(0 0 32px rgba(139,92,246,0.18));
+          filter:
+            drop-shadow(0 4px 20px rgba(0,0,0,0.12))
+            drop-shadow(0 1px 4px rgba(0,0,0,0.05));
         }
+
+        /* ─── Loading overlay ─── */
         .fb-loading {
           position: absolute; inset: 0; z-index: 20;
           display: flex; flex-direction: column; align-items: center; justify-content: center;
-          gap: 20px; background: rgba(13,6,24,0.93); backdrop-filter: blur(8px);
+          gap: 18px;
+          background: rgba(255,255,255,0.95);
+          backdrop-filter: blur(6px);
+          animation: fb-fadein 0.18s ease;
         }
-        .fb-loading-icon { color: #a78bfa; animation: fb-pulse 2s ease-in-out infinite; }
-        .fb-loading-text { color: #e9d5ff; font-size: 1rem; letter-spacing: 0.1em; }
+
+        .fb-loading-icon {
+          width: 70px; height: 70px; border-radius: 20px;
+          background: #ffffff; border: 1.5px solid #e5e7eb;
+          display: flex; align-items: center; justify-content: center;
+          box-shadow: 0 4px 20px rgba(124,58,237,0.1);
+          color: #7c3aed;
+        }
+
+        .fb-loading-title {
+          font-size: 1.4rem; font-weight: 800;
+          letter-spacing: -0.03em; color: #111111;
+        }
+        .fb-loading-title span {
+          background: linear-gradient(90deg, #e879a0 0%, #a855f7 50%, #f97316 100%);
+          -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+          background-clip: text;
+        }
+
+        .fb-loading-sub {
+          font-size: 0.78rem; font-weight: 500;
+          color: #6b7280; letter-spacing: 0.03em;
+        }
+
         .fb-progress-track {
-          width: 200px; height: 3px; background: rgba(167,139,250,0.2);
-          border-radius: 999px; overflow: hidden;
+          width: 200px; height: 3px;
+          background: #f3f4f6; border-radius: 999px; overflow: hidden;
         }
         .fb-progress-fill {
-          height: 100%; background: linear-gradient(90deg, #7c3aed, #a78bfa);
-          border-radius: 999px; transition: width 0.3s ease;
-          box-shadow: 0 0 8px rgba(167,139,250,0.6);
+          height: 100%;
+          background: linear-gradient(90deg, #e879a0, #a855f7, #f97316, #a855f7, #e879a0);
+          background-size: 200% auto;
+          border-radius: 999px;
+          transition: width 0.35s ease;
+          animation: fb-progress 1.8s linear infinite;
         }
-        .fb-progress-label { color: #9ca3af; font-size: 0.8rem; letter-spacing: 0.05em; }
+        .fb-progress-label {
+          font-size: 0.75rem; font-weight: 500;
+          color: #9ca3af; letter-spacing: 0.04em;
+        }
+
+        /* ─── Bottom bar ─── */
         .fb-bottombar {
           position: relative; z-index: 10; width: 100%; flex-shrink: 0;
-          padding: 10px 20px; display: flex; align-items: center; justify-content: center;
-          border-top: 1px solid rgba(167,139,250,0.15);
-          background: rgba(255,255,255,0.03); backdrop-filter: blur(10px);
+          padding: 11px 28px;
+          display: flex; align-items: center; justify-content: space-between;
+          background: rgba(255,255,255,0.95);
+          border-top: 1.5px solid #f3f4f6;
+          backdrop-filter: blur(8px);
+          -webkit-backdrop-filter: blur(8px);
         }
-        .fb-page-label { color: #c4b5fd; font-size: 0.85rem; letter-spacing: 0.06em; }
+
+        .fb-page-label {
+          font-size: 0.8rem; font-weight: 500;
+          color: #6b7280; letter-spacing: 0.02em;
+        }
+
+        .fb-footer-brand {
+          font-size: 0.8rem; font-weight: 800;
+          letter-spacing: -0.01em;
+          background: linear-gradient(90deg, #e879a0 0%, #a855f7 50%, #f97316 100%);
+          -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+          background-clip: text;
+        }
 
         @media (max-width: 639px) {
-          .fb-nav { width: 36px; height: 36px; min-width: 36px; }
+          .fb-nav { width: 38px; height: 38px; min-width: 38px; }
           .fb-stage { padding: 10px 4px; gap: 4px; }
-          .fb-topbar { padding: 10px 12px; }
+          .fb-topbar, .fb-bottombar { padding: 10px 14px; }
+          .fb-title { font-size: 0.92rem; }
         }
       `}</style>
 
       <div className="fb-overlay">
-        {/* Top Bar */}
+
+        {/* ── Top Bar ── */}
         <div className="fb-topbar">
           <div className="fb-title">
-            <BookOpen size={15} />
-            Linit Magazine
+            <BookOpen size={18} strokeWidth={2} />
+            Linit&nbsp;<span className="fb-title-accent">Magazine</span>
           </div>
           <div className="fb-controls">
             {!isMobile && (
@@ -286,13 +374,21 @@ export default function FlipbookViewer({ isOpen, onClose, pdfURL }: FlipbookView
           </div>
         </div>
 
-        {/* Stage */}
+        {/* ── Stage ── */}
         <div className="fb-stage">
+
           {!isReady && (
             <div className="fb-loading">
-              <BookOpen size={44} className="fb-loading-icon" />
-              <div className="fb-loading-text">
-                {totalPages === 0 ? "Opening magazine…" : "Rendering pages…"}
+              <div className="fb-loading-icon">
+                <BookOpen size={32} strokeWidth={1.5} />
+              </div>
+              <div style={{ textAlign: "center", display: "flex", flexDirection: "column", alignItems: "center", gap: 4 }}>
+                <div className="fb-loading-title">
+                  {totalPages === 0
+                    ? <><span>Opening</span> magazine…</>
+                    : <><span>Rendering</span> pages…</>}
+                </div>
+                <div className="fb-loading-sub">GNU/Linux Users' Group · NIT Durgapur</div>
               </div>
               {totalPages > 0 && (
                 <>
@@ -307,7 +403,9 @@ export default function FlipbookViewer({ isOpen, onClose, pdfURL }: FlipbookView
 
           {isReady && dimsReady && (
             <>
-              <button className="fb-nav" onClick={prevPage}><ChevronLeft size={20} /></button>
+              <button className="fb-nav" onClick={prevPage}>
+                <ChevronLeft size={20} strokeWidth={2.5} />
+              </button>
 
               <div className="fb-book-wrap">
                 <HTMLFlipBook
@@ -344,15 +442,19 @@ export default function FlipbookViewer({ isOpen, onClose, pdfURL }: FlipbookView
                 </HTMLFlipBook>
               </div>
 
-              <button className="fb-nav" onClick={nextPage}><ChevronRight size={20} /></button>
+              <button className="fb-nav" onClick={nextPage}>
+                <ChevronRight size={20} strokeWidth={2.5} />
+              </button>
             </>
           )}
         </div>
 
-        {/* Bottom Bar */}
+        {/* ── Bottom Bar ── */}
         <div className="fb-bottombar">
           <div className="fb-page-label">{pageLabel}</div>
+          <div className="fb-footer-brand">Linit · NIT Durgapur</div>
         </div>
+
       </div>
     </>
   );
