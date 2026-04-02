@@ -145,7 +145,7 @@ export default function Footer() {
               +91 9679670516
             </Link>
           </p>
-          {!isLoading || people ? (
+          {!isLoading && people ? (
             <AnimatedTooltip items={addImagesToUsers(people)} />
           ) : null}
         </div>
