@@ -228,12 +228,12 @@ export default function Footer() {
               </Link>
             </li>
             <li>
-              <Link
+              {/* <Link
                 href="#"
                 className="text-gray-700 dark:text-gray-300 font-medium hover:underline hover:text-black dark:hover:text-white"
               >
                 Discord
-              </Link>
+              </Link> */}
             </li>
           </ul>
           {/* Google Play Button */}
