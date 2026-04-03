@@ -51,7 +51,19 @@ function ProjectPage() {
           <Modal key={project.id}>
             <ModalTrigger className="w-full h-full">
               <CardContainer className="inter-var w-full h-full">
-                <CardBody className="... w-full h-auto min-h-[420px] ...">                  {/* Title - Fixed Height and Left Aligned */}
+                <CardBody
+                  className="
+    bg-gray-50 dark:bg-black
+    relative group/card
+    border border-black/[0.1] dark:border-white/[0.2]
+    rounded-xl
+    p-6
+    w-full h-auto min-h-[420px]
+    flex flex-col
+    dark:hover:shadow-2xl dark:hover:shadow-emerald-500/[0.1]
+    transition-all duration-300
+  "
+                >
                   <CardItem
                     translateZ="50"
                     className="text-xl font-bold text-neutral-600 dark:text-white mb-3 text-left min-h-[56px] flex items-start w-full"
