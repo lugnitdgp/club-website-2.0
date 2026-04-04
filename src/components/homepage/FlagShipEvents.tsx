@@ -16,9 +16,13 @@ const FlagshipEvents = () => {
     "Open Source Starter Pack",
   ];
 
-  const filteredEvents = flagshipEventTitles
-    .map((title) => data?.find((event: any) => event.title.includes(title)))
-    .filter(Boolean);
+const filteredEvents = flagshipEventTitles
+  .map((title) =>
+    data?.find((event: any) =>
+      event.title.toLowerCase().includes(title.toLowerCase())
+    )
+  )
+  .filter(Boolean);
 
 const trimDescription = (description: string, maxLength: number) => {
   if (!description) return "";
