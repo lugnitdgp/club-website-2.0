@@ -3,7 +3,6 @@
 import SectionTitle from "@/components/Title";
 import { useFetchEventsQuery } from "@/store/slices/eventsSlice";
 import React from "react";
-import Image from "next/image";
 import Link from "next/link";
 import {
   Modal,
@@ -40,14 +39,11 @@ function EventsPage() {
             <ModalTrigger className="w-full text-left">
               <div className="w-full bg-white dark:bg-neutral-900 border border-gray-200 dark:border-white/10 rounded-2xl overflow-hidden hover:shadow-xl dark:hover:shadow-emerald-500/10 transition-all duration-300 hover:-translate-y-1 cursor-pointer">
 
-                {/* Image — flush to top, no clipping */}
                 {event.event_image ? (
                   <div className="w-full h-52 overflow-hidden">
-                    <Image
+                    <img
                       src={event.event_image}
                       alt={event.title}
-                      height={400}
-                      width={600}
                       className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
                     />
                   </div>
@@ -57,22 +53,14 @@ function EventsPage() {
                   </div>
                 )}
 
-                {/* Content */}
                 <div className="p-5 flex flex-col gap-3">
-                  {/* Title */}
                   <h3 className="text-base font-bold text-neutral-800 dark:text-white leading-snug line-clamp-2">
                     {event.title}
                   </h3>
-
-                  {/* Description */}
                   <p className="text-sm text-neutral-500 dark:text-neutral-400 line-clamp-3 leading-relaxed">
                     {trimDescription(event.description, 130)}
                   </p>
-
-                  {/* Divider */}
                   <div className="border-t border-gray-100 dark:border-white/10" />
-
-                  {/* Meta */}
                   <div className="flex flex-col gap-1.5">
                     <div className="flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400">
                       <Calendar className="w-3.5 h-3.5 shrink-0 text-purple-500" />
@@ -102,47 +90,48 @@ function EventsPage() {
               </div>
             </ModalTrigger>
 
-            {/* Modal */}
             <ModalBody>
-              <ModalContent className="w-full flex flex-col gap-4 overflow-y-auto max-h-[80vh] p-6">
-                <h2 className="text-xl font-bold text-neutral-800 dark:text-white">
-                  {event.title}
-                </h2>
+              <ModalContent className="!p-0 w-full flex flex-col overflow-y-auto max-h-[90vh]">
+                {/* Full poster — edge to edge, no padding, no height clamp */}
                 {event.event_image && (
-                  <div className="w-full h-56 rounded-xl overflow-hidden">
-                    <Image
+                  <div className="w-full flex justify-center p-4 pt-6">
+                    <img
                       src={event.event_image}
                       alt={event.title}
-                      height={400}
-                      width={600}
-                      className="w-full h-full object-cover"
+                      className="h-auto max-h-[420px] w-auto max-w-[85%] object-contain rounded-xl shadow-md"
                     />
                   </div>
                 )}
-                <div className="flex flex-col gap-2">
-                  <div className="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400">
-                    <Calendar className="w-4 h-4 text-purple-500" />
-                    <span>{new Date(event.event_timing).toLocaleString()}</span>
-                  </div>
-                  {event.venue && (
+                {/* Content below poster */}
+                <div className="p-6 flex flex-col gap-4">
+                  <h2 className="text-xl font-bold text-neutral-800 dark:text-white">
+                    {event.title}
+                  </h2>
+                  <div className="flex flex-col gap-2">
                     <div className="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400">
-                      <MapPin className="w-4 h-4 text-pink-500" />
-                      <span>{event.venue}</span>
+                      <Calendar className="w-4 h-4 text-purple-500" />
+                      <span>{new Date(event.event_timing).toLocaleString()}</span>
                     </div>
-                  )}
-                  {event.url && (
-                    <div className="flex items-center gap-2 text-sm text-blue-500 font-medium">
-                      <ExternalLink className="w-4 h-4" />
-                      <Link href={event.url} target="_blank" rel="noopener noreferrer">
-                        More Info
-                      </Link>
-                    </div>
-                  )}
+                    {event.venue && (
+                      <div className="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400">
+                        <MapPin className="w-4 h-4 text-pink-500" />
+                        <span>{event.venue}</span>
+                      </div>
+                    )}
+                    {event.url && (
+                      <div className="flex items-center gap-2 text-sm text-blue-500 font-medium">
+                        <ExternalLink className="w-4 h-4" />
+                        <Link href={event.url} target="_blank" rel="noopener noreferrer">
+                          More Info
+                        </Link>
+                      </div>
+                    )}
+                  </div>
+                  <div
+                    className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed prose dark:prose-invert max-w-none"
+                    dangerouslySetInnerHTML={{ __html: event.description }}
+                  />
                 </div>
-                <div
-                  className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed prose dark:prose-invert max-w-none"
-                  dangerouslySetInnerHTML={{ __html: event.description }}
-                />
               </ModalContent>
             </ModalBody>
           </Modal>

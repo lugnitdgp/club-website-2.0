@@ -139,10 +139,10 @@ export default function Footer() {
           <p>
             📞{" "}
             <Link
-              href="tel:+919679670516"
+              href="tel:+91 8167749988"
               className="text-gray-700 dark:text-gray-300 font-medium hover:underline hover:text-black dark:hover:text-white"
             >
-              +91 9679670516
+              +91 8167749988
             </Link>
           </p>
           {!isLoading && people ? (

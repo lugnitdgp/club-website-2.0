@@ -12,7 +12,7 @@ function Navbar() {
   const icons = [
     { url: "/events", name: "Events" },
     { url: "/timeline", name: "Timeline" },
-    { url: "/blogs", name: "Blogs" },
+    { url: "/articles", name: "Articles" },
     { url: "/projects", name: "Projects" },
     { url: "/linit", name: "Linit" },
     { url: "/members", name: "Members" },
