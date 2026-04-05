@@ -40,16 +40,16 @@ function EventsPage() {
               <div className="w-full bg-white dark:bg-neutral-900 border border-gray-200 dark:border-white/10 rounded-2xl overflow-hidden hover:shadow-xl dark:hover:shadow-emerald-500/10 transition-all duration-300 hover:-translate-y-1 cursor-pointer">
 
                 {event.event_image ? (
-                  <div className="w-full h-52 overflow-hidden">
+                  <div className="relative w-full h-48 flex justify-center items-center overflow-hidden shrink-0 bg-white dark:bg-neutral-900">
                     <img
                       src={event.event_image}
                       alt={event.title}
-                      className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+                      className="relative z-10 h-full w-auto max-w-[80%] object-contain"
                     />
                   </div>
                 ) : (
-                  <div className="w-full h-52 bg-gradient-to-br from-purple-100 to-blue-100 dark:from-purple-900/30 dark:to-blue-900/30 flex items-center justify-center">
-                    <span className="text-gray-400 text-sm">No image available</span>
+                  <div className="w-full h-48 bg-gradient-to-br from-orange-100 to-yellow-100 dark:from-orange-900/20 dark:to-yellow-900/20 flex items-center justify-center shrink-0">
+                    <span className="text-gray-400 text-sm">No image</span>
                   </div>
                 )}
 
@@ -94,11 +94,25 @@ function EventsPage() {
               <ModalContent className="!p-0 w-full flex flex-col overflow-y-auto max-h-[90vh]">
                 {/* Full poster — edge to edge, no padding, no height clamp */}
                 {event.event_image && (
-                  <div className="w-full flex justify-center p-4 pt-6">
+                  <div className="relative w-full flex justify-center items-center overflow-hidden rounded-t-2xl min-h-[320px]">
+                    {/* Blurred background layer */}
+                    <div
+                      className="absolute inset-0 scale-110"
+                      style={{
+                        backgroundImage: `url(${event.event_image})`,
+                        backgroundSize: "cover",
+                        backgroundPosition: "center",
+                        filter: "blur(28px) brightness(0.55) saturate(1.8)",
+                      }}
+                    />
+                    {/* Subtle dark vignette overlay */}
+                    <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/40" />
+                    {/* Actual poster */}
                     <img
                       src={event.event_image}
                       alt={event.title}
-                      className="h-auto max-h-[420px] w-auto max-w-[85%] object-contain rounded-xl shadow-md"
+                      className="relative z-10 h-auto max-h-[420px] w-auto max-w-[75%] object-contain rounded-xl shadow-2xl my-6"
+                      style={{ filter: "drop-shadow(0 8px 32px rgba(0,0,0,0.5))" }}
                     />
                   </div>
                 )}

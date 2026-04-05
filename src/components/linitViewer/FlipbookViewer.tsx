@@ -3,8 +3,9 @@
 import React, { useEffect, useRef, useState, useCallback } from "react";
 import HTMLFlipBook from "react-pageflip";
 import { useTheme } from "next-themes";
+import DataLoader from "@/components/loading/DataLoader";
 import {
-  X, ChevronLeft, ChevronRight, ZoomIn, ZoomOut, Loader2, BookOpen,
+  X, ChevronLeft, ChevronRight, ZoomIn, ZoomOut, BookOpen,
 } from "lucide-react";
 
 interface FlipbookViewerProps {
@@ -34,7 +35,6 @@ const Page = React.forwardRef<
       <div style={{ width: "100%", height: "100%", position: "relative", overflow: "hidden", background: "#fafaf8" }}>
         {isLoading ? (
           <div style={{ width: "100%", height: "100%", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 12, background: "#fff" }}>
-            <Loader2 style={{ color: "#7c3aed", animation: "spin 1s linear infinite" }} size={28} />
             <span style={{ fontSize: "0.8rem", color: "#7c3aed", fontFamily: "inherit" }}>Page {pageNumber}</span>
           </div>
         ) : (
@@ -139,36 +139,34 @@ export default function FlipbookViewer({ isOpen, onClose, pdfURL }: FlipbookView
   const isReady = loadedPages === totalPages && totalPages > 0;
   const pageLabel = isReady
     ? isMobile
-      ? `Page ${currentPage + 1} of ${totalPages}`
-      : `Pages ${currentPage + 1}–${Math.min(currentPage + 2, totalPages)} of ${totalPages}`
+      ? "Page " + (currentPage + 1) + " of " + totalPages
+      : "Pages " + (currentPage + 1) + "–" + Math.min(currentPage + 2, totalPages) + " of " + totalPages
     : "Loading…";
 
-  // Theme-aware CSS values
-  const bg          = dark ? "#0d1117" : "#ffffff";
-  const dotColor    = dark ? "rgba(255,255,255,0.06)" : "#d1d5db";
-  const barBg       = dark ? "rgba(15,23,36,0.95)"  : "rgba(255,255,255,0.95)";
-  const barBorder   = dark ? "#1e2a3a"               : "#f3f4f6";
-  const titleColor  = dark ? "#f1f5f9"               : "#111111";
-  const btnBg       = dark ? "rgba(255,255,255,0.06)": "#ffffff";
-  const btnBorder   = dark ? "rgba(255,255,255,0.12)": "#e5e7eb";
-  const btnColor    = dark ? "#c4b5fd"               : "#374151";
-  const btnHoverBg  = dark ? "rgba(167,139,250,0.15)": "#f5f3ff";
-  const navBg       = dark ? "rgba(255,255,255,0.06)": "#ffffff";
-  const labelColor  = dark ? "#94a3b8"               : "#6b7280";
-  const loadingBg   = dark ? "rgba(13,17,23,0.95)"   : "rgba(255,255,255,0.95)";
-  const iconBoxBg   = dark ? "rgba(255,255,255,0.05)": "#ffffff";
-  const iconBoxBorder= dark ? "rgba(255,255,255,0.1)": "#e5e7eb";
+  const loadingText = totalPages === 0
+    ? "Cracking open the magazine..."
+    : "Rendering page " + loadedPages + " of " + totalPages + "...";
+
+  const bg         = dark ? "#0d1117" : "#ffffff";
+  const dotColor   = dark ? "rgba(255,255,255,0.06)" : "#d1d5db";
+  const barBg      = dark ? "rgba(15,23,36,0.95)"  : "rgba(255,255,255,0.95)";
+  const barBorder  = dark ? "#1e2a3a"               : "#f3f4f6";
+  const titleColor = dark ? "#f1f5f9"               : "#111111";
+  const btnBg      = dark ? "rgba(255,255,255,0.06)": "#ffffff";
+  const btnBorder  = dark ? "rgba(255,255,255,0.12)": "#e5e7eb";
+  const btnColor   = dark ? "#c4b5fd"               : "#374151";
+  const btnHoverBg = dark ? "rgba(167,139,250,0.15)": "#f5f3ff";
+  const navBg      = dark ? "rgba(255,255,255,0.06)": "#ffffff";
+  const labelColor = dark ? "#94a3b8"               : "#6b7280";
 
   return (
     <>
       <style>{`
-        @keyframes fb-spin     { to { transform: rotate(360deg); } }
         @keyframes fb-fadein   { from { opacity: 0; } to { opacity: 1; } }
         @keyframes fb-progress {
           0%   { background-position: 0% 50%; }
           100% { background-position: 200% 50%; }
         }
-
         .fb-overlay {
           position: fixed; inset: 0; z-index: 9999;
           background-color: ${bg};
@@ -180,7 +178,6 @@ export default function FlipbookViewer({ isOpen, onClose, pdfURL }: FlipbookView
           animation: fb-fadein 0.18s ease;
           transition: background-color 0.3s;
         }
-
         .fb-topbar {
           position: relative; z-index: 10; width: 100%; flex-shrink: 0;
           display: flex; align-items: center; justify-content: space-between;
@@ -205,12 +202,9 @@ export default function FlipbookViewer({ isOpen, onClose, pdfURL }: FlipbookView
           display: flex; align-items: center; justify-content: center;
           transition: all 0.15s ease; box-shadow: 0 1px 3px rgba(0,0,0,0.08);
         }
-        .fb-btn:hover {
-          background: ${btnHoverBg}; border-color: #a78bfa; color: #a855f7;
-        }
+        .fb-btn:hover { background: ${btnHoverBg}; border-color: #a78bfa; color: #a855f7; }
         .fb-close { background: ${dark ? "rgba(239,68,68,0.1)" : "#fff1f2"}; border-color: ${dark ? "rgba(239,68,68,0.2)" : "#fecdd3"}; color: #f43f5e; }
         .fb-close:hover { background: ${dark ? "rgba(239,68,68,0.2)" : "#ffe4e6"}; border-color: #fb7185; color: #e11d48; }
-
         .fb-stage {
           flex: 1; position: relative; z-index: 10;
           width: 100%; display: flex; align-items: center; justify-content: center;
@@ -231,28 +225,19 @@ export default function FlipbookViewer({ isOpen, onClose, pdfURL }: FlipbookView
           flex-shrink: 0; display: flex; align-items: center; justify-content: center;
           filter: drop-shadow(0 4px 20px rgba(0,0,0,${dark ? "0.5" : "0.12"})) drop-shadow(0 1px 4px rgba(0,0,0,0.06));
         }
-        .fb-loading {
+        .fb-loading-overlay {
           position: absolute; inset: 0; z-index: 20;
           display: flex; flex-direction: column; align-items: center; justify-content: center;
-          gap: 18px; background: ${loadingBg}; backdrop-filter: blur(6px);
+          gap: 12px;
+          background: ${dark ? "rgba(13,17,23,0.97)" : "rgba(255,255,255,0.97)"};
+          backdrop-filter: blur(6px);
           animation: fb-fadein 0.18s ease;
         }
-        .fb-loading-icon {
-          width: 70px; height: 70px; border-radius: 20px;
-          background: ${iconBoxBg}; border: 1.5px solid ${iconBoxBorder};
-          display: flex; align-items: center; justify-content: center;
-          box-shadow: 0 4px 20px rgba(124,58,237,0.12); color: #7c3aed;
+        .fb-progress-track {
+          width: 200px; height: 3px;
+          background: ${dark ? "rgba(255,255,255,0.08)" : "#f3f4f6"};
+          border-radius: 999px; overflow: hidden;
         }
-        .fb-loading-title {
-          font-size: 1.4rem; font-weight: 800;
-          letter-spacing: -0.03em; color: ${titleColor};
-        }
-        .fb-loading-title span {
-          background: linear-gradient(90deg, #e879a0 0%, #a855f7 50%, #f97316 100%);
-          -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-        }
-        .fb-loading-sub { font-size: 0.78rem; font-weight: 500; color: ${labelColor}; letter-spacing: 0.03em; }
-        .fb-progress-track { width: 200px; height: 3px; background: ${dark ? "rgba(255,255,255,0.08)" : "#f3f4f6"}; border-radius: 999px; overflow: hidden; }
         .fb-progress-fill {
           height: 100%;
           background: linear-gradient(90deg, #e879a0, #a855f7, #f97316, #a855f7, #e879a0);
@@ -281,6 +266,8 @@ export default function FlipbookViewer({ isOpen, onClose, pdfURL }: FlipbookView
       `}</style>
 
       <div className="fb-overlay">
+
+        {/* Top bar */}
         <div className="fb-topbar">
           <div className="fb-title">
             <BookOpen size={18} strokeWidth={2} style={{ color: "#a855f7" }} />
@@ -297,20 +284,17 @@ export default function FlipbookViewer({ isOpen, onClose, pdfURL }: FlipbookView
           </div>
         </div>
 
+        {/* Stage */}
         <div className="fb-stage">
+
+          {/* Loading state — DataLoader replaces old spinner */}
           {!isReady && (
-            <div className="fb-loading">
-              <div className="fb-loading-icon"><BookOpen size={32} strokeWidth={1.5} /></div>
-              <div style={{ textAlign: "center", display: "flex", flexDirection: "column", alignItems: "center", gap: 4 }}>
-                <div className="fb-loading-title">
-                  {totalPages === 0 ? <><span>Opening</span> magazine…</> : <><span>Rendering</span> pages…</>}
-                </div>
-                <div className="fb-loading-sub">GNU/Linux Users&apos; Group · NIT Durgapur</div>
-              </div>
+            <div className="fb-loading-overlay">
+              <DataLoader text={loadingText} />
               {totalPages > 0 && (
                 <>
                   <div className="fb-progress-track">
-                    <div className="fb-progress-fill" style={{ width: `${progress}%` }} />
+                    <div className="fb-progress-fill" style={{ width: progress + "%" }} />
                   </div>
                   <div className="fb-progress-label">{loadedPages} / {totalPages} pages</div>
                 </>
@@ -318,12 +302,13 @@ export default function FlipbookViewer({ isOpen, onClose, pdfURL }: FlipbookView
             </div>
           )}
 
+          {/* Flipbook */}
           {isReady && dimsReady && (
             <>
               <button className="fb-nav" onClick={prevPage}><ChevronLeft size={20} strokeWidth={2.5} /></button>
               <div className="fb-book-wrap">
                 <HTMLFlipBook
-                  key={`${isMobile}-${bookDims.width}-${bookDims.height}`}
+                  key={isMobile + "-" + bookDims.width + "-" + bookDims.height}
                   ref={flipBookRef}
                   width={bookDims.width}
                   height={bookDims.height}
@@ -358,10 +343,12 @@ export default function FlipbookViewer({ isOpen, onClose, pdfURL }: FlipbookView
           )}
         </div>
 
+        {/* Bottom bar */}
         <div className="fb-bottombar">
           <div className="fb-page-label">{pageLabel}</div>
           <div className="fb-footer-brand">Linit · NIT Durgapur</div>
         </div>
+
       </div>
     </>
   );

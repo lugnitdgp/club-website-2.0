@@ -114,11 +114,25 @@ const FlagshipEvents = () => {
               <ModalContent className="!p-0 w-full flex flex-col overflow-y-auto max-h-[90vh]">
                 {/* Full poster — no padding, no height constraint */}
                 {event.event_image && (
-                  <div className="w-full flex justify-center p-4 pt-6">
+                  <div className="relative w-full flex justify-center items-center overflow-hidden rounded-t-2xl min-h-[320px]">
+                    {/* Blurred background layer */}
+                    <div
+                      className="absolute inset-0 scale-110"
+                      style={{
+                        backgroundImage: `url(${event.event_image})`,
+                        backgroundSize: "cover",
+                        backgroundPosition: "center",
+                        filter: "blur(28px) brightness(0.55) saturate(1.8)",
+                      }}
+                    />
+                    {/* Subtle dark vignette overlay */}
+                    <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/40" />
+                    {/* Actual poster */}
                     <img
                       src={event.event_image}
                       alt={event.title}
-                      className="h-auto max-h-[420px] w-auto max-w-[85%] object-contain rounded-xl shadow-md"
+                      className="relative z-10 h-auto max-h-[420px] w-auto max-w-[75%] object-contain rounded-xl shadow-2xl my-6"
+                      style={{ filter: "drop-shadow(0 8px 32px rgba(0,0,0,0.5))" }}
                     />
                   </div>
                 )}

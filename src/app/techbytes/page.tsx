@@ -63,11 +63,11 @@ export default function TechBytesPage() {
   return (
     <div
       className="min-h-screen w-full bg-white dark:bg-gray-950 transition-colors duration-300"
-      style={{
-        backgroundImage:
-          "radial-gradient(circle, rgb(209 213 219) 1px, transparent 1px)",
-        backgroundSize: "24px 24px",
-      }}
+      // style={{
+      //   backgroundImage:
+      //     "radial-gradient(circle, rgb(209 213 219) 1px, transparent 1px)",
+      //   backgroundSize: "24px 24px",
+      // }}
     >
       {/* <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500&display=swap');

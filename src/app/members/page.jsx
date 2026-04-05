@@ -144,7 +144,7 @@ function MembersPage() {
         <div className="flex flex-col items-center gap-4 text-center">
           <SectionTitle title="Meet Our Members" description="None of us is smarter than all of us" />
         </div>
-        <div className="mx-auto mt-8 max-w-screen-2xl rounded-2xl bg-muted/70 p-6 lg:p-12">
+        <div className="mx-auto mt-8 max-w-screen-2xl rounded-2xl p-6 lg:p-12">
           <div className="text-center">
             <h2 className="text-2xl font-semibold">Fourth Year Members</h2>
             <p className="text-muted-foreground">Our senior members leading the way</p>
