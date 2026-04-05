@@ -3,7 +3,7 @@
 import dynamic from 'next/dynamic';
 import DataLoader from "@/components/loading/DataLoader";
 import { useFetchLinitQuery } from "@/store/slices/linitSlice";
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import SectionTitle from "@/components/Title";
 
 const FlipbookViewer = dynamic(() => import('@/components/linitViewer/FlipbookViewer'), { ssr: false });
@@ -42,7 +42,6 @@ function PdfCover({ url }: { url: string }) {
 
   return (
     <div className="w-full h-full relative">
-      {/* Shimmer placeholder while loading */}
       {!ready && (
         <div
           className="absolute inset-0 animate-pulse"
@@ -102,29 +101,29 @@ function LinitPage() {
           </div>
 
           {/* Book Cards — 2 per row */}
-          <div className="grid grid-cols-2 gap-x-16 gap-y-24">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-24">
             {data.map((linit: any, i: number) => (
               <div key={linit.id} className="flex flex-col items-center gap-4 group">
 
                 {/* Number + Book wrapper */}
                 <div className="relative" style={{ width: "260px", height: "360px" }}>
 
-                  {/* Ghost number — top-left, behind book */}
+                  {/* Ghost year — top-left, behind book */}
                   <span
                     className="absolute select-none leading-none z-0"
                     style={{
                       fontFamily: "'Georgia', serif",
-                      fontSize: "8rem",
+                      fontSize: "5rem",
                       fontWeight: 900,
                       color: "transparent",
                       WebkitTextStroke: "2px #d1d5db",
-                      top: "-5rem",
+                      top: "-4rem",
                       left: "-2rem",
                       lineHeight: 1,
                       pointerEvents: "none",
                     }}
                   >
-                    {i + 1}
+                    {linit.year_edition}
                   </span>
 
                   {/* Book Cover */}
@@ -186,49 +185,52 @@ function LinitPage() {
                       {/* PDF first page as cover */}
                       <PdfCover url={linit.document_url} />
 
-                      {/* Hover read overlay */}
-                      <div className="absolute inset-0 z-30 bg-black/0 group-hover:bg-black/30 transition-all duration-300 flex items-center justify-center">
-                        <span
-                          className="opacity-0 group-hover:opacity-100 transition-all duration-300 translate-y-2 group-hover:translate-y-0 text-white text-xs font-bold tracking-[0.2em] uppercase px-5 py-2 rounded-full backdrop-blur-sm"
-                          style={{ background: "rgba(0,0,0,0.45)" }}
+                      {/* Hover overlay with icons */}
+                      <div className="absolute inset-0 z-30 bg-black/0 group-hover:bg-black/35 transition-all duration-300 flex items-center justify-center gap-4">
+
+                        {/* Eye / View icon */}
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setPdf(linit.document_url);
+                            setViewerOpen(true);
+                          }}
+                          className="opacity-0 group-hover:opacity-100 transition-all duration-300 translate-y-2 group-hover:translate-y-0 w-11 h-11 rounded-full flex items-center justify-center backdrop-blur-sm border border-white/30"
+                          style={{ background: "rgba(255,255,255,0.15)" }}
                         >
-                          Read
-                        </span>
+                          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                            <circle cx="12" cy="12" r="3"/>
+                          </svg>
+                        </button>
+
+                        {/* Download icon */}
+                        <a
+                          href={linit.document_url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          download
+                          onClick={(e) => e.stopPropagation()}
+                          className="opacity-0 group-hover:opacity-100 transition-all duration-300 translate-y-2 group-hover:translate-y-0 w-11 h-11 rounded-full flex items-center justify-center backdrop-blur-sm border border-white/30"
+                          style={{ background: "rgba(255,255,255,0.15)", transitionDelay: "60ms" }}
+                        >
+                          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                            <polyline points="7 10 12 15 17 10"/>
+                            <line x1="12" y1="15" x2="12" y2="3"/>
+                          </svg>
+                        </a>
+
                       </div>
                     </div>
                   </div>
                 </div>
 
-                {/* Title + meta */}
-                <div className="text-center flex flex-col gap-0.5 mt-4">
+                {/* Title */}
+                <div className="text-center mt-4">
                   <h2 className="text-base font-bold text-gray-900 dark:text-white">
                     {"Linit " + linit.year_edition}
                   </h2>
-                  <p className="text-xs text-gray-400 dark:text-gray-500 tracking-wide">
-                    {(linit.pages || 68) + " pages"}
-                  </p>
-                </div>
-
-                {/* Buttons */}
-                <div className="flex gap-2">
-                  <button
-                    onClick={() => {
-                      setPdf(linit.document_url);
-                      setViewerOpen(true);
-                    }}
-                    className="px-5 py-2 bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-white text-sm font-semibold rounded-full transition-all duration-300 shadow-md hover:shadow-lg"
-                  >
-                    View
-                  </button>
-                  <a
-                    href={linit.document_url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    download
-                    className="px-5 py-2 bg-white hover:bg-gray-50 dark:bg-gray-800 dark:hover:bg-gray-700 text-gray-800 dark:text-white text-sm font-semibold rounded-full transition-all duration-300 shadow-md hover:shadow-lg border border-gray-200 dark:border-gray-700 text-center"
-                  >
-                    Download
-                  </a>
                 </div>
 
               </div>

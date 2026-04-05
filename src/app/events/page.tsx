@@ -23,6 +23,11 @@ function EventsPage() {
     return plain.substring(0, maxLength) + "...";
   };
 
+  const extractSummary = (description: string): string | null => {
+    const match = description.match(/<summary>([\s\S]*?)<\/summary>/i);
+    return match ? match[1].trim() : null;
+  };
+
   if (isLoading) return <DataLoader text="Loading events data..." />;
   if (error)
     return <div className="h-[70vh] w-screen text-center">Error loading the events data.</div>;
@@ -58,7 +63,7 @@ function EventsPage() {
                     {event.title}
                   </h3>
                   <p className="text-sm text-neutral-500 dark:text-neutral-400 line-clamp-3 leading-relaxed">
-                    {trimDescription(event.description, 130)}
+                    {extractSummary(event.description) || trimDescription(event.description, 130)}
                   </p>
                   <div className="border-t border-gray-100 dark:border-white/10" />
                   <div className="flex flex-col gap-1.5">
@@ -143,7 +148,9 @@ function EventsPage() {
                   </div>
                   <div
                     className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed prose dark:prose-invert max-w-none"
-                    dangerouslySetInnerHTML={{ __html: event.description }}
+                    dangerouslySetInnerHTML={{
+                      __html: event.description.replace(/<summary>[\s\S]*?<\/summary>/i, "")
+                    }}
                   />
                 </div>
               </ModalContent>
