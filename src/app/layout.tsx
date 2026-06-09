@@ -1,4 +1,5 @@
 import "./globals.css";
+import "@/styles/staggered-menu.css";
 import { Montserrat } from "next/font/google";
 import type { Metadata } from "next";
 import StateProvider from "@/providers/StateProvider";
