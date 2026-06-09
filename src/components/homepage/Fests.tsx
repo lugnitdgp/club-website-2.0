@@ -35,7 +35,7 @@ function Fests() {
         features={features}
         title=""
         autoPlayInterval={3000}
-        imageHeight="h-[200px]"
+        imageHeight="h-[300px] md:h-[450px]"
       />
     </div>
   );

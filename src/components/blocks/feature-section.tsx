@@ -50,19 +50,20 @@ export function FeatureSteps({
           {title}
         </h2>
 
-        <div className="flex flex-colmd:items-center md:grid md:grid-cols-2 gap-6 md:gap-10">
+        <div className="flex flex-col md:grid md:grid-cols-2 gap-6 md:gap-10 items-center">
           <div className="order-2 md:order-1 space-y-8">
             {features.map((feature, index) => (
               <motion.div
                 key={index}
-                className="flex items-center gap-6 md:gap-8"
+                className="flex items-center gap-6 md:gap-8 cursor-pointer"
+                onClick={() => setCurrentFeature(index)}
                 initial={{ opacity: 0.3 }}
                 animate={{ opacity: index === currentFeature ? 1 : 0.3 }}
                 transition={{ duration: 0.5 }}
               >
                 <motion.div
                   className={cn(
-                    "w-8 h-8 md:w-10 md:h-10 rounded-full flex items-center justify-center border-2",
+                    "w-8 h-8 md:w-10 md:h-10 rounded-full flex items-center justify-center border-2 shrink-0",
                     index === currentFeature
                       ? "bg-primary border-primary text-primary-foreground scale-110"
                       : "bg-muted border-muted-foreground"
@@ -89,7 +90,8 @@ export function FeatureSteps({
 
           <div
             className={cn(
-              "order-1 md:order-2 relative h-[200px] md:h-[500px]  overflow-hidden rounded-lg"
+              "order-1 md:order-2 relative overflow-hidden rounded-lg w-full flex items-center justify-center bg-black/5 dark:bg-white/5",
+              imageHeight
             )}
           >
             <AnimatePresence mode="wait">
@@ -98,7 +100,7 @@ export function FeatureSteps({
                   index === currentFeature && (
                     <motion.div
                       key={index}
-                      className="absolute inset-0 rounded-lg overflow-hidden"
+                      className="absolute inset-0 rounded-lg overflow-hidden flex items-center justify-center"
                       initial={{ y: 100, opacity: 0, rotateX: -20 }}
                       animate={{ y: 0, opacity: 1, rotateX: 0 }}
                       exit={{ y: -100, opacity: 0, rotateX: 20 }}
@@ -107,9 +109,10 @@ export function FeatureSteps({
                       <Image
                         src={feature.image}
                         alt={feature.step}
-                        className="w-full h-full object-fit transition-transform transform"
+                        fill
+                        className="object-contain transition-transform transform p-4"
+                        priority
                       />
-                      <div className="absolute bottom-0 left-0 right-0 h-2/3 bg-gradient-to-t from-background via-background/50 to-transparent" />
                     </motion.div>
                   )
               )}
