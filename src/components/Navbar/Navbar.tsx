@@ -28,7 +28,11 @@ const socialItems = [
 export default function Navbar() {
   const pathname          = usePathname();
   const { resolvedTheme } = useTheme();
-  const isDark            = resolvedTheme === "dark";
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => { setMounted(true); }, []);
+  // Before hydration resolvedTheme is undefined — treat as indeterminate,
+  // so we fall back to the CSS-variable `bg-foreground` which always contrasts.
+  const isDark = mounted ? resolvedTheme === "dark" : null;
   const [open, setOpen]   = useState(false);
   const menuRef           = useRef<{ toggleMenu: () => void; closeMenu: () => void }>(null);
 
@@ -82,20 +86,19 @@ export default function Navbar() {
           redOffset={0}
           greenOffset={8}
           blueOffset={18}
-          brightness={isDark ? 35 : 62}
+          brightness={isDark === false ? 62 : 35}
           opacity={0.88}
           blur={10}
-          backgroundOpacity={isDark ? 0.12 : 0.08}
-          saturation={isDark ? 1.4 : 1.2}
+          backgroundOpacity={isDark === false ? 0.08 : 0.12}
+          saturation={isDark === false ? 1.2 : 1.4}
           className={[
             "w-full md:max-w-6xl mx-auto",
             "pointer-events-auto",
           ].join(" ")}
           style={{
-            // Outer pill wrapper — GlassSurface handles backdrop; we add border here
-            border: isDark
-              ? "1.5px solid rgba(255,255,255,0.13)"
-              : "1.5px solid rgba(0,0,0,0.08)",
+            border: isDark === false
+              ? "1.5px solid rgba(0,0,0,0.08)"
+              : "1.5px solid rgba(255,255,255,0.13)",
             isolation: "isolate",
           }}
         >
@@ -115,7 +118,7 @@ export default function Navbar() {
                     "uppercase text-sm font-bold tracking-wide",
                     "hover:text-purple-500 hover:underline cursor-pointer",
                     "py-2 px-3 whitespace-nowrap transition-colors",
-                    isDark ? "text-white/95" : "text-zinc-900",
+                    isDark === false ? "text-zinc-900" : "text-white/95",
                     pathname === item.url
                       ? "text-purple-500 underline"
                       : "",
@@ -136,9 +139,12 @@ export default function Navbar() {
                 aria-label="Open menu"
                 onClick={handleOpen}
               >
-                <span className={`block w-full h-[2px] rounded-full ${isDark ? "bg-white" : "bg-zinc-900"}`} />
-                <span className={`block w-[65%] h-[2px] rounded-full ${isDark ? "bg-white" : "bg-zinc-900"}`} />
-                <span className={`block w-full h-[2px] rounded-full ${isDark ? "bg-white" : "bg-zinc-900"}`} />
+                {/* bg-foreground is the safe pre-hydration fallback — it always contrasts
+                    with the navbar background regardless of theme. Once mounted we switch
+                    to explicit white/dark so the colour is never ambiguous. */}
+                <span className={`block w-full h-[2px] rounded-full ${isDark === null ? "bg-foreground" : isDark ? "bg-white" : "bg-zinc-900"}`} />
+                <span className={`block w-[65%] h-[2px] rounded-full ${isDark === null ? "bg-foreground" : isDark ? "bg-white" : "bg-zinc-900"}`} />
+                <span className={`block w-full h-[2px] rounded-full ${isDark === null ? "bg-foreground" : isDark ? "bg-white" : "bg-zinc-900"}`} />
               </button>
             </div>
           </div>
