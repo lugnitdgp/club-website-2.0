@@ -7,6 +7,7 @@ import { logo } from "@/assets";
 import { usePathname } from "next/navigation";
 import { StaggeredMenu } from "@/components/StaggeredMenu";
 import { useTheme } from "next-themes";
+import GlassSurface from "@/components/GlassSurface";
 
 const navItems = [
   { url: "/events",           name: "Events"    },
@@ -40,82 +41,111 @@ export default function Navbar() {
     link:      item.url,
   }));
 
-  // Lock body scroll when menu is open
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
     return () => { document.body.style.overflow = ""; };
   }, [open]);
 
-  function handleHamburger() {
+  function handleOpen() {
     if (!menuRef.current) return;
-    if (open) {
-      menuRef.current.closeMenu();
-      setOpen(false);
-    } else {
-      menuRef.current.toggleMenu();
-      setOpen(true);
-    }
+    menuRef.current.toggleMenu();
+    setOpen(true);
   }
 
   return (
     <>
-      <div className="w-full flex justify-center pointer-events-none">
-        <div
-          className={`
-            w-full md:max-w-6xl mx-auto
-            flex flex-row h-max justify-between items-center gap-4
-            backdrop-blur-md py-2 px-6 md:px-12
-            fixed top-4 rounded-3xl
-            border-2 border-black/5 dark:border-white/10
-            bg-white/70 dark:bg-black/70
-            pointer-events-auto
-            ${open ? "z-[40]" : "z-[9999]"}
-          `}
-          style={{ isolation: "isolate" }}
+      {/*
+        PILL STRATEGY
+        ─────────────
+        On mobile (< md):
+          • When menu is CLOSED → show pill normally (flex)
+          • When menu is OPEN   → hide pill completely (display:none)
+            The menu panel (z-9998) would always be covered by the pill
+            (z-9999) since both are fixed — there is no CSS z-index trick
+            that works across fixed siblings without hiding one of them.
+
+        On desktop (≥ md):
+          • Always visible — the mobile menu never renders on desktop.
+
+        Tailwind idiom:  open ? "hidden md:flex" : "flex md:flex"
+      */}
+      <div className={[
+        "w-full flex justify-center pointer-events-none",
+        "fixed top-4 z-[9999]",
+        open ? "hidden md:flex" : "flex",
+      ].join(" ")}>
+        <GlassSurface
+          width="100%"
+          height={56}
+          borderRadius={999}
+          distortionScale={-160}
+          redOffset={0}
+          greenOffset={8}
+          blueOffset={18}
+          brightness={isDark ? 35 : 62}
+          opacity={0.88}
+          blur={10}
+          backgroundOpacity={isDark ? 0.12 : 0.08}
+          saturation={isDark ? 1.4 : 1.2}
+          className={[
+            "w-full md:max-w-6xl mx-auto",
+            "pointer-events-auto",
+          ].join(" ")}
+          style={{
+            // Outer pill wrapper — GlassSurface handles backdrop; we add border here
+            border: isDark
+              ? "1.5px solid rgba(255,255,255,0.13)"
+              : "1.5px solid rgba(0,0,0,0.08)",
+            isolation: "isolate",
+          }}
         >
-          <Link href="/" className="flex-shrink-0">
-            <Image src={logo} alt="logo" width={30} height={30} className="shadow-lg rounded-full" />
-          </Link>
+          {/* Inner layout row — sits above the SVG filter layer (z-10) */}
+          <div className="w-full flex flex-row items-center justify-between gap-4 py-2 px-6 md:px-12">
+            <Link href="/" className="flex-shrink-0">
+              <Image src={logo} alt="logo" width={30} height={30} className="shadow-lg rounded-full" />
+            </Link>
 
-          <div className="hidden md:flex flex-row items-center space-x-1 flex-1">
-            {navItems.map((icon) => (
-              <Link
-                href={icon.url}
-                target={icon.url.includes("http") ? "_blank" : "_self"}
-                className={`uppercase text-sm hover:text-purple-500 font-medium hover:underline cursor-pointer py-2 px-3 whitespace-nowrap dark:text-white transition-colors ${
-                  pathname === icon.url ? "text-purple-500 underline" : ""
-                }`}
-                key={icon.name}
+            {/* Desktop nav links (centered) */}
+            <div className="hidden md:flex absolute left-1/2 transform -translate-x-1/2 items-center space-x-4 z-10">
+              {navItems.map((item) => (
+                <Link
+                  href={item.url}
+                  target={item.url.includes("http") ? "_blank" : "_self"}
+                  className={[
+                    "uppercase text-sm font-bold tracking-wide",
+                    "hover:text-purple-500 hover:underline cursor-pointer",
+                    "py-2 px-3 whitespace-nowrap transition-colors",
+                    isDark ? "text-white/95" : "text-zinc-900",
+                    pathname === item.url
+                      ? "text-purple-500 underline"
+                      : "",
+                  ].join(" ")}
+                  key={item.name}
+                >
+                  {item.name}
+                </Link>
+              ))}
+            </div>
+
+            <div className="flex items-center gap-3 flex-shrink-0">
+              <ThemeSwitcher />
+
+              {/* Hamburger — static 3 lines, only visible when pill is shown (menu closed) */}
+              <button
+                className="md:hidden flex flex-col justify-center gap-[5px] w-[22px] h-[20px] bg-transparent border-0 cursor-pointer p-0"
+                aria-label="Open menu"
+                onClick={handleOpen}
               >
-                {icon.name}
-              </Link>
-            ))}
+                <span className={`block w-full h-[2px] rounded-full ${isDark ? "bg-white" : "bg-zinc-900"}`} />
+                <span className={`block w-[65%] h-[2px] rounded-full ${isDark ? "bg-white" : "bg-zinc-900"}`} />
+                <span className={`block w-full h-[2px] rounded-full ${isDark ? "bg-white" : "bg-zinc-900"}`} />
+              </button>
+            </div>
           </div>
-
-          <div className="flex items-center gap-3 flex-shrink-0">
-            <ThemeSwitcher />
-            <button
-              className="md:hidden flex flex-col justify-center gap-[5px] w-[22px] h-[20px] bg-transparent border-0 cursor-pointer p-0"
-              aria-label={open ? "Close menu" : "Open menu"}
-              onClick={handleHamburger}
-            >
-              <span
-                className="block w-full h-[2px] rounded-full bg-foreground transition-all duration-300 origin-center"
-                style={{ transform: open ? "translateY(7px) rotate(45deg)" : "none" }}
-              />
-              <span
-                className="block w-[65%] h-[2px] rounded-full bg-foreground transition-all duration-300"
-                style={{ opacity: open ? 0 : 1, transform: open ? "scaleX(0)" : "scaleX(1)" }}
-              />
-              <span
-                className="block w-full h-[2px] rounded-full bg-foreground transition-all duration-300 origin-center"
-                style={{ transform: open ? "translateY(-7px) rotate(-45deg)" : "none" }}
-              />
-            </button>
-          </div>
-        </div>
+        </GlassSurface>
       </div>
 
+      {/* StaggeredMenu — z-[9998], has its own X close button inside the panel */}
       <div className="md:hidden">
         <StaggeredMenu
           ref={menuRef}
@@ -126,10 +156,6 @@ export default function Navbar() {
           socialItems={socialItems}
           displaySocials
           displayItemNumbering
-          logoUrl=""
-          menuButtonColor={isDark ? "#ffffff" : "#18181b"}
-          openMenuButtonColor={isDark ? "#a855f7" : "#7e22ce"}
-          changeMenuColorOnOpen
           accentColor="#a855f7"
           closeOnClickAway
           onMenuClose={() => setOpen(false)}
