@@ -128,7 +128,7 @@ function ProjectCard({ project, onOpen }: CardProps) {
       />
 
       {/* Top-right subtle glow chip */}
-      <div className="absolute top-3 right-3 w-2 h-2 rounded-full bg-emerald-400 shadow-[0_0_8px_2px_rgba(52,211,153,0.7)] opacity-70 group-hover:opacity-100 group-hover:shadow-[0_0_14px_4px_rgba(52,211,153,0.9)] transition-all duration-300 z-[4]" />
+      {/* <div className="absolute top-3 right-3 w-2 h-2 rounded-full bg-emerald-400 shadow-[0_0_8px_2px_rgba(52,211,153,0.7)] opacity-70 group-hover:opacity-100 group-hover:shadow-[0_0_14px_4px_rgba(52,211,153,0.9)] transition-all duration-300 z-[4]" /> */}
 
       {/* ── Glass overlay — bottom ────────────────────────────────────────── */}
       <div
@@ -168,7 +168,7 @@ function ProjectCard({ project, onOpen }: CardProps) {
 
         {/* Action buttons */}
         <div className="flex items-center gap-2" onClick={e => e.stopPropagation()}>
-          {project.gitlink && (
+          {/* {project.gitlink && (
             <Link href={project.gitlink} target="_blank" rel="noopener noreferrer">
               <Button
                 variant="outline"
@@ -203,7 +203,7 @@ function ProjectCard({ project, onOpen }: CardProps) {
                 <Link2 className="w-3 h-3" /> Demo
               </Button>
             </Link>
-          )}
+          )} */}
           <Button
             variant="ghost"
             size="sm"
@@ -309,7 +309,7 @@ function ProjectModal({ project }: { project: any }) {
           />
         </div>
 
-        <div className="flex gap-3 pt-4 border-t border-zinc-200 dark:border-zinc-800">
+        {/* <div className="flex gap-3 pt-4 border-t border-zinc-200 dark:border-zinc-800">
           {project.gitlink && (
             <Link href={project.gitlink} target="_blank" rel="noopener noreferrer" className="flex-1">
               <Button
@@ -335,7 +335,7 @@ function ProjectModal({ project }: { project: any }) {
               </Button>
             </Link>
           )}
-        </div>
+        </div> */}
       </div>
     </ModalContent>
   );
@@ -594,7 +594,7 @@ export default function ProjectPage() {
     <ScrollStackWithScatter
       groups={cardGroups}
       cardW={1200}
-      cardH={330}
+      cardH={600}
       peekGap={12}
       scaleStep={0.035}
       navbarHeight={96}
