@@ -10,13 +10,14 @@ import { useTheme } from "next-themes";
 import GlassSurface from "@/components/GlassSurface";
 
 const navItems = [
-  { url: "/events",           name: "Events"    },
-  { url: "/timeline",         name: "Timeline"  },
-  { url: "/articles",         name: "Articles"  },
-  { url: "/projects",         name: "Projects"  },
-  { url: "/linit",            name: "Linit"     },
-  { url: "/members",          name: "Members"   },
-  { url: "/faculty-advisors", name: "Fac Ad"    },
+  { url: "/",           name: "Home"    },
+  { url: "/events",     name: "Events"  },
+  { url: "/timeline",   name: "Timeline"},
+  { url: "/articles",   name: "Articles"},
+  { url: "/projects",   name: "Projects"},
+  { url: "/linit",      name: "Linit"   },
+  { url: "/members",    name: "Members" },
+  { url: "/faculty-advisors", name: "Fac Ad" },
 ];
 
 const socialItems = [
@@ -30,15 +31,15 @@ export default function Navbar() {
   const { resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
   useEffect(() => { setMounted(true); }, []);
-  // Before hydration resolvedTheme is undefined — treat as indeterminate,
-  // so we fall back to the CSS-variable `bg-foreground` which always contrasts.
+  
   const isDark = mounted ? resolvedTheme === "dark" : null;
   const [open, setOpen]   = useState(false);
-  const menuRef           = useRef<{ toggleMenu: () => void; closeMenu: () => void }>(null);
+  const menuRef           = useRef(null);
 
   const swatchLight = ["#e9d5ff", "#a855f7"];
   const swatchDark  = ["#3b0764", "#7e22ce"];
 
+  // Mobile menu keeps all items (including Home)
   const menuItems = navItems.map((item) => ({
     label:     item.name,
     ariaLabel: `Go to ${item.name}`,
@@ -58,21 +59,6 @@ export default function Navbar() {
 
   return (
     <>
-      {/*
-        PILL STRATEGY
-        ─────────────
-        On mobile (< md):
-          • When menu is CLOSED → show pill normally (flex)
-          • When menu is OPEN   → hide pill completely (display:none)
-            The menu panel (z-9998) would always be covered by the pill
-            (z-9999) since both are fixed — there is no CSS z-index trick
-            that works across fixed siblings without hiding one of them.
-
-        On desktop (≥ md):
-          • Always visible — the mobile menu never renders on desktop.
-
-        Tailwind idiom:  open ? "hidden md:flex" : "flex md:flex"
-      */}
       <div className={[
         "w-full flex justify-center pointer-events-none",
         "fixed top-4 z-[9999]",
@@ -87,14 +73,11 @@ export default function Navbar() {
           greenOffset={8}
           blueOffset={18}
           brightness={isDark === false ? 62 : 35}
-          opacity={0.88}
+          opacity={1.5}
           blur={10}
           backgroundOpacity={isDark === false ? 0.08 : 0.12}
           saturation={isDark === false ? 1.2 : 1.4}
-          className={[
-            "w-full md:max-w-6xl mx-auto",
-            "pointer-events-auto",
-          ].join(" ")}
+          className="w-full md:max-w-6xl mx-auto pointer-events-auto"
           style={{
             border: isDark === false
               ? "1.5px solid rgba(0,0,0,0.08)"
@@ -102,7 +85,6 @@ export default function Navbar() {
             isolation: "isolate",
           }}
         >
-          {/* Inner layout row — sits above the SVG filter layer (z-10) */}
           <div className="w-full flex flex-row items-center justify-between gap-4 py-2 px-6 md:px-12">
             <Link href="/" className="flex-shrink-0">
               <Image src={logo} alt="logo" width={30} height={30} className="shadow-lg rounded-full" />
@@ -110,7 +92,9 @@ export default function Navbar() {
 
             {/* Desktop nav links (centered) */}
             <div className="hidden md:flex absolute left-1/2 transform -translate-x-1/2 items-center space-x-4 z-10">
-              {navItems.map((item) => (
+              {navItems
+                .filter((item) => item.name !== "Home") // <-- Filters out "Home" on desktop
+                .map((item) => (
                 <Link
                   href={item.url}
                   target={item.url.includes("http") ? "_blank" : "_self"}
@@ -133,15 +117,11 @@ export default function Navbar() {
             <div className="flex items-center gap-3 flex-shrink-0">
               <ThemeSwitcher />
 
-              {/* Hamburger — static 3 lines, only visible when pill is shown (menu closed) */}
               <button
                 className="md:hidden flex flex-col justify-center gap-[5px] w-[22px] h-[20px] bg-transparent border-0 cursor-pointer p-0"
                 aria-label="Open menu"
                 onClick={handleOpen}
               >
-                {/* bg-foreground is the safe pre-hydration fallback — it always contrasts
-                    with the navbar background regardless of theme. Once mounted we switch
-                    to explicit white/dark so the colour is never ambiguous. */}
                 <span className={`block w-full h-[2px] rounded-full ${isDark === null ? "bg-foreground" : isDark ? "bg-white" : "bg-zinc-900"}`} />
                 <span className={`block w-[65%] h-[2px] rounded-full ${isDark === null ? "bg-foreground" : isDark ? "bg-white" : "bg-zinc-900"}`} />
                 <span className={`block w-full h-[2px] rounded-full ${isDark === null ? "bg-foreground" : isDark ? "bg-white" : "bg-zinc-900"}`} />
@@ -151,7 +131,6 @@ export default function Navbar() {
         </GlassSurface>
       </div>
 
-      {/* StaggeredMenu — z-[9998], has its own X close button inside the panel */}
       <div className="md:hidden">
         <StaggeredMenu
           ref={menuRef}

@@ -327,31 +327,37 @@ export const StaggeredMenu = forwardRef<{ toggleMenu: () => void; closeMenu: () 
               )}
             </ul>
 
-            {displaySocials && socialItems && socialItems.length > 0 && (
-              <div className="sm-socials mt-auto pt-8 flex flex-col gap-3" aria-label="Social links">
-                <h3
-                  className="sm-socials-title m-0 text-base font-medium"
-                  style={{ color: accentColor ?? '#a855f7' }}
-                >
-                  Socials
-                </h3>
-                <ul className="sm-socials-list list-none m-0 p-0 flex flex-row items-center gap-4 flex-wrap" role="list">
-                  {socialItems.map((s, i) => (
-                    <li key={s.label + i} className="sm-socials-item">
-                      <a
-                        href={s.link}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="sm-socials-link text-[1.2rem] font-semibold no-underline inline-block py-[2px] transition-[color,opacity] duration-300"
-                        style={{ color: isDark ? '#d8b4fe' : '#111111' }}
-                      >
-                        {s.label}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
+         {displaySocials && socialItems && socialItems.length > 0 && (
+  <div 
+    className="sm-socials mt-auto pt-6 md:pt-8 flex flex-col gap-2 md:gap-3" 
+    aria-label="Social links"
+  >
+    <h3
+      className="sm-socials-title m-0 text-sm md:text-base font-medium"
+      style={{ color: accentColor ?? '#a855f7' }}
+    >
+      Socials
+    </h3>
+    <ul 
+      className="sm-socials-list list-none m-0 p-0 flex flex-row items-center gap-3 sm:gap-4 lg:gap-5 flex-wrap" 
+      role="list"
+    >
+      {socialItems.map((s, i) => (
+        <li key={s.label + i} className="sm-socials-item">
+          <a
+            href={s.link}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="sm-socials-link text-base sm:text-lg md:text-[1.2rem] font-semibold no-underline inline-block py-1 md:py-[2px] transition-opacity duration-300 hover:opacity-75 focus-visible:opacity-75"
+            style={{ color: isDark ? '#d8b4fe' : '#111111' }}
+          >
+            {s.label}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
+)}
           </div>
         </aside>
       </div>
