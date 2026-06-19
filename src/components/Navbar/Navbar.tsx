@@ -34,7 +34,7 @@ export default function Navbar() {
   
   const isDark = mounted ? resolvedTheme === "dark" : null;
   const [open, setOpen]   = useState(false);
-  const menuRef           = useRef(null);
+  const menuRef           = useRef<{ toggleMenu: () => void; closeMenu: () => void } | null>(null);
 
   const swatchLight = ["#e9d5ff", "#a855f7"];
   const swatchDark  = ["#3b0764", "#7e22ce"];
