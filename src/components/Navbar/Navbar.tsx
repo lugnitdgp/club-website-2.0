@@ -74,8 +74,8 @@ export default function Navbar() {
           blueOffset={18}
           brightness={isDark === false ? 62 : 35}
           opacity={1.5}
-          blur={10}
-          backgroundOpacity={isDark === false ? 0.08 : 0.12}
+          blur={18}
+          backgroundOpacity={isDark === false ? 0.1 : 0.12}
           saturation={isDark === false ? 1.2 : 1.4}
           className="w-full md:max-w-6xl mx-auto pointer-events-auto"
           style={{

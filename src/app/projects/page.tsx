@@ -443,112 +443,110 @@ function SectionHeader() {
         />
       </div>
 
-      {/* ── Scroll indicator — pinned to bottom of the hero ──────────────── */}
-      <div
-        className="flex flex-col items-center gap-4 pb-10 pointer-events-none"
-        style={{ animation: "hero-fade-up 1s 0.8s ease-out both" }}
-      >
-        {/* Label */}
-        <p
-          className="text-[10px] uppercase tracking-[0.28em] font-semibold"
-          style={{ color: "rgba(16,185,129,0.65)" }}
-        >
-          Scroll to explore
-        </p>
+   {/* ── Scroll indicator — pinned to bottom of the hero ──────────────── */}
+<div
+  className="flex flex-col items-center gap-1 sm:gap-2 pb-24 sm:pb-10 -mt-10 sm:mt-0 pointer-events-none"
+  style={{ animation: "hero-fade-up 1s 0.8s ease-out both" }}
+>
+  {/* Label */}
+  <p
+    className="text-[9px] sm:text-[10px] uppercase tracking-[0.28em] font-semibold"
+    style={{ color: "rgba(16,185,129,0.65)" }}
+  >
+    Scroll to explore
+  </p>
 
-        {/* Mouse shell */}
-        <div
-          className="relative flex items-center justify-center"
-          style={{ width: 44, height: 64 }}
-        >
-          {/* Three ripple rings */}
-          {([0, 0.45, 0.9] as number[]).map((delay, i) => (
-            <span
-              key={i}
-              className="absolute rounded-full"
-              style={{
-                width: 44 + i * 18,
-                height: 44 + i * 18,
-                top: "50%",
-                left: "50%",
-                transform: "translate(-50%,-50%)",
-                border: "1px solid rgba(16,185,129,0.30)",
-                animation: `scroll-ripple 2.6s ${delay}s ease-out infinite`,
-                opacity: 0,
-              }}
-            />
-          ))}
+  {/* Mouse shell & Ripples Container — Scaled down uniformly on mobile */}
+  <div
+    className="relative flex items-center justify-center scale-75 sm:scale-100 origin-center transition-transform duration-300"
+    style={{ width: 44, height: 104 }}
+  >
+    {/* Three ripple rings */}
+    {([0, 0.45, 0.9] as number[]).map((delay, i) => (
+      <span
+        key={i}
+        className="absolute rounded-full"
+        style={{
+          width: 44 + i * 18,
+          height: 44 + i * 18,
+          top: "50%",
+          left: "50%",
+          transform: "translate(-50%,-50%)",
+          border: "1px solid rgba(16,185,129,0.30)",
+          animation: `scroll-ripple 2.6s ${delay}s ease-out infinite`,
+          opacity: 0,
+        }}
+      />
+    ))}
 
-          {/* Mouse outline */}
-          <span
-            className="relative z-10"
-            style={{
-              display: "block",
-              width: 36,
-              height: 56,
-              borderRadius: 20,
-              border: "2px solid rgba(16,185,129,0.8)",
-            }}
-          >
-            {/* Glowing dot */}
-            <span
-              className="absolute left-1/2 rounded-full"
-              style={{
-                width: 6,
-                height: 6,
-                background: "#34d399",
-                transform: "translateX(-50%)",
-                top: 8,
-                animation: "scroll-dot 2s ease-in-out infinite",
-                boxShadow: "0 0 10px 2px rgba(52,211,153,0.7)",
-              }}
-            />
-          </span>
-        </div>
+    {/* Mouse outline */}
+    <span
+      className="relative z-10"
+      style={{
+        display: "block",
+        width: 36,
+        height: 56,
+        borderRadius: 20,
+        border: "2px solid rgba(16,185,129,0.8)",
+      }}
+    >
+      {/* Glowing dot */}
+      <span
+        className="absolute left-1/2 rounded-full"
+        style={{
+          width: 6,
+          height: 6,
+          background: "#34d399",
+          transform: "translateX(-50%)",
+          top: 8,
+          animation: "scroll-dot 2s ease-in-out infinite",
+          boxShadow: "0 0 10px 2px rgba(52,211,153,0.7)",
+        }}
+      />
+    </span>
+  </div>
 
-        {/* Chevron cascade */}
-        <div className="flex flex-col items-center" style={{ gap: 4 }}>
-          {([0, 0.2, 0.4] as number[]).map((delay, i) => (
-            <span
-              key={i}
-              style={{
-                display: "block",
-                width: 14,
-                height: 14,
-                borderLeft: "2px solid rgba(16,185,129,0.5)",
-                borderBottom: "2px solid rgba(16,185,129,0.5)",
-                transform: "rotate(-45deg)",
-                animation: `scroll-chevron 2s ${delay}s ease-in-out infinite`,
-                opacity: 0,
-              }}
-            />
-          ))}
-        </div>
-      </div>
+  {/* Chevron cascade — Scaled down and hidden/reduced on tiny screens if necessary */}
+  <div className="flex flex-col items-center gap-1 sm:gap-1.5" style={{ minHeight: "24px" }}>
+    {([0, 0.2, 0.4] as number[]).map((delay, i) => (
+      <span
+        key={i}
+        className="w-2.5 h-2.5 sm:w-3.5 sm:h-3.5 block"
+        style={{
+          borderLeft: "2px solid rgba(16,185,129,0.5)",
+          borderBottom: "2px solid rgba(16,185,129,0.5)",
+          transform: "rotate(-45deg)",
+          animation: `scroll-chevron 2s ${delay}s ease-in-out infinite`,
+          opacity: 0,
+        }}
+      />
+    ))}
+  </div>
+</div>
 
-      <style>{`
-        @keyframes hero-fade-up {
-          from { opacity: 0; transform: translateY(18px); }
-          to   { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes scroll-dot {
-          0%   { top: 8px;  opacity: 1; }
-          55%  { top: 34px; opacity: 0.15; }
-          56%  { top: 8px;  opacity: 0; }
-          80%  { top: 8px;  opacity: 1; }
-          100% { top: 8px;  opacity: 1; }
-        }
-        @keyframes scroll-ripple {
-          0%   { transform: translate(-50%,-50%) scale(0.55); opacity: 0.65; }
-          100% { transform: translate(-50%,-50%) scale(2.5);  opacity: 0; }
-        }
-        @keyframes scroll-chevron {
-          0%   { opacity: 0;   transform: rotate(-45deg) translateY(-5px); }
-          45%  { opacity: 1;   transform: rotate(-45deg) translateY(0px);  }
-          85%  { opacity: 0;   transform: rotate(-45deg) translateY(5px);  }
-          100% { opacity: 0;   transform: rotate(-45deg) translateY(5px);  }
-        }
-      `}</style>
+<style>{`
+  @keyframes hero-fade-up {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes scroll-dot {
+    0%   { top: 8px;  opacity: 1; }
+    55%  { top: 32px; opacity: 0.15; }
+    56%  { top: 8px;  opacity: 0; }
+    80%  { top: 8px;  opacity: 1; }
+    100% { top: 8px;  opacity: 1; }
+  }
+  @keyframes scroll-ripple {
+    0%   { transform: translate(-50%,-50%) scale(0.55); opacity: 0.65; }
+    100% { transform: translate(-50%,-50%) scale(2.2);  opacity: 0; }
+  }
+  @keyframes scroll-chevron {
+    0%   { opacity: 0;   transform: rotate(-45deg) translateY(-3px); }
+    45%  { opacity: 1;   transform: rotate(-45deg) translateY(0px);  }
+    85%  { opacity: 0;   transform: rotate(-45deg) translateY(3px);  }
+    100% { opacity: 0;   transform: rotate(-45deg) translateY(3px);  }
+  }
+`}</style>
     </div>
   );
 }
