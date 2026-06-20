@@ -329,7 +329,7 @@ export const StaggeredMenu = forwardRef<{ toggleMenu: () => void; closeMenu: () 
 
   {displaySocials && socialItems && socialItems.length > 0 && (
   <div 
-    className="sm-socials mt-6 sm:mt-auto pt-4 sm:pt-6 md:pt-8 flex flex-col gap-2 md:gap-3" 
+    className="sm-socials mt-2 sm:mt-auto pt-2 sm:pt-5 md:pt-5 flex flex-col gap-1 md:gap-1" 
     aria-label="Social links"
   >
     <h3
@@ -339,7 +339,7 @@ export const StaggeredMenu = forwardRef<{ toggleMenu: () => void; closeMenu: () 
       Socials
     </h3>
     <ul 
-      className="sm-socials-list list-none m-0 p-0 flex flex-row items-center gap-3 sm:gap-4 lg:gap-5 flex-wrap" 
+      className="sm-socials-list list-none m-0 p-0 flex flex-row items-center gap-2 sm:gap-2 lg:gap-2 flex-wrap" 
       role="list"
     >
       {socialItems.map((s, i) => (
