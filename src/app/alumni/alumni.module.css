@@ -1,0 +1,302 @@
+/* Grid Container */
+.gridContainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2rem;
+  margin-top: 2.5rem;
+  perspective: 1000px;
+}
+
+/* Card Base Style */
+.card {
+  position: relative;
+  background: rgba(15, 23, 42, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 24px;
+  height: 350px;
+  width: 100%;
+  max-width: 250px;
+  overflow: visible; /* allows imageContainer lift & shadow pop-out */
+  cursor: pointer;
+  z-index: 1;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.3);
+  transition: transform 0.55s cubic-bezier(0.215, 0.610, 0.355, 1.000), box-shadow 0.55s ease, filter 0.55s ease;
+  will-change: transform;
+}
+
+/* Light Theme Override */
+:global(.light) .card {
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.1);
+}
+
+/* Hover State - The Active Card */
+.card:hover {
+  z-index: 10;
+  box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.85), 0 0 50px -10px rgba(34, 197, 94, 0.15);
+}
+
+.card:nth-child(odd):hover {
+  transform: translateY(-8px) scale(1.03) rotate(2deg);
+}
+
+.card:nth-child(even):hover {
+  transform: translateY(-8px) scale(1.03) rotate(-2deg);
+}
+
+:global(.light) .card:hover {
+  box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.2), 0 0 50px -10px rgba(34, 197, 94, 0.1);
+}
+
+/* Image Container (holding the image/avatarFallback) */
+.imageContainer {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border-radius: 24px;
+  z-index: 1;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+/* Portrait Image (Covers entire card) */
+.portraitImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  transition: all 0.55s cubic-bezier(0.215, 0.610, 0.355, 1.000);
+  transform: scale(1) translateZ(0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.card:hover .portraitImage {
+  transform: scale(1.06) translateZ(0);
+}
+
+/* Fallback Avatar Lettering */
+.avatarFallback {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3.5rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, #1e1b4b, #311042);
+  color: #ffffff;
+  z-index: 1;
+  transition: all 0.55s cubic-bezier(0.215, 0.610, 0.355, 1.000);
+  transform: scale(1) translateZ(0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.card:hover .avatarFallback {
+  transform: scale(1.06) translateZ(0);
+}
+
+/* Dark Gradient Overlay for text readability */
+.gradientOverlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.45) 45%, transparent 100%);
+  z-index: 2;
+  transition: all 0.55s cubic-bezier(0.215, 0.610, 0.355, 1.000);
+  pointer-events: none;
+}
+
+.card:hover .gradientOverlay {
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.95) 0%, rgba(0, 0, 0, 0.6) 65%, transparent 100%);
+}
+
+/* Details Section - Name, Reveal Group (Email, Bio), Social Handles */
+.details {
+  position: absolute;
+  left: 1.5rem;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+  transition: all 0.55s cubic-bezier(0.215, 0.610, 0.355, 1.000);
+  pointer-events: auto;
+}
+
+.name {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 0;
+  transition: all 0.55s cubic-bezier(0.215, 0.610, 0.355, 1.000);
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
+}
+
+/* Wrapper and Group containing email and description - hidden by default, expands on hover */
+.revealWrapper {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.55s cubic-bezier(0.215, 0.610, 0.355, 1.000);
+  width: 100%;
+  overflow: hidden;
+}
+
+.card:hover .revealWrapper {
+  grid-template-rows: 1fr;
+}
+
+.revealGroup {
+  min-height: 0;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.55s cubic-bezier(0.215, 0.610, 0.355, 1.000), transform 0.55s cubic-bezier(0.215, 0.610, 0.355, 1.000);
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  width: 100%;
+  padding-top: 0.5rem;
+  padding-bottom: 0.75rem;
+}
+
+.card:hover .revealGroup {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.email {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.75);
+  margin: 0;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.role {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.85);
+  line-height: 1.4;
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+}
+
+/* Social links container at bottom of details */
+.socialLinks {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  min-height: 2rem;
+  width: 100%;
+  margin-top: 0.5rem;
+}
+
+.socialIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+  font-size: 1rem;
+  transition: all 0.55s cubic-bezier(0.215, 0.610, 0.355, 1.000);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+.socialIcon:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: scale(1.1) translateY(-2px);
+}
+
+.githubIcon {
+  opacity: 1;
+  transition: all 0.55s cubic-bezier(0.215, 0.610, 0.355, 1.000);
+}
+
+.githubIcon:hover {
+  background: #24292e;
+}
+
+.card:hover .githubIcon {
+  opacity: 0;
+  transform: translateX(15px) scale(0.8);
+  pointer-events: none;
+}
+
+.facebookIcon:hover {
+  background: #1877f2;
+}
+
+.linkedinIcon {
+  opacity: 1;
+  transition: all 0.55s cubic-bezier(0.215, 0.610, 0.355, 1.000);
+}
+
+.linkedinIcon:hover {
+  background: #0a66c2;
+}
+
+/* GitHub badge inside portrait */
+.socialBadge {
+  position: absolute;
+  bottom: 1.25rem;
+  right: 1.25rem;
+  background: #ffffff;
+  border: 2px solid #ffffff;
+  color: #24292e;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transform: translateY(12px) scale(0.9);
+  transition: all 0.55s cubic-bezier(0.215, 0.610, 0.355, 1.000);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  z-index: 5;
+  font-size: 1.1rem;
+}
+
+.socialBadge svg {
+  fill: #24292e;
+  color: #24292e;
+}
+
+.socialBadge:hover {
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+  background: #f3f4f6;
+}
+
+.card:hover .socialBadge {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+/* Sibling Blur Effect */
+.gridContainer:has(.card:hover) .card:not(:hover) {
+  filter: blur(4px) opacity(0.45);
+}
