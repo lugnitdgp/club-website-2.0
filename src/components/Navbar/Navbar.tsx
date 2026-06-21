@@ -64,27 +64,29 @@ export default function Navbar() {
         "fixed top-4 z-[9999]",
         open ? "hidden md:flex" : "flex",
       ].join(" ")}>
-        <GlassSurface
-          width="100%"
-          height={56}
-          borderRadius={999}
-          distortionScale={-160}
-          redOffset={0}
-          greenOffset={8}
-          blueOffset={18}
-          brightness={isDark === false ? 62 : 35}
-          opacity={1.5}
-          blur={18}
-          backgroundOpacity={isDark === false ? 0.1 : 0.12}
-          saturation={isDark === false ? 1.2 : 1.4}
-          className="w-full md:max-w-6xl mx-auto pointer-events-auto"
-          style={{
-            border: isDark === false
-              ? "1.5px solid rgba(0,0,0,0.08)"
-              : "1.5px solid rgba(255,255,255,0.13)",
-            isolation: "isolate",
-          }}
-        >
+     <GlassSurface
+  width="100%"
+  height={56}
+  borderRadius={999}
+  distortionScale={-160}
+  redOffset={0}
+  greenOffset={8}
+  blueOffset={18}
+  // Increase brightness and background opacity for light mode
+  brightness={isDark === false ? 85 : 35} 
+  opacity={1.5}
+  blur={18}
+  // Changed 0.1 to 0.65 or 0.7 to give the text a solid whitish backdrop
+  backgroundOpacity={isDark === false ? -0.9 : 0.12} 
+  saturation={isDark === false ? 1.2 : 1.4}
+  className="w-full md:max-w-6xl mx-auto pointer-events-auto"
+  style={{
+    border: isDark === false
+      ? "1.5px solid rgba(0,0,0,0.08)"
+      : "1.5px solid rgba(255,255,255,0.13)",
+    isolation: "isolate",
+  }}
+>
           <div className="w-full flex flex-row items-center justify-between gap-4 py-2 px-6 md:px-12">
             <Link href="/" className="flex-shrink-0">
               <Image src={logo} alt="logo" width={30} height={30} className="shadow-lg rounded-full" />
@@ -92,27 +94,28 @@ export default function Navbar() {
 
             {/* Desktop nav links (centered) */}
             <div className="hidden md:flex absolute left-1/2 transform -translate-x-1/2 items-center space-x-4 z-10">
-              {navItems
-                .filter((item) => item.name !== "Home") // <-- Filters out "Home" on desktop
-                .map((item) => (
-                <Link
-                  href={item.url}
-                  target={item.url.includes("http") ? "_blank" : "_self"}
-                  className={[
-                    "uppercase text-sm font-bold tracking-wide",
-                    "hover:text-purple-500 hover:underline cursor-pointer",
-                    "py-2 px-3 whitespace-nowrap transition-colors",
-                    isDark === false ? "text-zinc-900" : "text-white/95",
-                    pathname === item.url
-                      ? "text-purple-500 underline"
-                      : "",
-                  ].join(" ")}
-                  key={item.name}
-                >
-                  {item.name}
-                </Link>
-              ))}
-            </div>
+  {navItems
+    .filter((item) => item.name !== "Home")
+    .map((item) => (
+      <Link
+        href={item.url}
+        target={item.url.includes("http") ? "_blank" : "_self"}
+        className={[
+          "uppercase text-sm font-bold tracking-wide cursor-pointer",
+          "py-2 px-3 whitespace-nowrap transition-all duration-300",
+          // Active state stays explicitly purple and ignores blending
+          pathname === item.url
+            ? "text-purple-500 underline mix-blend-normal"
+            : isDark === false
+            ? "text-black mix-blend-difference hover:mix-blend-normal hover:text-purple-500 hover:underline"
+            : "text-white/95 hover:text-purple-500 hover:underline",
+        ].join(" ")}
+        key={item.name}
+      >
+        {item.name}
+      </Link>
+    ))}
+</div>
 
             <div className="flex items-center gap-3 flex-shrink-0">
               <ThemeSwitcher />
