@@ -327,9 +327,10 @@ export const StaggeredMenu = forwardRef<{ toggleMenu: () => void; closeMenu: () 
               )}
             </ul>
 
-  {displaySocials && socialItems && socialItems.length > 0 && (
+ {displaySocials && socialItems && socialItems.length > 0 && (
   <div 
-    className="sm-socials mt-2 sm:mt-auto pt-2 sm:pt-5 md:pt-5 flex flex-col gap-1 md:gap-1" 
+    // 👇 Added mb-12 for mobile to lift it up, removed on sm screens
+    className="sm-socials mb-12 sm:mb-0 mt-2 sm:mt-auto pt-2 sm:pt-5 md:pt-5 flex flex-col gap-1 md:gap-1" 
     aria-label="Social links"
   >
     <h3
@@ -357,7 +358,6 @@ export const StaggeredMenu = forwardRef<{ toggleMenu: () => void; closeMenu: () 
       ))}
     </ul>
   </div>
-
 )}
           </div>
         </aside>

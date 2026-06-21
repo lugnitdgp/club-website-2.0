@@ -444,8 +444,10 @@ function SectionHeader() {
       </div>
 
    {/* ── Scroll indicator — pinned to bottom of the hero ──────────────── */}
+{/* ── Scroll indicator — pinned to bottom of the hero ──────────────── */}
 <div
-  className="flex flex-col items-center gap-1 sm:gap-2 pb-24 sm:pb-10 -mt-10 sm:mt-0 pointer-events-none"
+  // 👇 Changed pb-24 to pb-12 and -mt-10 to -mt-24 to pull the cue upwards on mobile
+  className="flex flex-col items-center gap-1 sm:gap-2 pb-12 sm:pb-10 -mt-24 sm:mt-0 pointer-events-none"
   style={{ animation: "hero-fade-up 1s 0.8s ease-out both" }}
 >
   {/* Label */}
@@ -523,7 +525,6 @@ function SectionHeader() {
     ))}
   </div>
 </div>
-
 <style>{`
   @keyframes hero-fade-up {
     from { opacity: 0; transform: translateY(12px); }
