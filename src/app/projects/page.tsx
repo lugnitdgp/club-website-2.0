@@ -390,7 +390,7 @@ function SectionHeader() {
         style={{ paddingTop: 48 }} // 💡 Reduced from 96 to pull heading closer to navbar
       >
         {/* Eyebrow */}
-        <p className="text-[10px] sm:text-xs uppercase tracking-[0.28em] font-semibold text-emerald-500 mb-5">
+        <p className="text-[10px] sm:text-xs uppercase tracking-[0.28em] font-semibold text-purple-500 mb-5">
           Open source
         </p>
 
@@ -400,8 +400,8 @@ function SectionHeader() {
             sentence="Our Projects"
             manualMode={false}
             blurAmount={4}
-            borderColor="#10b981"
-            glowColor="rgba(16,185,129,0.55)"
+            borderColor="purple"
+            glowColor="hsla(277, 71%, 42%, 0.55)"
             animationDuration={0.6}
             pauseBetweenAnimations={1.2}
           />
@@ -411,7 +411,7 @@ function SectionHeader() {
         <p
           className="max-w-sm sm:max-w-md text-sm sm:text-base font-medium leading-relaxed"
           style={{
-            color: "rgba(16,185,129,0.55)",
+            color: "purple",
             animation: "hero-fade-up 0.9s 0.2s ease-out both",
           }}
         >
@@ -420,7 +420,7 @@ function SectionHeader() {
         <p
           className="max-w-sm sm:max-w-md text-xs sm:text-sm leading-relaxed mt-1"
           style={{
-            color: "var(--tw-prose-body, rgba(113,113,122,0.85))",
+            color: "var(--tw-prose-body, purple)",
             animation: "hero-fade-up 0.9s 0.45s ease-out both",
           }}
         >
@@ -433,7 +433,7 @@ function SectionHeader() {
           style={{
             width: 40,
             height: 1,
-            background: "rgba(16,185,129,0.3)",
+            background: "purple",
             animation: "hero-fade-up 0.9s 0.6s ease-out both",
           }}
         />
@@ -447,7 +447,7 @@ function SectionHeader() {
         {/* Label */}
         <p
           className="text-[9px] sm:text-[10px] uppercase tracking-[0.28em] font-semibold"
-          style={{ color: "rgba(16,185,129,0.65)" }}
+          style={{ color: "purple" }}
         >
           Scroll to explore
         </p>
@@ -468,7 +468,7 @@ function SectionHeader() {
                 top: "50%",
                 left: "50%",
                 transform: "translate(-50%,-50%)",
-                border: "1px solid rgba(16,185,129,0.30)",
+                border: "1px solid purple",
                 animation: `scroll-ripple 2.6s ${delay}s ease-out infinite`,
                 opacity: 0,
               }}
@@ -483,7 +483,7 @@ function SectionHeader() {
               width: 36,
               height: 56,
               borderRadius: 20,
-              border: "2px solid rgba(16,185,129,0.8)",
+              border: "2px solid purple",
             }}
           >
             {/* Glowing dot */}
@@ -492,11 +492,11 @@ function SectionHeader() {
               style={{
                 width: 6,
                 height: 6,
-                background: "#34d399",
+                background: "purple",
                 transform: "translateX(-50%)",
                 top: 8,
                 animation: "scroll-dot 2s ease-in-out infinite",
-                boxShadow: "0 0 10px 2px rgba(52,211,153,0.7)",
+                boxShadow: "0 0 10px 2px rgba(97, 52, 211, 0.7)",
               }}
             />
           </span>
@@ -509,8 +509,8 @@ function SectionHeader() {
               key={i}
               className="w-2.5 h-2.5 sm:w-3.5 sm:h-3.5 block"
               style={{
-                borderLeft: "2px solid rgba(16,185,129,0.5)",
-                borderBottom: "2px solid rgba(16,185,129,0.5)",
+                borderLeft: "2px solid purple",
+                borderBottom: "2px solid purple",
                 transform: "rotate(-45deg)",
                 animation: `scroll-chevron 2s ${delay}s ease-in-out infinite`,
                 opacity: 0,
