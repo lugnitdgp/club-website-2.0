@@ -20,11 +20,11 @@ const navItems = [
   { url: "/faculty-advisors", name: "Fac Ad" },
 ];
 
-const socialItems = [
-  { label: "GitHub",    link: "https://github.com/lugnitdgp"           },
-  { label: "LinkedIn",  link: "https://linkedin.com/company/lugnitdgp" },
-  { label: "Instagram", link: "https://instagram.com/lugnitdgp"        },
-];
+// const socialItems = [
+//   { label: "GitHub",    link: "https://github.com/lugnitdgp"           },
+//   { label: "LinkedIn",  link: "https://linkedin.com/company/lugnitdgp" },
+//   { label: "Instagram", link: "https://instagram.com/lugnitdgp"        },
+// ];
 
 export default function Navbar() {
   const pathname          = usePathname();
@@ -151,8 +151,8 @@ export default function Navbar() {
           position="right"
           colors={isDark ? swatchDark : swatchLight}
           items={menuItems}
-          socialItems={socialItems}
-          displaySocials
+          // socialItems={socialItems}
+          // displaySocials
           displayItemNumbering
           accentColor="#a855f7"
           closeOnClickAway
