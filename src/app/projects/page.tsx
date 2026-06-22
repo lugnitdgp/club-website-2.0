@@ -302,7 +302,7 @@ function ProjectModal({ project }: { project: any }) {
             className="
               prose prose-sm dark:prose-invert max-w-none
               overflow-y-auto max-h-[30vh]
-              text-zinc-600 dark:text-zinc-400
+              text-zinc-700 dark:text-zinc-200
               pr-1
             "
             dangerouslySetInnerHTML={{ __html: project.description_markdown }}
@@ -409,18 +409,20 @@ function SectionHeader() {
 
         {/* Tagline — two-line, staggered fade-in */}
         <p
-          className="max-w-sm sm:max-w-md text-sm sm:text-base font-medium leading-relaxed"
+          className="    max-w-sm sm:max-w-md text-sm sm:text-base font-medium leading-relaxed
+    text-purple-700 dark:text-white
+    dark:drop-shadow-[0_0_10px_rgba(255,255,255,0.45)]"
           style={{
-            color: "purple",
+            // color: "var(--tw-prose-body, purple)",
             animation: "hero-fade-up 0.9s 0.2s ease-out both",
           }}
         >
           Where ideas become code.
         </p>
         <p
-          className="max-w-sm sm:max-w-md text-xs sm:text-sm leading-relaxed mt-1"
+          className="max-w-sm sm:max-w-md text-xs sm:text-sm leading-relaxed mt-1 text-purple-700 dark:text-white dark:drop-shadow-[0_0_10px_rgba(255,255,255,0.45)]"
           style={{
-            color: "var(--tw-prose-body, purple)",
+            // color: "var(--tw-prose-body, purple)",
             animation: "hero-fade-up 0.9s 0.45s ease-out both",
           }}
         >
