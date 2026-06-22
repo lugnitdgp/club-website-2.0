@@ -31,7 +31,7 @@ export default function Navbar() {
   const { resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
   useEffect(() => { setMounted(true); }, []);
-  
+
   const isDark = mounted ? resolvedTheme === "dark" : null;
   const [open, setOpen]   = useState(false);
   const menuRef           = useRef<{ toggleMenu: () => void; closeMenu: () => void } | null>(null);
@@ -72,13 +72,14 @@ export default function Navbar() {
   redOffset={0}
   greenOffset={8}
   blueOffset={18}
-  // Increase brightness and background opacity for light mode
-  brightness={isDark === false ? 85 : 35} 
+  // Dark mode block left exactly as-is — you said it isn't causing issues.
+  // Light mode: backgroundOpacity pushed back DOWN (raising it is what made
+  // the pill go dark) and brightness pushed UP to lighten the backdrop.
+  brightness={isDark === false ? 140 : 35}
   opacity={1.5}
   blur={18}
-  // Changed 0.1 to 0.65 or 0.7 to give the text a solid whitish backdrop
-  backgroundOpacity={isDark === false ? -0.9 : 0.12} 
-  saturation={isDark === false ? 1.2 : 1.4}
+  backgroundOpacity={isDark === false ? 0.18 : 0.12}
+  saturation={isDark === false ? 1.1 : 1.4}
   className="w-full md:max-w-6xl mx-auto pointer-events-auto"
   style={{
     border: isDark === false
@@ -87,7 +88,17 @@ export default function Navbar() {
     isolation: "isolate",
   }}
 >
-          <div className="w-full flex flex-row items-center justify-between gap-4 py-2 px-6 md:px-12">
+          {/* Flat white wash painted over the glass effect — only in light mode.
+              This is what actually guarantees the whitish look, independent of
+              whatever tint GlassSurface defaults to internally. */}
+          {isDark === false && (
+            <div
+              className="absolute inset-0 rounded-full pointer-events-none"
+              style={{ background: "rgba(255,255,255,0.55)" }}
+            />
+          )}
+
+          <div className="relative z-10 w-full flex flex-row items-center justify-between gap-4 py-2 px-6 md:px-12">
             <Link href="/" className="flex-shrink-0">
               <Image src={logo} alt="logo" width={30} height={30} className="shadow-lg rounded-full" />
             </Link>
@@ -103,11 +114,10 @@ export default function Navbar() {
         className={[
           "uppercase text-sm font-bold tracking-wide cursor-pointer",
           "py-2 px-3 whitespace-nowrap transition-all duration-300",
-          // Active state stays explicitly purple and ignores blending
           pathname === item.url
-            ? "text-purple-500 underline mix-blend-normal"
+            ? "text-purple-500 underline"
             : isDark === false
-            ? "text-black mix-blend-difference hover:mix-blend-normal hover:text-purple-500 hover:underline"
+            ? "text-zinc-900 hover:text-purple-500 hover:underline"
             : "text-white/95 hover:text-purple-500 hover:underline",
         ].join(" ")}
         key={item.name}

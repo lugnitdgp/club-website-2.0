@@ -184,7 +184,7 @@ export default function Footer() {
           <ul className="mt-2 space-y-2">
             {[
               { href: "/blogs", text: "Blogs" },
-              { href: "/CTF", text: "CTF" },
+              { href: "/ctf", text: "CTF" },
               { href: "/articles", text: "Articles" },
               { href: "/techbytes", text: "Techbytes" },
             ].map((link) => (
