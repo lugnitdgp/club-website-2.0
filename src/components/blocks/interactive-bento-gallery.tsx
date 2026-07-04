@@ -304,6 +304,19 @@ const InteractiveBentoGallery: React.FC<InteractiveBentoGalleryProps> = ({
     const [selectedItem, setSelectedItem] = useState<MediaItemType | null>(null)
     const [items, setItems] = useState(mediaItems)
     const [isDragging, setIsDragging] = useState(false)
+    const [isMobile, setIsMobile] = useState(false);
+
+useEffect(() => {
+    const checkMobile = () => {
+        setIsMobile(window.innerWidth < 768);
+    };
+
+    checkMobile();
+
+    window.addEventListener("resize", checkMobile);
+
+    return () => window.removeEventListener("resize", checkMobile);
+}, []);
 
     return (
         <div className="w-full md:w-3/5 md:mx-auto px-4 py-8">
@@ -342,31 +355,49 @@ const InteractiveBentoGallery: React.FC<InteractiveBentoGalleryProps> = ({
                 {items.map((item, index) => (
                     <motion.div
                         key={item.id}
-                        className={`relative overflow-hidden rounded-xl cursor-move shadow-xl h-32 md:h-auto ${item.span}`}
+                        className={`relative overflow-hidden rounded-xl shadow-xl h-32 md:h-auto ${item.span}`}
+                        style={{
+                            touchAction: "pan-y",
+                            cursor: isMobile ? "pointer" : "move",
+                        }}
                         onClick={() => !isDragging && setSelectedItem(item)}
                         variants={{
                             hidden: { y: 50, scale: 0.9, opacity: 0 },
                             visible: {
-                                y: 0, scale: 1, opacity: 1,
-                                transition: { type: 'spring', stiffness: 350, damping: 25, delay: index * 0.05 },
+                                y: 0,
+                                scale: 1,
+                                opacity: 1,
+                                transition: {
+                                    type: "spring",
+                                    stiffness: 350,
+                                    damping: 25,
+                                    delay: index * 0.05,
+                                },
                             },
                         }}
-                        whileHover={{ scale: 1.02 }}
-                        drag
+                        whileHover={!isMobile ? { scale: 1.02 } : undefined}
+                        drag={!isMobile}
                         dragConstraints={{ left: 0, right: 0, top: 0, bottom: 0 }}
                         dragElastic={1}
                         onDragStart={() => setIsDragging(true)}
                         onDragEnd={(_, info) => {
-                            setIsDragging(false)
-                            const dist = info.offset.x + info.offset.y
+                            if (isMobile) return;
+
+                            setIsDragging(false);
+
+                            const dist = info.offset.x + info.offset.y;
+
                             if (Math.abs(dist) > 50) {
-                                const next = [...items]
-                                const [dragged] = next.splice(index, 1)
-                                const target = dist > 0
-                                    ? Math.min(index + 1, items.length - 1)
-                                    : Math.max(index - 1, 0)
-                                next.splice(target, 0, dragged)
-                                setItems(next)
+                                const next = [...items];
+                                const [dragged] = next.splice(index, 1);
+
+                                const target =
+                                    dist > 0
+                                        ? Math.min(index + 1, items.length - 1)
+                                        : Math.max(index - 1, 0);
+
+                                next.splice(target, 0, dragged);
+                                setItems(next);
                             }
                         }}
                     >
