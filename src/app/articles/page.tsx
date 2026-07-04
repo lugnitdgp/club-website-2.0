@@ -55,13 +55,13 @@ function ArticlesPage() {
     <div className="w-[90%] mx-auto flex flex-col gap-10 mt-8 pt-20">
       <SectionTitle
         title="Our Articles"
-        description="We regulary post Articles on our Dev.to"
+        description="We regularly post Articles on our Dev.to"
       />
       <div className=" flex flex-col items-center  w-full ">
         <p className=" text-center text-sm text-gray-500">
           Oops! Looks like these are not arranged properly! Can you help us😜{" "}
           <br />
-          Althogth they are functional😎{" "}
+          Although they are functional😎{" "}
         </p>
         <InteractiveBentoBlogs
           mediaItems={mediaItems}
