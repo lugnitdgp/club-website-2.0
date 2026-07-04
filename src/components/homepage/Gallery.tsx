@@ -79,8 +79,7 @@ function Gallery() {
     {
       id: 7,
       type: "image",
-      title: "Shiva Temple",
-      // desc: "Peaceful Shiva sanctuary.",
+      title: "Workshop",
       url: "https://res.cloudinary.com/dogqbjx8a/image/upload/WhatsApp_Image_2025-03-09_at_10.27.30_ugugge.jpg",
       span: "md:col-span-2 md:row-span-4 sm:col-span-2 sm:row-span-3",
     },
