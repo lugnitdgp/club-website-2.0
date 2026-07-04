@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useRef, useState, useCallback } from "react";
 import { createPortal } from "react-dom";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useMotionValue } from "framer-motion";
 import { X } from "lucide-react";
 
 interface MediaItemType {
@@ -122,21 +122,24 @@ interface GalleryModalProps {
 const GalleryModal = ({ selectedItem, onClose, onSelectItem, mediaItems }: GalleryModalProps) => {
   const [visible, setVisible] = useState(false);
   const [closing, setClosing] = useState(false);
-  const [dockPos, setDockPos] = useState({ x: 0, y: 0 });
+  const thumbsRef = useRef<HTMLDivElement>(null);
 
-  // Trigger enter animation one frame after mount
+  // BUG FIX 1: Use motion values directly for drag position.
+  // Previously used React state + onDragEnd accumulation which caused a "snap to corner"
+  // bug because Framer Motion's internal transform and our state-based x/y double-applied.
+  const dockX = useMotionValue(0);
+  const dockY = useMotionValue(0);
+
   useEffect(() => {
     const id = requestAnimationFrame(() => setVisible(true));
     return () => cancelAnimationFrame(id);
   }, []);
 
-  // Lock body scroll
   useEffect(() => {
     document.body.style.overflow = "hidden";
     return () => { document.body.style.overflow = ""; };
   }, []);
 
-  // Escape key
   useEffect(() => {
     const handler = (e: KeyboardEvent) => { if (e.key === "Escape") handleClose(); };
     window.addEventListener("keydown", handler);
@@ -148,6 +151,34 @@ const GalleryModal = ({ selectedItem, onClose, onSelectItem, mediaItems }: Galle
     setClosing(true);
     setTimeout(() => onClose(), 220);
   }, [closing, onClose]);
+
+  // BUG FIX 2: Use a native capture-phase listener with stopImmediatePropagation.
+  // React synthetic e.stopPropagation() does NOT stop Framer Motion's native addEventListener
+  // drag listeners on the parent. Only stopImmediatePropagation on the native event
+  // during capture phase prevents the parent from ever seeing the pointer event.
+  // setPointerCapture routes all subsequent pointermove/pointerup here for manual scroll.
+  useEffect(() => {
+    const el = thumbsRef.current;
+    if (!el) return;
+    let startX = 0;
+    let startScroll = 0;
+    const onDown = (e: PointerEvent) => {
+      e.stopImmediatePropagation();
+      startX = e.clientX;
+      startScroll = el.scrollLeft;
+      el.setPointerCapture(e.pointerId);
+    };
+    const onMove = (e: PointerEvent) => {
+      if (!el.hasPointerCapture(e.pointerId)) return;
+      el.scrollLeft = startScroll - (e.clientX - startX);
+    };
+    el.addEventListener("pointerdown", onDown, { capture: true });
+    el.addEventListener("pointermove", onMove);
+    return () => {
+      el.removeEventListener("pointerdown", onDown, { capture: true });
+      el.removeEventListener("pointermove", onMove);
+    };
+  }, []);
 
   const shown = visible && !closing;
 
@@ -258,48 +289,59 @@ const GalleryModal = ({ selectedItem, onClose, onSelectItem, mediaItems }: Galle
         drag
         dragMomentum={false}
         dragElastic={0.08}
-        onDragEnd={(_, info) =>
-          setDockPos((p) => ({ x: p.x + info.offset.x, y: p.y + info.offset.y }))
-        }
         style={{
           position: "fixed",
           zIndex: 10000,
           left: "50%",
           bottom: "1.5rem",
-          x: `calc(-50% + ${dockPos.x}px)`,
-          y: dockPos.y,
+          translateX: "-50%", // centers the dock; dockX/dockY are the drag offset on top
+          x: dockX,
+          y: dockY,
           opacity: shown ? 1 : 0,
           transition: "opacity 0.2s ease",
           pointerEvents: closing ? "none" : "auto",
           touchAction: "none",
         }}
-        className="rounded-xl bg-sky-400/20 backdrop-blur-xl border border-blue-400/30 shadow-lg cursor-grab active:cursor-grabbing"
+        className="rounded-xl bg-sky-400/20 backdrop-blur-xl border border-blue-400/30 shadow-lg flex flex-col items-center cursor-grab active:cursor-grabbing"
       >
-        <div className="flex items-center -space-x-2 px-3 py-2">
-          {mediaItems.map((item, index) => {
-            const isActive = selectedItem.id === item.id;
-            return (
-              <motion.div
-                key={item.id}
-                onClick={(e) => { e.stopPropagation(); onSelectItem(item); }}
-                style={{ zIndex: isActive ? 30 : mediaItems.length - index }}
-                className={`relative w-8 h-8 sm:w-9 sm:h-9 md:w-10 md:h-10 flex-shrink-0
-                  rounded-lg overflow-hidden cursor-pointer
-                  ${isActive ? "ring-2 ring-white/70 shadow-lg" : "hover:ring-2 hover:ring-white/30"}`}
-                initial={{ rotate: index % 2 === 0 ? -15 : 15 }}
-                animate={{
-                  scale: isActive ? 1.2 : 1,
-                  rotate: isActive ? 0 : index % 2 === 0 ? -15 : 15,
-                  y: isActive ? -8 : 0,
-                }}
-                whileHover={{ scale: 1.3, rotate: 0, y: -10 }}
-                transition={{ type: "spring", stiffness: 400, damping: 25 }}
-              >
-                <MediaItem item={item} className="w-full h-full" onClick={() => onSelectItem(item)} />
-                <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/5 to-white/20" />
-              </motion.div>
-            );
-          })}
+        {/* Drag indicator pill */}
+        <div className="w-full flex justify-center pt-2 pb-1 select-none pointer-events-none">
+          <div className="w-10 h-1.5 bg-white/40 rounded-full" />
+        </div>
+
+        {/* Thumbnail strip — uses native capture-phase listener to intercept
+            pointer events before Framer Motion's drag sees them. */}
+        <div
+          ref={thumbsRef}
+          className="max-w-[90vw] overflow-x-auto"
+          style={{ cursor: "default" }}
+        >
+          <div className="flex items-center gap-2 md:-space-x-2 px-3 pb-3 pt-1">
+            {mediaItems.map((item, index) => {
+              const isActive = selectedItem.id === item.id;
+              return (
+                <motion.div
+                  key={item.id}
+                  onClick={(e) => { e.stopPropagation(); onSelectItem(item); }}
+                  style={{ zIndex: isActive ? 30 : mediaItems.length - index }}
+                  className={`relative w-10 h-10 sm:w-11 sm:h-11 md:w-12 md:h-12 flex-shrink-0
+                    rounded-lg overflow-hidden cursor-pointer
+                    ${isActive ? "ring-2 ring-white/70 shadow-lg" : "hover:ring-2 hover:ring-white/30"}`}
+                  initial={{ rotate: index % 2 === 0 ? -15 : 15 }}
+                  animate={{
+                    scale: isActive ? 1.2 : 1,
+                    rotate: isActive ? 0 : index % 2 === 0 ? -15 : 15,
+                    y: isActive ? -8 : 0,
+                  }}
+                  whileHover={{ scale: 1.3, rotate: 0, y: -10 }}
+                  transition={{ type: "spring", stiffness: 400, damping: 25 }}
+                >
+                  <MediaItem item={item} className="w-full h-full" onClick={() => onSelectItem(item)} />
+                  <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/5 to-white/20" />
+                </motion.div>
+              );
+            })}
+          </div>
         </div>
       </motion.div>
     </>,
