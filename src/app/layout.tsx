@@ -6,6 +6,8 @@ import StateProvider from "@/providers/StateProvider";
 import LayoutProvider from "@/providers/LayoutProvider";
 import { ThemeProvider } from "@/components/ThemeProvider";
 
+import  AIAssistant  from "@/components/AIAssistant"
+
 export const metadata: Metadata = {
   title: {
     default: "GNU/Linux Users Group",
@@ -32,6 +34,9 @@ export default function RootLayout({
           <StateProvider>
             <LayoutProvider>{children}</LayoutProvider>
           </StateProvider>
+
+          <AIAssistant/>
+          
         </ThemeProvider>
       </body>
     </html>
