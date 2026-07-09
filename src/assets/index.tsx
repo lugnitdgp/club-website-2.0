@@ -9,6 +9,9 @@ import placeholder from "./Images/placeholder.png";
 import aarhn from "./Images/aarhn.png";
 import aavishkar from "./Images/aavishkar.png";
 import mukti from "./Images/mukti.png";
+import penguinSticker from './Images/tux_bot.png';
+
+
 export {
   logo,
   header,
@@ -21,4 +24,5 @@ export {
   aarhn,
   aavishkar,
   mukti,
+  penguinSticker,
 };
