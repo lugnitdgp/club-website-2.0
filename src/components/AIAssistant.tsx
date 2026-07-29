@@ -12,6 +12,11 @@ import { logo, penguinSticker } from "@/assets";
 import GlassSurface from "@/components/GlassSurface";
 import { useTheme } from "next-themes";
 
+
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+
+
 interface Message {
   role: "user" | "bot";
   content: string;
@@ -140,8 +145,7 @@ export default function AIAssistant() {
       const decoder = new TextDecoder("utf-8");
       
       let buffer = "";
-      let rawJsonBuffer = ""; 
-      let lastDisplayedText = ""; 
+      let fullMessage = ""; // Track the accumulated tokens here
 
       while (true) {
         const { value, done } = await reader.read();
@@ -162,38 +166,22 @@ export default function AIAssistant() {
 
           try {
             const payload = JSON.parse(dataString);
-            let token = payload.response || "";
+            const token = payload.response || "";
 
             if (token) {
-              rawJsonBuffer += token; 
-              let displayMessage = ""; 
+              fullMessage += token; // Append the new chunk to our full message
 
-              if (rawJsonBuffer.includes('"answer_summary"')) {
-                const match = rawJsonBuffer.match(/"answer_summary"\s*:\s*"([\s\S]*)/);
-                if (match) {
-                  let text = match[1];
-                  text = text.replace(/",\s*"data_list"\s*:\s*\[[\s\S]*$/, "");
-                  text = text.replace(/("?\s*}?\s*)$/, "");
-                  displayMessage = text.replace(/\\n/g, '\n').replace(/\\"/g, '"');
+              setMessages((prev) => {
+                const updatedMessages = [...prev];
+                const lastIndex = updatedMessages.length - 1;
+                if (updatedMessages[lastIndex].role === "bot") {
+                  updatedMessages[lastIndex] = { ...updatedMessages[lastIndex], content: fullMessage };
                 }
-              }
-
-              if (displayMessage && displayMessage !== lastDisplayedText) {
-                lastDisplayedText = displayMessage; 
-
-                setMessages((prev) => {
-                  const updatedMessages = [...prev];
-                  const lastIndex = updatedMessages.length - 1;
-                  if (updatedMessages[lastIndex].role === "bot") {
-                    updatedMessages[lastIndex] = { ...updatedMessages[lastIndex], content: displayMessage };
-                  }
-                  return updatedMessages;
-                });
-
-                await new Promise(r => setTimeout(r, 15));
-              }
+                return updatedMessages;
+              });
             }
           } catch (err) {
+            console.error("Error parsing stream payload:", err);
           }
         }
       }
@@ -326,39 +314,81 @@ export default function AIAssistant() {
                 
                 <ScrollArea className="flex-1 p-5" ref={scrollRef}>
                   <div className="flex flex-col gap-5 pb-4">
-                    {messages.map((msg, index) => (
-                      <div
-                        key={index}
-                        className={`flex gap-2.5 ${msg.role === "user" ? "justify-end" : "justify-start"}`}
-                      >
-                        {msg.role === "bot" && (
-                          <Avatar className="h-7 w-7 mt-0.5 border shadow-sm dark:border-white/10 bg-white/80 dark:bg-black/50 flex-shrink-0">
-                            <AvatarImage src={logo.src} alt="GLUG Bot Logo" className="object-contain p-0.5" />
-                            <AvatarFallback className="bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 text-[10px]">
-                              <Bot size={14} />
-                            </AvatarFallback>
-                          </Avatar>
-                        )}
+                    {messages.map((msg, index) => {
+                      // 1. Unescape escaped characters (like \*\* or \\n)
+                      // 2. Force double newlines before specific Markdown blocks to satisfy strict parsing
+                      let cleanContent = msg.content || "";
+                      cleanContent = cleanContent
+                        .replace(/\\n/g, '\n')           // Fix stringified newlines
+                        .replace(/\r\n/g, '\n')          // Normalize Windows line endings
+                        .replace(/\\\*/g, '*')           // Unescape asterisks
+                        .replace(/\\#/g, '#')            // Unescape headers
+                        .replace(/([^\n])\n(#+)\s/g, '$1\n\n$2 ')          // Ensure blank line before headers
+                        .replace(/([^\n|])\n(\|)/g, '$1\n\n$2')            // Ensure blank line before tables
+                        .replace(/([^\n])\n([*+-]|\d+\.)\s/g, '$1\n\n$2')  // Ensure blank line before lists
+                        .replace(/\n\n\n+/g, '\n\n');                      // Clean up excessive spacing
 
+                      return (
                         <div
-                          className={`px-3.5 py-2.5 text-xs shadow-sm max-w-[85%] leading-relaxed whitespace-pre-wrap ${
-                            msg.role === "user"
-                              ? "bg-gradient-to-br from-purple-600 to-indigo-600 text-white rounded-2xl rounded-tr-sm border border-purple-500/50"
-                              : "bg-white/80 dark:bg-black/40 text-slate-800 dark:text-slate-100 rounded-2xl rounded-tl-sm border border-white/50 dark:border-white/10 backdrop-blur-md"
-                          }`}
+                          key={index}
+                          className={`flex gap-2.5 ${msg.role === "user" ? "justify-end" : "justify-start"}`}
                         >
-                          {msg.content}
-                        </div>
+                          {msg.role === "bot" && (
+                            <Avatar className="h-7 w-7 mt-0.5 border shadow-sm dark:border-white/10 bg-white/80 dark:bg-black/50 flex-shrink-0">
+                              <AvatarImage src={logo.src} alt="GLUG Bot Logo" className="object-contain p-0.5" />
+                              <AvatarFallback className="bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 text-[10px]">
+                                <Bot size={14} />
+                              </AvatarFallback>
+                            </Avatar>
+                          )}
 
-                        {msg.role === "user" && (
-                          <Avatar className="h-7 w-7 mt-0.5 border shadow-sm dark:border-white/10 flex-shrink-0">
-                            <AvatarFallback className="bg-slate-800 dark:bg-black/50 text-white text-[10px]">
-                              <User size={14} />
-                            </AvatarFallback>
-                          </Avatar>
-                        )}
-                      </div>
-                    ))}
+                          <div
+                            className={`px-3.5 py-2.5 text-xs shadow-sm max-w-[90%] leading-relaxed ${
+                              msg.role === "user"
+                                ? "bg-gradient-to-br from-purple-600 to-indigo-600 text-white rounded-2xl rounded-tr-sm border border-purple-500/50 whitespace-pre-wrap"
+                                : "bg-white/90 dark:bg-black/60 text-slate-800 dark:text-slate-100 rounded-2xl rounded-tl-sm border border-white/50 dark:border-white/10 backdrop-blur-md overflow-hidden"
+                            }`}
+                          >
+                            {msg.role === "user" ? (
+                              msg.content
+                            ) : (
+                              <div className="space-y-3 markdown-body">
+                                <ReactMarkdown
+                                  remarkPlugins={[remarkGfm]}
+                                  components={{
+                                    h2: ({ node, ...props }) => <h2 className="text-sm font-bold text-slate-900 dark:text-white mt-4 mb-2 border-b border-slate-200 dark:border-slate-700 pb-1" {...props} />,
+                                    h3: ({ node, ...props }) => <h3 className="text-xs font-semibold text-slate-800 dark:text-slate-200 mt-3 mb-1" {...props} />,
+                                    a: ({ node, ...props }) => <a className="text-purple-600 dark:text-purple-400 hover:underline font-medium break-all" target="_blank" rel="noopener noreferrer" {...props} />,
+                                    ul: ({ node, ...props }) => <ul className="list-disc pl-4 space-y-1 my-2 marker:text-purple-500" {...props} />,
+                                    ol: ({ node, ...props }) => <ol className="list-decimal pl-4 space-y-1 my-2 marker:text-purple-500" {...props} />,
+                                    strong: ({ node, ...props }) => <strong className="font-bold text-slate-900 dark:text-white" {...props} />,
+                                    table: ({ node, ...props }) => (
+                                      <div className="overflow-x-auto my-3 rounded-lg border border-slate-200 dark:border-slate-700">
+                                        <table className="w-full text-left border-collapse min-w-[300px]" {...props} />
+                                      </div>
+                                    ),
+                                    thead: ({ node, ...props }) => <thead className="bg-slate-100 dark:bg-slate-800/50" {...props} />,
+                                    th: ({ node, ...props }) => <th className="px-3 py-2 font-semibold border-b border-slate-200 dark:border-slate-700" {...props} />,
+                                    td: ({ node, ...props }) => <td className="px-3 py-2 border-b border-slate-100 dark:border-slate-800/50 align-top" {...props} />,
+                                    p: ({ node, ...props }) => <p className="mb-2 last:mb-0 whitespace-pre-wrap" {...props} />
+                                  }}
+                                >
+                                  {cleanContent}
+                                </ReactMarkdown>
+                              </div>
+                            )}
+                          </div>
+
+                          {msg.role === "user" && (
+                            <Avatar className="h-7 w-7 mt-0.5 border shadow-sm dark:border-white/10 flex-shrink-0">
+                              <AvatarFallback className="bg-slate-800 dark:bg-black/50 text-white text-[10px]">
+                                <User size={14} />
+                              </AvatarFallback>
+                            </Avatar>
+                          )}
+                        </div>
+                      );
+                    })}
 
                     {isLoading && (
                       <div className="flex gap-2.5 justify-start">
