@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { Send, Bot, User, Trash2, X, AlertTriangle } from "lucide-react";
+import { Send, Bot, User, Trash2, X, AlertTriangle, FileText, ExternalLink, BookOpen, HelpCircle } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -15,10 +15,149 @@ import { useTheme } from "next-themes";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 
+// ─── PYQ Payload Types ────────────────────────────────────────────────────────
+interface PYQFile {
+  year: string;
+  exam_type: string;
+  label: string;
+  url: string;
+}
+
+interface PYQSubject {
+  code: string;
+  files: PYQFile[];
+}
+
+interface PYQResultsPayload {
+  type: "results";
+  semester: number;
+  message: string;
+  subjects: PYQSubject[];
+}
+
+interface PYQClarifyPayload {
+  type: "clarify";
+  message: string;
+  options: string[];
+}
+
+interface PYQEmptyPayload {
+  type: "empty";
+  code: string;
+  message: string;
+}
+
+type PYQPayload = PYQResultsPayload | PYQClarifyPayload | PYQEmptyPayload;
+
+// ─── PYQ Card Renderer ────────────────────────────────────────────────────────
+function PYQCard({ payload }: { payload: PYQPayload }) {
+  if (payload.type === "results") {
+    return (
+      <div className="space-y-3">
+        <div className="flex items-center gap-2 mb-1">
+          <div className="h-6 w-6 rounded-full bg-purple-100 dark:bg-purple-900/40 flex items-center justify-center flex-shrink-0">
+            <BookOpen size={12} className="text-purple-600 dark:text-purple-400" />
+          </div>
+          <p className="text-xs font-semibold text-slate-800 dark:text-slate-100 leading-snug">
+            {payload.message}
+          </p>
+        </div>
+        {payload.subjects.map((subject) => (
+          <div
+            key={subject.code}
+            className="rounded-xl border border-purple-200/60 dark:border-purple-800/40 bg-purple-50/50 dark:bg-purple-950/20 overflow-hidden"
+          >
+            <div className="flex items-center gap-2 px-3 py-2 bg-purple-100/60 dark:bg-purple-900/30 border-b border-purple-200/50 dark:border-purple-800/30">
+              <FileText size={12} className="text-purple-600 dark:text-purple-400 flex-shrink-0" />
+              <span className="text-[11px] font-bold text-purple-700 dark:text-purple-300 tracking-wide uppercase">
+                {subject.code}
+              </span>
+            </div>
+            <div className="p-2 space-y-1.5">
+              {subject.files.map((file, i) => (
+                <a
+                  key={i}
+                  href={file.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-between gap-2 px-2.5 py-2 rounded-lg bg-white/70 dark:bg-black/30 border border-white/60 dark:border-white/10 hover:border-purple-400/50 dark:hover:border-purple-500/50 hover:bg-purple-50 dark:hover:bg-purple-950/40 transition-all duration-150 group"
+                >
+                  <div className="flex items-center gap-2 min-w-0">
+                    <span
+                      className={`text-[9px] font-bold px-1.5 py-0.5 rounded uppercase tracking-wider flex-shrink-0 ${
+                        file.exam_type === "endsem"
+                          ? "bg-indigo-100 text-indigo-700 dark:bg-indigo-900/40 dark:text-indigo-300"
+                          : "bg-amber-100 text-amber-700 dark:bg-amber-900/40 dark:text-amber-300"
+                      }`}
+                    >
+                      {file.exam_type === "endsem" ? "End" : "Mid"}
+                    </span>
+                    <span className="text-[11px] font-medium text-slate-700 dark:text-slate-200 truncate">
+                      {file.label}
+                    </span>
+                  </div>
+                  <ExternalLink
+                    size={11}
+                    className="text-slate-400 group-hover:text-purple-500 dark:text-slate-600 dark:group-hover:text-purple-400 flex-shrink-0 transition-colors"
+                  />
+                </a>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    );
+  }
+
+  if (payload.type === "clarify") {
+    return (
+      <div className="space-y-2">
+        <div className="flex items-start gap-2">
+          <div className="h-6 w-6 rounded-full bg-amber-100 dark:bg-amber-900/40 flex items-center justify-center flex-shrink-0 mt-0.5">
+            <HelpCircle size={12} className="text-amber-600 dark:text-amber-400" />
+          </div>
+          <p className="text-xs text-slate-700 dark:text-slate-200 leading-relaxed">
+            {payload.message}
+          </p>
+        </div>
+        <div className="flex flex-wrap gap-1.5 pl-8">
+          {payload.options.map((opt) => (
+            <span
+              key={opt}
+              className="text-[11px] font-semibold px-2.5 py-1 rounded-full bg-amber-100 dark:bg-amber-900/30 text-amber-800 dark:text-amber-300 border border-amber-200 dark:border-amber-700/40"
+            >
+              {opt}
+            </span>
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  // type === "empty"
+  return (
+    <div className="flex items-start gap-2">
+      <div className="h-6 w-6 rounded-full bg-slate-100 dark:bg-slate-800/60 flex items-center justify-center flex-shrink-0 mt-0.5">
+        <FileText size={12} className="text-slate-500 dark:text-slate-400" />
+      </div>
+      <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+        {payload.message}
+      </p>
+    </div>
+  );
+}
+
+// ─── Helpers to detect a PYQ payload ─────────────────────────────────────────
+function isPYQPayload(value: unknown): value is PYQPayload {
+  if (typeof value !== "object" || value === null) return false;
+  const t = (value as Record<string, unknown>).type;
+  return t === "results" || t === "clarify" || t === "empty";
+}
 
 interface Message {
   role: "user" | "bot";
   content: string;
+  pyq?: PYQPayload;
 }
 
 const DEFAULT_MESSAGE: Message = { 
@@ -67,9 +206,9 @@ export default function AIAssistant() {
   // so it actually uses the extra room when the user drags the panel wider,
   // and shrinks gracefully (with tables falling back to horizontal scroll)
   // when the panel is narrow.
-  const getBubbleMaxWidth = (isBot: boolean, hasTable: boolean) => {
+  const getBubbleMaxWidth = (isBot: boolean, hasTable: boolean, isPyq: boolean) => {
     const available = panelWidth - 64; // avatar + gaps + panel padding
-    const cap = isBot ? (hasTable ? 760 : 480) : 420;
+    const cap = isBot ? (isPyq ? available : hasTable ? 760 : 480) : 420;
     return Math.max(200, Math.min(available, cap));
   };
 
@@ -238,11 +377,31 @@ export default function AIAssistant() {
 
           try {
             const payload = JSON.parse(dataString);
-            const token = payload.response || "";
+            const responseValue = payload.response;
 
+            // PYQ matcher returns a structured object — render it as a card,
+            // not as a stringified token.
+            if (isPYQPayload(responseValue)) {
+              setIsStreaming(false);
+              setMessages((prev) => {
+                const updatedMessages = [...prev];
+                const lastIndex = updatedMessages.length - 1;
+                if (updatedMessages[lastIndex].role === "bot") {
+                  updatedMessages[lastIndex] = {
+                    ...updatedMessages[lastIndex],
+                    content: "",
+                    pyq: responseValue,
+                  };
+                }
+                return updatedMessages;
+              });
+              return;
+            }
+
+            // Ordinary text token — accumulate and stream into the bubble.
+            const token = typeof responseValue === "string" ? responseValue : "";
             if (token) {
-              fullMessage += token; // Append the new chunk to our full message
-
+              fullMessage += token;
               setMessages((prev) => {
                 const updatedMessages = [...prev];
                 const lastIndex = updatedMessages.length - 1;
@@ -405,7 +564,8 @@ export default function AIAssistant() {
 
                       const isBot = msg.role === "bot";
                       const hasTable = isBot && containsTable(cleanContent);
-                      const bubbleMaxWidth = getBubbleMaxWidth(isBot, hasTable);
+                      const isPyq = !!msg.pyq;
+                      const bubbleMaxWidth = getBubbleMaxWidth(isBot, hasTable, isPyq);
 
                       return (
                         <div
@@ -428,6 +588,7 @@ export default function AIAssistant() {
                                 : "bg-white/90 dark:bg-black/60 text-slate-800 dark:text-slate-100 rounded-2xl rounded-tl-sm border border-white/50 dark:border-white/10 backdrop-blur-md overflow-hidden"
                             }`}
                             style={{
+                              width: msg.pyq ? "100%" : undefined,
                               maxWidth: bubbleMaxWidth,
                               overflowWrap: "anywhere",
                               wordBreak: "break-word",
@@ -435,7 +596,11 @@ export default function AIAssistant() {
                           >
                             {msg.role === "user" ? (
                               msg.content
+                            ) : msg.pyq ? (
+                              // ── Structured PYQ response ──────────────────
+                              <PYQCard payload={msg.pyq} />
                             ) : (
+                              // ── Regular markdown / streamed text ─────────
                               <div className="space-y-3 markdown-body">
                                 <ReactMarkdown
                                   remarkPlugins={[remarkGfm]}
@@ -446,16 +611,7 @@ export default function AIAssistant() {
                                     ul: ({ node, ...props }) => <ul className="list-disc pl-4 space-y-1 my-2 marker:text-purple-500" {...props} />,
                                     ol: ({ node, ...props }) => <ol className="list-decimal pl-4 space-y-1 my-2 marker:text-purple-500" {...props} />,
                                     strong: ({ node, ...props }) => <strong className="font-bold text-slate-900 dark:text-white" {...props} />,
-                                    // Table gets its own scroll container and, crucially, resets
-                                    // word-break/overflow-wrap back to "normal" so cell text wraps
-                                    // at spaces (or scrolls) instead of shattering mid-word the way
-                                    // it did when it inherited the bubble's "anywhere" wrap setting.
                                     table: ({ node, ...props }) => {
-                                      // Definite pixel cap (derived from the same panelWidth
-                                      // the bubble itself is capped by), not a % max-width —
-                                      // percentages are unreliable here because they resolve to
-                                      // "auto" during the browser's intrinsic-size pass, which is
-                                      // exactly what let the table drag the whole row sideways.
                                       const tableCap = Math.max(160, bubbleMaxWidth - 28);
                                       return (
                                         <div
