@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { Send, Bot, User, Trash2, X } from "lucide-react";
+import { Send, Bot, User, Trash2, X, AlertTriangle } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -9,7 +9,6 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { logo, penguinSticker } from "@/assets";
 
-import GlassSurface from "@/components/GlassSurface";
 import { useTheme } from "next-themes";
 
 
@@ -27,6 +26,10 @@ const DEFAULT_MESSAGE: Message = {
   content: "Hello! I am your GLUG AI assistant. Ask me anything about the club, upcoming events, or Linux!" 
 };
 
+// Heuristic: does this message contain a GFM markdown table?
+// (at least one pipe-delimited line plus a "---" style separator row)
+const containsTable = (content: string) => /\|/.test(content) && /-{2,}/.test(content);
+
 export default function AIAssistant() {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([DEFAULT_MESSAGE]);
@@ -34,8 +37,13 @@ export default function AIAssistant() {
   
   const [isLoading, setIsLoading] = useState(false);
   const [isStreaming, setIsStreaming] = useState(false);
+  const [showClearConfirm, setShowClearConfirm] = useState(false);
   
   const scrollRef = useRef<HTMLDivElement>(null);
+  // Whether we should auto-follow new content to the bottom — true by default,
+  // and flips off if the user manually scrolls up to read earlier messages
+  // (same behavior as Claude's own chat).
+  const [stickToBottom, setStickToBottom] = useState(true);
 
   const { resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
@@ -48,6 +56,22 @@ export default function AIAssistant() {
   const isResizing = useRef(false);
   const startX = useRef(0);
   const startWidth = useRef(400);
+
+  const getResponsivePanelWidth = () => {
+    if (typeof window === "undefined") return 400;
+    const safeWidth = Math.max(window.innerWidth - 24, 280);
+    return Math.min(safeWidth, 720);
+  };
+
+  // Bubble width now tracks the live panel width instead of a fixed rem cap,
+  // so it actually uses the extra room when the user drags the panel wider,
+  // and shrinks gracefully (with tables falling back to horizontal scroll)
+  // when the panel is narrow.
+  const getBubbleMaxWidth = (isBot: boolean, hasTable: boolean) => {
+    const available = panelWidth - 64; // avatar + gaps + panel padding
+    const cap = isBot ? (hasTable ? 760 : 480) : 420;
+    return Math.max(200, Math.min(available, cap));
+  };
 
   const startResizing = (e: React.PointerEvent<HTMLDivElement>) => {
     e.preventDefault();
@@ -64,7 +88,7 @@ export default function AIAssistant() {
       const delta = startX.current - moveEvent.clientX;
       const newWidth = startWidth.current + delta;
       
-      if (newWidth >= 320 && newWidth <= 800) {
+      if (newWidth >= 280 && newWidth <= 720) {
         setPanelWidth(newWidth);
       }
     };
@@ -85,12 +109,24 @@ export default function AIAssistant() {
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = "hidden";
+      setPanelWidth(getResponsivePanelWidth());
     } else {
       document.body.style.overflow = "";
     }
     return () => {
       document.body.style.overflow = "";
     };
+  }, [isOpen]);
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (isOpen) {
+        setPanelWidth(getResponsivePanelWidth());
+      }
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, [isOpen]);
 
   useEffect(() => {
@@ -111,17 +147,53 @@ export default function AIAssistant() {
     }
   }, [messages]);
 
+  // ScrollArea's own ref points at the non-scrolling Root wrapper, not the
+  // element that actually scrolls — Radix always tags the real scrollable
+  // node with this data attribute, so we reach through to it directly.
+  const getViewport = () =>
+    scrollRef.current?.querySelector<HTMLDivElement>(
+      "[data-radix-scroll-area-viewport]"
+    ) ?? null;
+
+  const scrollToBottom = (behavior: ScrollBehavior = "smooth") => {
+    const viewport = getViewport();
+    if (!viewport) return;
+    viewport.scrollTo({ top: viewport.scrollHeight, behavior });
+  };
+
+  // Detect when the user scrolls up to read earlier messages, so we stop
+  // yanking them back down — and resume auto-following once they're back
+  // near the bottom (or send a new message).
   useEffect(() => {
-    if (scrollRef.current) {
-      scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
-    }
-  }, [messages, isLoading, isOpen, isStreaming]);
+    const viewport = getViewport();
+    if (!viewport) return;
+
+    const handleScroll = () => {
+      const distanceFromBottom =
+        viewport.scrollHeight - viewport.scrollTop - viewport.clientHeight;
+      setStickToBottom(distanceFromBottom < 80);
+    };
+
+    viewport.addEventListener("scroll", handleScroll);
+    return () => viewport.removeEventListener("scroll", handleScroll);
+  }, [isOpen]);
+
+  // Follow the bottom as messages arrive, while "Thinking..." shows, and as
+  // the reply streams in — instant during streaming so rapid token updates
+  // don't animate-jitter, a single smooth glide for a new send/open.
+  useEffect(() => {
+    if (!isOpen || !stickToBottom) return;
+    scrollToBottom(isStreaming ? "auto" : "smooth");
+  }, [messages, isLoading, isStreaming, isOpen, stickToBottom]);
 
   const handleSendMessage = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!input.trim()) return;
 
     const userMessage = input.trim();
+    // A new prompt always jumps to the bottom, even if the user had
+    // scrolled up to read earlier history.
+    setStickToBottom(true);
     setMessages((prev) => [...prev, { role: "user", content: userMessage }]);
     setInput("");
     setIsLoading(true);
@@ -193,15 +265,35 @@ export default function AIAssistant() {
     }
   };
 
-  const clearChat = () => {
-    if (window.confirm("Clear conversation history?")) {
-      setMessages([DEFAULT_MESSAGE]);
-      localStorage.removeItem("glug-chat-history");
-    }
+  // Instead of the browser's native window.confirm() (which renders as an
+  // unstyled OS dialog), a themed in-panel modal handles the confirmation.
+  const requestClearChat = () => setShowClearConfirm(true);
+
+  const confirmClearChat = () => {
+    setMessages([DEFAULT_MESSAGE]);
+    localStorage.removeItem("glug-chat-history");
+    setShowClearConfirm(false);
   };
 
   return (
     <>
+      {/* Visible horizontal scrollbar just for wide tables inside chat bubbles */}
+      <style jsx global>{`
+        .glug-table-scroll::-webkit-scrollbar {
+          height: 6px;
+        }
+        .glug-table-scroll::-webkit-scrollbar-track {
+          background: transparent;
+        }
+        .glug-table-scroll::-webkit-scrollbar-thumb {
+          background-color: rgba(147, 51, 234, 0.45);
+          border-radius: 999px;
+        }
+        .glug-table-scroll::-webkit-scrollbar-thumb:hover {
+          background-color: rgba(147, 51, 234, 0.65);
+        }
+      `}</style>
+
       <button
         onClick={() => setIsOpen(true)}
         className="fixed bottom-6 right-6 z-[9999] h-20 w-20 hover:-translate-y-2 transition-transform duration-300 group focus:outline-none"
@@ -233,8 +325,8 @@ export default function AIAssistant() {
               animate={{ x: 0, opacity: 1, scale: 1 }}
               exit={{ x: "100%", opacity: 0, scale: 0.95 }}
               transition={{ type: "spring", damping: 25, stiffness: 300 }}
-              style={{ width: panelWidth, maxWidth: "calc(100vw - 2rem)" }}
-              className="fixed right-4 top-4 bottom-4 z-[9999] pointer-events-none flex flex-col gap-4"
+              style={{ width: panelWidth, maxWidth: "calc(100vw - 1rem)" }}
+              className="fixed right-2 top-2 bottom-2 sm:right-4 sm:top-4 sm:bottom-4 z-[9999] pointer-events-none flex flex-col gap-3 sm:gap-4"
             >
               
               <div 
@@ -244,36 +336,15 @@ export default function AIAssistant() {
                 <div className={`w-1.5 h-12 rounded-full transition-colors duration-200 ${isDragging ? 'bg-purple-500' : 'bg-black/10 dark:bg-white/10 group-hover:bg-purple-500/50'}`} />
               </div>
 
-              <div className="w-full h-[56px] shrink-0 pointer-events-auto relative shadow-xl rounded-full">
-                <GlassSurface
-                  width="100%"
-                  height={56} 
-                  borderRadius={999}
-                  distortionScale={-160}
-                  redOffset={0}
-                  greenOffset={8}
-                  blueOffset={18}
-                  brightness={isDark === false ? 140 : 35}
-                  opacity={1.5}
-                  blur={18}
-                  backgroundOpacity={isDark === false ? 0.18 : 0.12}
-                  saturation={isDark === false ? 1.1 : 1.4}
-                  className="w-full h-full"
+              <div className="w-full h-[56px] shrink-0 pointer-events-auto relative rounded-full">
+                <div
+                  className="relative z-10 w-full h-full flex items-center justify-between px-5 rounded-full bg-white/90 dark:bg-black/80"
                   style={{
                     border: isDark === false
                       ? "1.5px solid rgba(0,0,0,0.08)"
                       : "1.5px solid rgba(255,255,255,0.13)",
-                    isolation: "isolate",
                   }}
                 >
-                  {isDark === false && (
-                    <div
-                      className="absolute inset-0 rounded-full pointer-events-none"
-                      style={{ background: "rgba(255,255,255,0.55)" }}
-                    />
-                  )}
-
-                  <div className="relative z-10 w-full h-full flex items-center justify-between px-5">
                     <div className="flex items-center gap-3">
                       <Avatar className="h-8 w-8 border shadow-sm dark:border-white/10 bg-white/80 dark:bg-black/50">
                         <AvatarImage src={logo.src} alt="GLUG Bot Logo" className="object-contain p-0.5" />
@@ -291,7 +362,7 @@ export default function AIAssistant() {
                         <Button
                           variant="ghost"
                           size="icon"
-                          onClick={clearChat}
+                          onClick={requestClearChat}
                           className="text-slate-600 hover:text-red-500 hover:bg-white/50 dark:text-slate-300 dark:hover:bg-red-500/20 h-8 w-8 rounded-full transition-colors"
                         >
                           <Trash2 size={16} />
@@ -306,14 +377,18 @@ export default function AIAssistant() {
                         <X size={18} />
                       </Button>
                     </div>
-                  </div>
-                </GlassSurface>
+                </div>
               </div>
 
               <div className="w-full flex-1 pointer-events-auto rounded-[32px] overflow-hidden flex flex-col shadow-2xl bg-white/60 dark:bg-[#111113]/60 backdrop-blur-[18px] border border-black/5 dark:border-white/10">
                 
                 <ScrollArea className="flex-1 p-5" ref={scrollRef}>
-                  <div className="flex flex-col gap-5 pb-4">
+                  {/* Hard pixel clip (not a % max-width) so a wide table can never
+                      inflate this column and drag the rest of the chat sideways. */}
+                  <div
+                    className="flex flex-col gap-5 pb-4 overflow-x-hidden"
+                    style={{ maxWidth: Math.max(200, panelWidth - 40) }}
+                  >
                     {messages.map((msg, index) => {
                       // 1. Unescape escaped characters (like \*\* or \\n)
                       // 2. Force double newlines before specific Markdown blocks to satisfy strict parsing
@@ -328,10 +403,14 @@ export default function AIAssistant() {
                         .replace(/([^\n])\n([*+-]|\d+\.)\s/g, '$1\n\n$2')  // Ensure blank line before lists
                         .replace(/\n\n\n+/g, '\n\n');                      // Clean up excessive spacing
 
+                      const isBot = msg.role === "bot";
+                      const hasTable = isBot && containsTable(cleanContent);
+                      const bubbleMaxWidth = getBubbleMaxWidth(isBot, hasTable);
+
                       return (
                         <div
                           key={index}
-                          className={`flex gap-2.5 ${msg.role === "user" ? "justify-end" : "justify-start"}`}
+                          className={`flex w-full min-w-0 gap-2.5 ${msg.role === "user" ? "justify-end" : "justify-start"}`}
                         >
                           {msg.role === "bot" && (
                             <Avatar className="h-7 w-7 mt-0.5 border shadow-sm dark:border-white/10 bg-white/80 dark:bg-black/50 flex-shrink-0">
@@ -343,11 +422,16 @@ export default function AIAssistant() {
                           )}
 
                           <div
-                            className={`px-3.5 py-2.5 text-xs shadow-sm max-w-[90%] leading-relaxed ${
+                            className={`min-w-0 px-3.5 py-2.5 text-xs shadow-sm leading-relaxed break-words ${
                               msg.role === "user"
                                 ? "bg-gradient-to-br from-purple-600 to-indigo-600 text-white rounded-2xl rounded-tr-sm border border-purple-500/50 whitespace-pre-wrap"
                                 : "bg-white/90 dark:bg-black/60 text-slate-800 dark:text-slate-100 rounded-2xl rounded-tl-sm border border-white/50 dark:border-white/10 backdrop-blur-md overflow-hidden"
                             }`}
+                            style={{
+                              maxWidth: bubbleMaxWidth,
+                              overflowWrap: "anywhere",
+                              wordBreak: "break-word",
+                            }}
                           >
                             {msg.role === "user" ? (
                               msg.content
@@ -362,19 +446,52 @@ export default function AIAssistant() {
                                     ul: ({ node, ...props }) => <ul className="list-disc pl-4 space-y-1 my-2 marker:text-purple-500" {...props} />,
                                     ol: ({ node, ...props }) => <ol className="list-decimal pl-4 space-y-1 my-2 marker:text-purple-500" {...props} />,
                                     strong: ({ node, ...props }) => <strong className="font-bold text-slate-900 dark:text-white" {...props} />,
-                                    table: ({ node, ...props }) => (
-                                      <div className="overflow-x-auto my-3 rounded-lg border border-slate-200 dark:border-slate-700">
-                                        <table className="w-full text-left border-collapse min-w-[300px]" {...props} />
-                                      </div>
-                                    ),
+                                    // Table gets its own scroll container and, crucially, resets
+                                    // word-break/overflow-wrap back to "normal" so cell text wraps
+                                    // at spaces (or scrolls) instead of shattering mid-word the way
+                                    // it did when it inherited the bubble's "anywhere" wrap setting.
+                                    table: ({ node, ...props }) => {
+                                      // Definite pixel cap (derived from the same panelWidth
+                                      // the bubble itself is capped by), not a % max-width —
+                                      // percentages are unreliable here because they resolve to
+                                      // "auto" during the browser's intrinsic-size pass, which is
+                                      // exactly what let the table drag the whole row sideways.
+                                      const tableCap = Math.max(160, bubbleMaxWidth - 28);
+                                      return (
+                                        <div
+                                          className="glug-table-scroll my-3 rounded-lg border border-slate-200 dark:border-slate-700 overflow-x-auto"
+                                          style={{
+                                            maxWidth: tableCap,
+                                            WebkitOverflowScrolling: "touch",
+                                            scrollbarWidth: "thin",
+                                          }}
+                                        >
+                                          <table
+                                            className="w-max min-w-full text-left border-collapse text-[11px] sm:text-xs"
+                                            style={{
+                                              tableLayout: "auto",
+                                              wordBreak: "normal",
+                                              overflowWrap: "normal",
+                                            }}
+                                            {...props}
+                                          />
+                                        </div>
+                                      );
+                                    },
                                     thead: ({ node, ...props }) => <thead className="bg-slate-100 dark:bg-slate-800/50" {...props} />,
-                                    th: ({ node, ...props }) => <th className="px-3 py-2 font-semibold border-b border-slate-200 dark:border-slate-700" {...props} />,
+                                    tr: ({ node, ...props }) => <tr className="even:bg-slate-50/60 dark:even:bg-white/[0.03]" {...props} />,
+                                    th: ({ node, ...props }) => <th className="px-3 py-2 font-semibold border-b border-slate-200 dark:border-slate-700 whitespace-nowrap" {...props} />,
                                     td: ({ node, ...props }) => <td className="px-3 py-2 border-b border-slate-100 dark:border-slate-800/50 align-top" {...props} />,
                                     p: ({ node, ...props }) => <p className="mb-2 last:mb-0 whitespace-pre-wrap" {...props} />
                                   }}
                                 >
                                   {cleanContent}
                                 </ReactMarkdown>
+                                {hasTable && (
+                                  <p className="text-[10px] text-slate-400 dark:text-slate-500 italic">
+                                    Scroll the table sideways to see more columns →
+                                  </p>
+                                )}
                               </div>
                             )}
                           </div>
@@ -426,6 +543,60 @@ export default function AIAssistant() {
                   </form>
                 </div>
 
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
+
+      <AnimatePresence>
+        {showClearConfirm && (
+          <>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setShowClearConfirm(false)}
+              className="fixed inset-0 bg-black/40 dark:bg-black/60 backdrop-blur-sm z-[10050] pointer-events-auto"
+            />
+            <motion.div
+              role="alertdialog"
+              aria-modal="true"
+              aria-labelledby="clear-chat-title"
+              initial={{ opacity: 0, scale: 0.94, y: 8 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.94, y: 8 }}
+              transition={{ type: "spring", damping: 25, stiffness: 350 }}
+              className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-[10051] w-[calc(100vw-2rem)] max-w-sm rounded-3xl bg-white/95 dark:bg-[#111113]/95 backdrop-blur-xl border border-black/5 dark:border-white/10 shadow-2xl p-6"
+            >
+              <div className="flex items-start gap-3.5">
+                <div className="shrink-0 h-10 w-10 rounded-full bg-red-100 dark:bg-red-500/15 flex items-center justify-center">
+                  <AlertTriangle size={18} className="text-red-500 dark:text-red-400" />
+                </div>
+                <div className="min-w-0">
+                  <h3 id="clear-chat-title" className="text-sm font-semibold text-slate-900 dark:text-white">
+                    Clear conversation history?
+                  </h3>
+                  <p className="mt-1 text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
+                    This will remove all messages in this chat. This action can't be undone.
+                  </p>
+                </div>
+              </div>
+
+              <div className="mt-5 flex items-center justify-end gap-2">
+                <Button
+                  variant="ghost"
+                  onClick={() => setShowClearConfirm(false)}
+                  className="h-9 px-4 rounded-full text-xs font-medium text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-white/10"
+                >
+                  Cancel
+                </Button>
+                <Button
+                  onClick={confirmClearChat}
+                  className="h-9 px-4 rounded-full text-xs font-medium bg-red-600 hover:bg-red-700 text-white border border-red-500/50"
+                >
+                  Clear chat
+                </Button>
               </div>
             </motion.div>
           </>
