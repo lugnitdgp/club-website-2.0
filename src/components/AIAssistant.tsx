@@ -707,13 +707,13 @@ export default function AIAssistant() {
 
       <AnimatePresence>
         {showClearConfirm && (
-          <>
+          <div className="fixed inset-0 z-[10050] flex items-center justify-center p-4">
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setShowClearConfirm(false)}
-              className="fixed inset-0 bg-black/40 dark:bg-black/60 backdrop-blur-sm z-[10050] pointer-events-auto"
+              className="absolute inset-0 bg-black/40 dark:bg-black/60 backdrop-blur-sm pointer-events-auto"
             />
             <motion.div
               role="alertdialog"
@@ -723,7 +723,7 @@ export default function AIAssistant() {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.94, y: 8 }}
               transition={{ type: "spring", damping: 25, stiffness: 350 }}
-              className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-[10051] w-[calc(100vw-2rem)] max-w-sm rounded-3xl bg-white/95 dark:bg-[#111113]/95 backdrop-blur-xl border border-black/5 dark:border-white/10 shadow-2xl p-6"
+              className="relative z-[10051] w-full max-w-sm max-h-[85vh] overflow-y-auto pointer-events-auto rounded-3xl bg-white/95 dark:bg-[#111113]/95 backdrop-blur-xl border border-black/5 dark:border-white/10 shadow-2xl p-5 sm:p-6"
             >
               <div className="flex items-start gap-3.5">
                 <div className="shrink-0 h-10 w-10 rounded-full bg-red-100 dark:bg-red-500/15 flex items-center justify-center">
@@ -755,7 +755,7 @@ export default function AIAssistant() {
                 </Button>
               </div>
             </motion.div>
-          </>
+          </div>
         )}
       </AnimatePresence>
     </>
