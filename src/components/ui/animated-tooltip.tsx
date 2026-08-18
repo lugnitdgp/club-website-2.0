@@ -68,17 +68,17 @@ export const AnimatedTooltip = ({
                   rotate: rotate,
                   whiteSpace: "nowrap",
                 }}
-                className="absolute -top-20 -left-1/2 translate-x-1/2 flex text-xs flex-col items-center justify-center rounded-md bg-foreground z-50 shadow-xl px-4 py-2 bg-white"
+                className="absolute -top-20 -left-1/2 translate-x-1/2 flex text-xs flex-col items-center justify-center rounded-md z-50 shadow-xl px-4 py-2 bg-gray-900 dark:bg-white"
               >
                 <div className="absolute inset-x-10 z-30 w-[20%] -bottom-px bg-gradient-to-r from-transparent via-emerald-500 to-transparent h-px" />
                 <div className="absolute left-10 w-[40%] z-30 -bottom-px bg-gradient-to-r from-transparent via-sky-500 to-transparent h-px" />
-                <div className="font-bold text-background relative z-30 text-base">
+                <div className="font-bold text-white dark:text-gray-900 relative z-30 text-base">
                   {item.name}
                 </div>
-                <div className="text-muted-foreground text-sm">
+                <div className="text-gray-300 dark:text-gray-600 text-sm">
                   {item.email}
                 </div>
-                <div className="text-muted-foreground text-sm">
+                <div className="text-gray-300 dark:text-gray-600 text-sm">
                   {item.phone_number}
                 </div>
               </motion.div>

@@ -1,17 +1,23 @@
 "use client";
 import React from "react";
 import Image from "next/image";
-import { homepage_penguin_dark, header } from "../../assets";
+import { homepage_penguin_dark, header, header_dark } from "../../assets";
 import { motion } from "framer-motion";
 import { AnimatedGradientText } from "../magicui/animated-gradient-text";
 import { NumberTicker } from "../magicui/number-ticker";
 import { useFetchCountQuery } from "@/store/slices/countSlice";
 import { cn } from "@/lib/utils";
 import { DotPattern } from "../magicui/dots";
+import { useTheme } from "next-themes";
+import { useEffect, useState } from "react";
 
 
 function LandingComponent() {
   const { data, isLoading } = useFetchCountQuery({});
+  const { resolvedTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+
   return (
     <>
       <div className="snap-start relative flex flex-row overflow-x-hidden overflow-y-hidden justify-between align-middle h-screen pt-10 ">
@@ -23,42 +29,14 @@ function LandingComponent() {
           />
         </div>
         <div className="home-onboard-text flex w-5/6  md:w-3/6 flex-col justify-evenly  md:px-7 mx-auto">
-          {/* <div className="group relative mx-auto flex w-max items-center justify-center rounded-full px-4 py-1.5 shadow-[inset_0_-8px_10px_#8fdfff1f] transition-shadow duration-500 ease-out hover:shadow-[inset_0_-5px_10px_#8fdfff3f] ">
-            <span
-              className={cn(
-                "absolute inset-0 block  animate-gradient rounded-[inherit] bg-gradient-to-r from-[#ffaa40]/50 via-[#9c40ff]/50 to-[#ffaa40]/50 bg-[length:300%_100%] p-[1px]"
-              )}
-              style={{
-                WebkitMask:
-                  "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
-                WebkitMaskComposite: "destination-out",
-                mask: "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
-                maskComposite: "subtract",
-                WebkitClipPath: "padding-box",
-              }}
-            />
-            🎉 <hr className="mx-2 h-4 w-px shrink-0 bg-neutral-500" />
-            <AnimatedGradientText className="text-base font-medium cursor-pointer">
-              MUKTI 2026 Coming Soon
-            </AnimatedGradientText>
-          </div> */}
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4, ease: "easeIn" }}
             viewport={{ once: true }}
           >
-            {/* <div className="font-bold text-heading leading-10 text-onBackground dark:text-onBackgroundDark">
-              Explore
-            </div>
-            <div className=" font-bold text-heading ">
-              <AuroraText> Create</AuroraText>
-            </div>
-            <div className=" font-bold text-heading leading-10 text-onBackground dark:text-onBackgroundDark">
-              Inspire
-            </div> */}
             <Image
-              src={header}
+              src={mounted && resolvedTheme === "dark" ? header_dark : header}
               alt={""}
               className=" md:w-1/2 h-auto mx-auto pointer-events-none"
             />

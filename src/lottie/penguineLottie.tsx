@@ -7,12 +7,25 @@ const Lottie = dynamic(() => import("lottie-react"), { ssr: false });
 import penguineLottie from "./penguine.json";
 import Loading from "./loading.json";
 
+// Optional: static penguin (if you use it somewhere else)
 const PenguineLottie = () => {
-  return <Lottie animationData={penguineLottie} loop={true} />;
+  return (
+    <Lottie
+      animationData={penguineLottie}
+      loop
+      className="w-full h-full object-contain"
+    />
+  );
 };
 
 export default PenguineLottie;
 
 export const PenguineLoadingLottie = () => {
-  return <Lottie animationData={Loading} loop={true} className="h-60" />;
+  return (
+    <Lottie
+      animationData={Loading}
+      loop
+      className="w-full h-full object-contain"
+    />
+  );
 };
