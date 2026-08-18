@@ -683,20 +683,32 @@ export default function AIAssistant() {
                   <form onSubmit={handleSendMessage} className="relative flex items-center">
                     <Input
                       value={input}
-                      onChange={(e) => setInput(e.target.value)}
+                      onChange={(e) => setInput(e.target.value.slice(0, 200))}
                       placeholder="Ask about events, projects..."
+                      maxLength={200}
                       className="pr-10 py-5 rounded-full bg-white/60 dark:bg-black/40 border-white/50 dark:border-white/10 text-slate-900 dark:text-white text-xs shadow-sm focus-visible:ring-purple-500 dark:focus-visible:ring-purple-500 placeholder:text-slate-500 dark:placeholder:text-slate-400 backdrop-blur-md"
                       disabled={isLoading || isStreaming}
                     />
                     <Button
                       type="submit"
                       size="icon"
-                      disabled={isLoading || isStreaming || !input.trim()}
+                      disabled={isLoading || isStreaming || !input.trim() || input.length > 200}
                       className="absolute right-1 h-8 w-9 rounded-full bg-purple-600 hover:bg-purple-700 text-white transition-colors border border-purple-500/50"
                     >
                       <Send size={12} />
                     </Button>
                   </form>
+                  {input.length > 140 && (
+                    <p
+                      className={`mt-1.5 text-right text-[10px] font-medium transition-colors duration-200 ${
+                        input.length >= 200
+                          ? "text-red-500 dark:text-red-400"
+                          : "text-slate-400 dark:text-slate-500"
+                      }`}
+                    >
+                      {input.length}/200
+                    </p>
+                  )}
                 </div>
 
               </div>
