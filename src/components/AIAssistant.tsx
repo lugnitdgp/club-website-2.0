@@ -11,7 +11,6 @@ import { logo, penguinSticker } from "@/assets";
 
 import { useTheme } from "next-themes";
 
-
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 
@@ -47,7 +46,13 @@ interface PYQEmptyPayload {
   message: string;
 }
 
-type PYQPayload = PYQResultsPayload | PYQClarifyPayload | PYQEmptyPayload;
+interface PYQNotFoundPayload {
+  type: "not_found";
+  message: string;
+  options: string[];
+}
+
+type PYQPayload = PYQResultsPayload | PYQClarifyPayload | PYQEmptyPayload | PYQNotFoundPayload;
 
 // ─── PYQ Card Renderer ────────────────────────────────────────────────────────
 function PYQCard({ payload }: { payload: PYQPayload }) {
@@ -109,6 +114,40 @@ function PYQCard({ payload }: { payload: PYQPayload }) {
     );
   }
 
+  if (payload.type === "not_found") {
+    return (
+      <div className="space-y-2">
+        <div className="flex items-start gap-2">
+          <div className="h-6 w-6 rounded-full bg-red-100 dark:bg-red-900/40 flex items-center justify-center flex-shrink-0 mt-0.5">
+            <AlertTriangle size={12} className="text-red-600 dark:text-red-400" />
+          </div>
+          <div className="text-xs text-slate-700 dark:text-slate-200 leading-relaxed [&>p]:mb-1 last:[&>p]:mb-0">
+            <ReactMarkdown
+              components={{
+                strong: ({ node, ...props }) => <strong className="font-semibold text-slate-900 dark:text-white" {...props} />,
+                em: ({ node, ...props }) => <em className="italic" {...props} />
+              }}
+            >
+              {payload.message}
+            </ReactMarkdown>
+          </div>
+        </div>
+        {payload.options && payload.options.length > 0 && (
+          <div className="flex flex-wrap gap-1.5 pl-8">
+            {payload.options.map((opt) => (
+              <span
+                key={opt}
+                className="text-[11px] font-semibold px-2.5 py-1 rounded-full bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-300 border border-red-200 dark:border-red-700/40"
+              >
+                {opt}
+              </span>
+            ))}
+          </div>
+        )}
+      </div>
+    );
+  }
+
   if (payload.type === "clarify") {
     return (
       <div className="space-y-2">
@@ -120,16 +159,18 @@ function PYQCard({ payload }: { payload: PYQPayload }) {
             {payload.message}
           </p>
         </div>
-        <div className="flex flex-wrap gap-1.5 pl-8">
-          {payload.options.map((opt) => (
-            <span
-              key={opt}
-              className="text-[11px] font-semibold px-2.5 py-1 rounded-full bg-amber-100 dark:bg-amber-900/30 text-amber-800 dark:text-amber-300 border border-amber-200 dark:border-amber-700/40"
-            >
-              {opt}
-            </span>
-          ))}
-        </div>
+        {payload.options && payload.options.length > 0 && (
+          <div className="flex flex-wrap gap-1.5 pl-8">
+            {payload.options.map((opt) => (
+              <span
+                key={opt}
+                className="text-[11px] font-semibold px-2.5 py-1 rounded-full bg-amber-100 dark:bg-amber-900/30 text-amber-800 dark:text-amber-300 border border-amber-200 dark:border-amber-700/40"
+              >
+                {opt}
+              </span>
+            ))}
+          </div>
+        )}
       </div>
     );
   }
@@ -151,7 +192,7 @@ function PYQCard({ payload }: { payload: PYQPayload }) {
 function isPYQPayload(value: unknown): value is PYQPayload {
   if (typeof value !== "object" || value === null) return false;
   const t = (value as Record<string, unknown>).type;
-  return t === "results" || t === "clarify" || t === "empty";
+  return t === "results" || t === "clarify" || t === "empty" || t === "not_found";
 }
 
 interface Message {
